@@ -1,0 +1,468 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { useAuth, useUserType, useIsAuthenticated } from "@/lib/auth-context"
+import { useRouter } from "next/navigation"
+import { Search, Filter, MapPin, Menu, Star, Heart, MessageCircle, User, Home, Briefcase, Mail, Plus } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
+import { CarouselBanner } from "@/components/ui/carousel-banner"
+import Link from "next/link"
+
+export default function JobseekerPage() {
+  const router = useRouter()
+  const { user, logout } = useAuth()
+  const userType = useUserType()
+  const isAuthenticated = useIsAuthenticated()
+
+  // 从 localStorage 加载筛选条件
+  const [jobseekerFilters, setJobseekerFilters] = useState<any>({})
+
+  // 页面加载时从 localStorage 读取筛选条件
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const savedJobseekerFilters = localStorage.getItem('jobseeker_filters')
+        if (savedJobseekerFilters) {
+          setJobseekerFilters(JSON.parse(savedJobseekerFilters))
+        }
+      } catch (error) {
+        console.error('Failed to load filters:', error)
+      }
+    }
+  }, [])
+
+  // 检查是否有活跃的筛选条件
+  const hasActiveFilters = () => {
+    return (
+      jobseekerFilters.location?.length > 0 ||
+      jobseekerFilters.jobTypes?.length > 0 ||
+      (jobseekerFilters.salaryRange && (jobseekerFilters.salaryRange[0] !== 0 || jobseekerFilters.salaryRange[1] !== 50)) ||
+      jobseekerFilters.employmentType !== "" ||
+      jobseekerFilters.benefits?.length > 0
+    )
+  }
+
+  // 跳转到筛选页面
+  const handleFilterClick = () => {
+    router.push('/filter/jobseeker')
+  }
+
+  // 处理位置筛选点击
+  const handleLocationClick = () => {
+    router.push('/filter/jobseeker')
+  }
+
+  // 清除筛选条件的辅助函数
+  const clearFilter = (type: string, value?: string) => {
+    if (type === "location" && value) {
+      const newFilters = {
+        ...jobseekerFilters,
+        location: jobseekerFilters.location.filter((item: string) => item !== value),
+      }
+      setJobseekerFilters(newFilters)
+      localStorage.setItem('jobseeker_filters', JSON.stringify(newFilters))
+    } else if (type === "jobTypes" && value) {
+      const newFilters = {
+        ...jobseekerFilters,
+        jobTypes: jobseekerFilters.jobTypes.filter((item: string) => item !== value),
+      }
+      setJobseekerFilters(newFilters)
+      localStorage.setItem('jobseeker_filters', JSON.stringify(newFilters))
+    } else if (type === "salaryRange") {
+      const newFilters = { ...jobseekerFilters, salaryRange: [0, 50] }
+      setJobseekerFilters(newFilters)
+      localStorage.setItem('jobseeker_filters', JSON.stringify(newFilters))
+    } else if (type === "employmentType") {
+      const newFilters = { ...jobseekerFilters, employmentType: "" }
+      setJobseekerFilters(newFilters)
+      localStorage.setItem('jobseeker_filters', JSON.stringify(newFilters))
+    } else if (type === "benefits" && value) {
+      const newFilters = {
+        ...jobseekerFilters,
+        benefits: jobseekerFilters.benefits.filter((item: string) => item !== value),
+      }
+      setJobseekerFilters(newFilters)
+      localStorage.setItem('jobseeker_filters', JSON.stringify(newFilters))
+    }
+  }
+
+  // 格式化薪资显示
+  const formatSalary = (value: number) => {
+    if (value === 0) return "不限"
+    if (value >= 50) return "50K+"
+    return `${value}K`
+  }
+
+  // 格式化工作性质
+  const getEmploymentTypeText = (type: string) => {
+    switch (type) {
+      case "full-time": return "全职"
+      case "part-time": return "兼职"
+      case "temporary": return "临时"
+      case "contract": return "合同制"
+      default: return ""
+    }
+  }
+
+  // 演出机会数据
+  const opportunities = [
+    {
+      id: 1,
+      title: "大型音乐剧《猫》舞蹈演员",
+      company: "星光文化传媒",
+      location: "北京",
+      salary: "8000-12000",
+      type: "全职",
+      tags: ["五险一金", "演出补贴", "培训机会"],
+      description: "招聘专业舞蹈演员，要求有扎实的舞蹈基础，形象气质佳，有团队合作精神。",
+      posted: "2天前",
+      urgent: true
+    },
+    {
+      id: 2,
+      title: "武术指导及表演",
+      company: "东方影视",
+      location: "上海",
+      salary: "10000-15000",
+      type: "合同制",
+      tags: ["影视经验", "高薪", "知名导演"],
+      description: "知名导演新片招聘武术指导，要求有丰富的武术表演和指导经验。",
+      posted: "1天前",
+      urgent: false
+    },
+    {
+      id: 3,
+      title: "儿童剧表演演员",
+      company: "童话王国剧团",
+      location: "广州",
+      salary: "6000-8000",
+      type: "兼职",
+      tags: ["周末演出", "儿童剧", "轻松愉快"],
+      description: "招聘儿童剧表演演员，要求喜欢孩子，表演生动有趣，周末演出。",
+      posted: "3天前",
+      urgent: false
+    }
+  ]
+
+  // Banner轮播数据
+  const bannerSlides = [
+    {
+      id: 1,
+      title: "发现演出机会",
+      subtitle: "专业艺术表演平台",
+      description: "汇聚全国优质演出机会，为您的艺术才华找到最佳舞台",
+      image: "/placeholder.svg?height=200&width=400",
+      buttonText: "立即查看",
+      backgroundColor: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+    },
+    {
+      id: 2,
+      title: "丰富演出类型",
+      subtitle: "覆盖各类表演领域",
+      description: "舞台剧、音乐剧、舞蹈演出、影视拍摄等多种机会等你来",
+      image: "/placeholder.svg?height=200&width=400",
+      buttonText: "浏览职位",
+      backgroundColor: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
+    },
+    {
+      id: 3,
+      title: "专业成长平台",
+      subtitle: "提升艺术技能",
+      description: "与知名导演合作，参与优质项目，让您的艺术生涯更上一层楼",
+      image: "/placeholder.svg?height=200&width=400",
+      buttonText: "开始申请",
+      backgroundColor: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
+    }
+  ]
+
+  // 表演类别
+  const categories = [
+    { name: "舞蹈", count: 56, icon: "💃" },
+    { name: "表演", count: 43, icon: "🎭" },
+    { name: "武术", count: 28, icon: "🥋" },
+    { name: "杂技", count: 15, icon: "🤹" },
+    { name: "音乐", count: 37, icon: "🎵" },
+    { name: "戏曲", count: 22, icon: "🎪" },
+  ]
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white border-b sticky top-0 z-10">
+        <div className="flex items-center justify-between p-4">
+          <div className="flex items-center">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="sm" className="mr-2">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-80">
+                <SheetHeader className="py-6">
+                  <SheetTitle className="text-lg font-semibold text-green-600 mb-6">薏仁直聘</SheetTitle>
+                </SheetHeader>
+                <div className="py-6">
+                  <nav className="space-y-4">
+                    <Link href="/jobseeker" className="block py-2 text-gray-700 hover:text-green-600">
+                      求职方首页
+                    </Link>
+                    <Link href="/employer" className="block py-2 text-gray-700 hover:text-green-600">
+                      应聘方首页
+                    </Link>
+                    <Link href="/post/create" className="block py-2 text-green-600 hover:text-green-700 font-medium">
+                      发布信息
+                    </Link>
+                    <Link href="/forum" className="block py-2 text-gray-700 hover:text-green-600">
+                      论坛
+                    </Link>
+                    <Link href="/profile/jobseeker" className="block py-2 text-gray-700 hover:text-green-600">
+                      个人中心
+                    </Link>
+                    <Link href="/messages" className="block py-2 text-gray-700 hover:text-green-600">
+                      消息
+                    </Link>
+                    <Link href="/settings" className="block py-2 text-gray-700 hover:text-green-600">
+                      设置
+                    </Link>
+                    {isAuthenticated && (
+                      <button 
+                        onClick={logout}
+                        className="block w-full text-left py-2 text-red-600 hover:text-red-700"
+                      >
+                        退出登录
+                      </button>
+                    )}
+                  </nav>
+                </div>
+              </SheetContent>
+            </Sheet>
+            <h1 className="text-xl font-bold text-green-600">薏仁直聘</h1>
+          </div>
+          <div className="flex items-center space-x-2">
+            {isAuthenticated ? (
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={user?.avatar || "/placeholder.svg?height=32&width=32"} />
+                <AvatarFallback>{user?.name?.[0] || "我"}</AvatarFallback>
+              </Avatar>
+            ) : (
+              <Button asChild size="sm" variant="outline" className="h-8 px-3 rounded-xl">
+                <Link href="/login">登录</Link>
+              </Button>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="pb-20">
+        {/* Banner轮播 */}
+        <div className="px-4 mb-6">
+          <CarouselBanner
+            slides={bannerSlides}
+            height="180px"
+            autoPlay={true}
+            autoPlayInterval={4000}
+          />
+        </div>
+
+        {/* Search Section */}
+        <div className="px-4 mb-6">
+          <div className="bg-white rounded-2xl shadow-sm p-4">
+            <div className="relative mb-4">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Input
+                placeholder="搜索演出机会、剧团、地区..."
+                className="pl-10 h-12 rounded-xl border-gray-200"
+              />
+            </div>
+            
+            <div className="flex space-x-2">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="flex-1 h-10 rounded-xl"
+                onClick={handleLocationClick}
+              >
+                <MapPin className="h-4 w-4 mr-1" />
+                位置
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="flex-1 h-10 rounded-xl"
+                onClick={handleFilterClick}
+              >
+                <Filter className="h-4 w-4 mr-1" />
+                筛选
+                {hasActiveFilters() && (
+                  <Badge className="ml-2 bg-green-500 text-white">
+                    {(jobseekerFilters.location?.length || 0) +
+                     (jobseekerFilters.jobTypes?.length || 0) +
+                     (jobseekerFilters.salaryRange && (jobseekerFilters.salaryRange[0] !== 0 || jobseekerFilters.salaryRange[1] !== 50) ? 1 : 0) +
+                     (jobseekerFilters.employmentType ? 1 : 0) +
+                     (jobseekerFilters.benefits?.length || 0)}
+                  </Badge>
+                )}
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Active Filters Display */}
+        {hasActiveFilters() && (
+          <div className="px-4 mb-4">
+            <div className="bg-white rounded-2xl shadow-sm p-4">
+              <h3 className="font-medium mb-3">已选条件</h3>
+              <div className="flex flex-wrap gap-2">
+                {jobseekerFilters.location?.map((city: string) => (
+                  <Badge key={city} variant="secondary" className="rounded-full px-3 py-1">
+                    {city}
+                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("location", city)}>
+                      ×
+                    </button>
+                  </Badge>
+                ))}
+                
+                {jobseekerFilters.jobTypes?.map((type: string) => (
+                  <Badge key={type} variant="secondary" className="rounded-full px-3 py-1">
+                    {type}
+                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("jobTypes", type)}>
+                      ×
+                    </button>
+                  </Badge>
+                ))}
+                
+                {jobseekerFilters.salaryRange && (jobseekerFilters.salaryRange[0] !== 0 || jobseekerFilters.salaryRange[1] !== 50) && (
+                  <Badge variant="secondary" className="rounded-full px-3 py-1">
+                    {formatSalary(jobseekerFilters.salaryRange[0])}-{formatSalary(jobseekerFilters.salaryRange[1])}
+                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("salaryRange")}>
+                      ×
+                    </button>
+                  </Badge>
+                )}
+                
+                {jobseekerFilters.employmentType && (
+                  <Badge variant="secondary" className="rounded-full px-3 py-1">
+                    {getEmploymentTypeText(jobseekerFilters.employmentType)}
+                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("employmentType")}>
+                      ×
+                    </button>
+                  </Badge>
+                )}
+                
+                {jobseekerFilters.benefits?.map((benefit: string) => (
+                  <Badge key={benefit} variant="secondary" className="rounded-full px-3 py-1">
+                    {benefit}
+                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("benefits", benefit)}>
+                      ×
+                    </button>
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Categories */}
+        <div className="px-4 mb-6">
+          <h2 className="text-lg font-semibold mb-4">演出类别</h2>
+          <div className="grid grid-cols-3 gap-3">
+            {categories.map((category) => (
+              <div key={category.name} className="bg-white rounded-2xl p-4 text-center shadow-sm">
+                <div className="text-2xl mb-2">{category.icon}</div>
+                <div className="font-medium text-sm">{category.name}</div>
+                <div className="text-xs text-gray-500">{category.count}个职位</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Recommended Opportunities */}
+        <div className="px-4">
+          <h2 className="text-lg font-semibold mb-4">推荐演出机会</h2>
+          <div className="space-y-4">
+            {opportunities.map((opportunity) => (
+              <div key={opportunity.id} className="bg-white rounded-2xl p-4 shadow-sm">
+                <div className="flex items-start justify-between mb-2">
+                  <div className="flex-1">
+                    <div className="flex items-center space-x-2 mb-1">
+                      <h3 className="font-medium">{opportunity.title}</h3>
+                      {opportunity.urgent && (
+                        <Badge className="bg-red-100 text-red-800 text-xs">急招</Badge>
+                      )}
+                    </div>
+                    <p className="text-sm text-gray-600 mb-2">{opportunity.company}</p>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                      <Heart className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
+                  <span>{opportunity.location}</span>
+                  <span>•</span>
+                  <span>{opportunity.type}</span>
+                  <span>•</span>
+                  <span className="text-green-600 font-medium">{opportunity.salary}/月</span>
+                </div>
+                
+                <div className="flex flex-wrap gap-1 mb-2">
+                  {opportunity.tags.map((tag) => (
+                    <Badge key={tag} variant="secondary" className="text-xs">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+                
+                <p className="text-sm text-gray-600 mb-3">{opportunity.description}</p>
+                
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-gray-500">{opportunity.posted}</span>
+                  <Button size="sm" className="rounded-xl" onClick={()=>{
+                        router.push("/job/1")
+                      }}>
+                    立即申请
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
+
+      {/* Bottom Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t">
+        <div className="flex justify-around py-2">
+          <Link href="/jobseeker" className="flex flex-col items-center py-2 text-green-600">
+            <Briefcase className="h-5 w-5" />
+            <span className="text-xs mt-1">求职方</span>
+          </Link>
+          <Link href="/forum" className="flex flex-col items-center py-2 text-gray-400">
+            <MessageCircle className="h-5 w-5" />
+            <span className="text-xs mt-1">论坛</span>
+          </Link>
+          <Link href="/post/create" className="flex flex-col items-center py-2 text-gray-400">
+            <div className="bg-green-500 rounded-full p-1">
+              <Plus className="h-4 w-4 text-white" />
+            </div>
+            <span className="text-xs mt-1">发布</span>
+          </Link>
+          <Link href="/messages" className="flex flex-col items-center py-2 text-gray-400">
+            <Mail className="h-5 w-5" />
+            <span className="text-xs mt-1">消息</span>
+          </Link>
+          <Link href="/profile/jobseeker" className="flex flex-col items-center py-2 text-gray-400">
+            <User className="h-5 w-5" />
+            <span className="text-xs mt-1">我的</span>
+          </Link>
+        </div>
+      </nav>
+    </div>
+  )
+}

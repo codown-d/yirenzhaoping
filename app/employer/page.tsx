@@ -1,0 +1,484 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { useAuth, useUserType, useIsAuthenticated } from "@/lib/auth-context"
+import { useRouter } from "next/navigation"
+import { Search, Filter, MapPin, Menu, Star, Heart, MessageCircle, User, Home, Users, Mail, Plus } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
+import { CarouselBanner } from "@/components/ui/carousel-banner"
+import Link from "next/link"
+
+export default function EmployerPage() {
+  const router = useRouter()
+  const { user, logout } = useAuth()
+  const userType = useUserType()
+  const isAuthenticated = useIsAuthenticated()
+
+  // 从 localStorage 加载筛选条件
+  const [employerFilters, setEmployerFilters] = useState<any>({})
+
+  // 页面加载时从 localStorage 读取筛选条件
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const savedEmployerFilters = localStorage.getItem('employer_filters')
+        if (savedEmployerFilters) {
+          setEmployerFilters(JSON.parse(savedEmployerFilters))
+        }
+      } catch (error) {
+        console.error('Failed to load filters:', error)
+      }
+    }
+  }, [])
+
+  // 检查是否有活跃的筛选条件
+  const hasActiveFilters = () => {
+    return (
+      employerFilters.location?.length > 0 ||
+      employerFilters.gender !== "" ||
+      employerFilters.specialties?.length > 0 ||
+      (employerFilters.ageRange && (employerFilters.ageRange[0] !== 18 || employerFilters.ageRange[1] !== 45)) ||
+      employerFilters.experience !== "" ||
+      employerFilters.education?.length > 0
+    )
+  }
+
+  // 跳转到筛选页面
+  const handleFilterClick = () => {
+    router.push('/filter/employer')
+  }
+
+  // 处理位置筛选点击
+  const handleLocationClick = () => {
+    router.push('/filter/employer')
+  }
+
+  // 清除筛选条件的辅助函数
+  const clearFilter = (type: string, value?: string) => {
+    if (type === "location" && value) {
+      const newFilters = {
+        ...employerFilters,
+        location: employerFilters.location.filter((item: string) => item !== value),
+      }
+      setEmployerFilters(newFilters)
+      localStorage.setItem('employer_filters', JSON.stringify(newFilters))
+    } else if (type === "gender") {
+      const newFilters = { ...employerFilters, gender: "" }
+      setEmployerFilters(newFilters)
+      localStorage.setItem('employer_filters', JSON.stringify(newFilters))
+    } else if (type === "specialties" && value) {
+      const newFilters = {
+        ...employerFilters,
+        specialties: employerFilters.specialties.filter((item: string) => item !== value),
+      }
+      setEmployerFilters(newFilters)
+      localStorage.setItem('employer_filters', JSON.stringify(newFilters))
+    } else if (type === "ageRange") {
+      const newFilters = { ...employerFilters, ageRange: [18, 45] }
+      setEmployerFilters(newFilters)
+      localStorage.setItem('employer_filters', JSON.stringify(newFilters))
+    } else if (type === "experience") {
+      const newFilters = { ...employerFilters, experience: "" }
+      setEmployerFilters(newFilters)
+      localStorage.setItem('employer_filters', JSON.stringify(newFilters))
+    } else if (type === "education" && value) {
+      const newFilters = {
+        ...employerFilters,
+        education: employerFilters.education.filter((item: string) => item !== value),
+      }
+      setEmployerFilters(newFilters)
+      localStorage.setItem('employer_filters', JSON.stringify(newFilters))
+    }
+  }
+
+  // 格式化经验显示
+  const getExperienceText = (exp: string) => {
+    switch (exp) {
+      case "0-1": return "应届/1年以内"
+      case "1-3": return "1-3年"
+      case "3-5": return "3-5年"
+      case "5+": return "5年以上"
+      default: return ""
+    }
+  }
+
+  // 表演者数据
+  const performers = [
+    {
+      id: 1,
+      name: "李小华",
+      age: 25,
+      specialty: "古典舞",
+      experience: "3年",
+      location: "北京",
+      rating: 4.8,
+      avatar: "/placeholder.svg?height=60&width=60",
+      tags: ["专业院校", "获奖经历", "团队合作"],
+      price: "800-1200/天",
+      description: "毕业于北京舞蹈学院，擅长古典舞和民族舞，有丰富的舞台表演经验。"
+    },
+    {
+      id: 2,
+      name: "王明",
+      age: 28,
+      specialty: "武术",
+      experience: "5年",
+      location: "上海",
+      rating: 4.9,
+      avatar: "/placeholder.svg?height=60&width=60",
+      tags: ["武术冠军", "影视经验", "教学经验"],
+      price: "1000-1500/天",
+      description: "全国武术冠军，参与过多部影视作品拍摄，具有丰富的武术指导经验。"
+    },
+    {
+      id: 3,
+      name: "张美丽",
+      age: 23,
+      specialty: "芭蕾舞",
+      experience: "2年",
+      location: "广州",
+      rating: 4.7,
+      avatar: "/placeholder.svg?height=60&width=60",
+      tags: ["海外留学", "芭蕾专业", "形象佳"],
+      price: "600-1000/天",
+      description: "俄罗斯芭蕾舞学院毕业，技法扎实，形象气质佳，适合各类演出。"
+    }
+  ]
+
+  // Banner轮播数据
+  const bannerSlides = [
+    {
+      id: 1,
+      title: "寻找优秀求职者",
+      subtitle: "专业艺术人才招聘平台",
+      description: "汇聚全国优秀表演艺术人才，为您的项目找到最合适的求职者",
+      image: "/placeholder.svg?height=200&width=400",
+      buttonText: "立即招聘",
+      backgroundColor: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+    },
+    {
+      id: 2,
+      title: "海量人才资源",
+      subtitle: "覆盖各类表演艺术",
+      description: "舞蹈、戏曲、武术、杂技等各类专业求职者应有尽有",
+      image: "/placeholder.svg?height=200&width=400",
+      buttonText: "浏览人才",
+      backgroundColor: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
+    },
+    {
+      id: 3,
+      title: "高效匹配系统",
+      subtitle: "智能推荐合适人选",
+      description: "基于需求智能匹配，快速找到符合要求的求职者",
+      image: "/placeholder.svg?height=200&width=400",
+      buttonText: "开始匹配",
+      backgroundColor: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
+    }
+  ]
+
+  // 表演类别
+  const categories = [
+    { name: "舞蹈", count: 156, icon: "💃" },
+    { name: "武术", count: 89, icon: "🥋" },
+    { name: "杂技", count: 67, icon: "🤹" },
+    { name: "声乐", count: 134, icon: "🎵" },
+    { name: "器乐", count: 98, icon: "🎼" },
+    { name: "戏曲", count: 76, icon: "🎭" },
+  ]
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white border-b sticky top-0 z-10">
+        <div className="flex items-center justify-between p-4">
+          <div className="flex items-center">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="sm" className="mr-2">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-80">
+                <SheetHeader className="py-6">
+                  <SheetTitle className="text-lg font-semibold text-green-600 mb-6">薏仁直聘</SheetTitle>
+                </SheetHeader>
+                <div className="py-6">
+                  <nav className="space-y-4">
+                    <Link href="/employer" className="block py-2 text-gray-700 hover:text-green-600">
+                      应聘方首页
+                    </Link>
+                    <Link href="/jobseeker" className="block py-2 text-gray-700 hover:text-green-600">
+                      求职方首页
+                    </Link>
+                    <Link href="/post/create" className="block py-2 text-green-600 hover:text-green-700 font-medium">
+                      发布信息
+                    </Link>
+                    <Link href="/forum" className="block py-2 text-gray-700 hover:text-green-600">
+                      论坛
+                    </Link>
+                    <Link href="/profile/employer" className="block py-2 text-gray-700 hover:text-green-600">
+                      个人中心
+                    </Link>
+                    <Link href="/messages" className="block py-2 text-gray-700 hover:text-green-600">
+                      消息
+                    </Link>
+                    <Link href="/settings" className="block py-2 text-gray-700 hover:text-green-600">
+                      设置
+                    </Link>
+                    {isAuthenticated && (
+                      <button 
+                        onClick={logout}
+                        className="block w-full text-left py-2 text-red-600 hover:text-red-700"
+                      >
+                        退出登录
+                      </button>
+                    )}
+                  </nav>
+                </div>
+              </SheetContent>
+            </Sheet>
+            <h1 className="text-xl font-bold text-green-600">薏仁直聘</h1>
+          </div>
+          <div className="flex items-center space-x-2">
+            {isAuthenticated ? (
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={user?.avatar || "/placeholder.svg?height=32&width=32"} />
+                <AvatarFallback>{user?.name?.[0] || "我"}</AvatarFallback>
+              </Avatar>
+            ) : (
+              <Button asChild size="sm" variant="outline" className="h-8 px-3 rounded-xl">
+                <Link href="/login">登录</Link>
+              </Button>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="pb-20">
+        {/* Banner轮播 */}
+        <div className="px-4 mb-6">
+          <CarouselBanner
+            slides={bannerSlides}
+            height="180px"
+            autoPlay={true}
+            autoPlayInterval={4000}
+          />
+        </div>
+
+        {/* Search Section */}
+        <div className="px-4 mb-6">
+          <div className="bg-white rounded-2xl shadow-sm p-4">
+            <div className="relative mb-4">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Input
+                placeholder="搜索求职者、专业、地区..."
+                className="pl-10 h-12 rounded-xl border-gray-200"
+              />
+            </div>
+            
+            <div className="flex space-x-2">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="flex-1 h-10 rounded-xl"
+                onClick={handleLocationClick}
+              >
+                <MapPin className="h-4 w-4 mr-1" />
+                位置
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="flex-1 h-10 rounded-xl"
+                onClick={handleFilterClick}
+              >
+                <Filter className="h-4 w-4 mr-1" />
+                筛选
+                {hasActiveFilters() && (
+                  <Badge className="ml-2 bg-green-500 text-white">
+                    {(employerFilters.location?.length || 0) +
+                     (employerFilters.gender ? 1 : 0) +
+                     (employerFilters.specialties?.length || 0) +
+                     (employerFilters.ageRange && (employerFilters.ageRange[0] !== 18 || employerFilters.ageRange[1] !== 45) ? 1 : 0) +
+                     (employerFilters.experience ? 1 : 0) +
+                     (employerFilters.education?.length || 0)}
+                  </Badge>
+                )}
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Active Filters Display */}
+        {hasActiveFilters() && (
+          <div className="px-4 mb-4">
+            <div className="bg-white rounded-2xl shadow-sm p-4">
+              <h3 className="font-medium mb-3">已选条件</h3>
+              <div className="flex flex-wrap gap-2">
+                {employerFilters.location?.map((city: string) => (
+                  <Badge key={city} variant="secondary" className="rounded-full px-3 py-1">
+                    {city}
+                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("location", city)}>
+                      ×
+                    </button>
+                  </Badge>
+                ))}
+                
+                {employerFilters.gender && (
+                  <Badge variant="secondary" className="rounded-full px-3 py-1">
+                    {employerFilters.gender === "male" ? "男" : "女"}
+                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("gender")}>
+                      ×
+                    </button>
+                  </Badge>
+                )}
+                
+                {employerFilters.specialties?.map((specialty: string) => (
+                  <Badge key={specialty} variant="secondary" className="rounded-full px-3 py-1">
+                    {specialty}
+                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("specialties", specialty)}>
+                      ×
+                    </button>
+                  </Badge>
+                ))}
+                
+                {employerFilters.ageRange && (employerFilters.ageRange[0] !== 18 || employerFilters.ageRange[1] !== 45) && (
+                  <Badge variant="secondary" className="rounded-full px-3 py-1">
+                    {employerFilters.ageRange[0]}-{employerFilters.ageRange[1]}岁
+                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("ageRange")}>
+                      ×
+                    </button>
+                  </Badge>
+                )}
+                
+                {employerFilters.experience && (
+                  <Badge variant="secondary" className="rounded-full px-3 py-1">
+                    {getExperienceText(employerFilters.experience)}
+                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("experience")}>
+                      ×
+                    </button>
+                  </Badge>
+                )}
+                
+                {employerFilters.education?.map((edu: string) => (
+                  <Badge key={edu} variant="secondary" className="rounded-full px-3 py-1">
+                    {edu}
+                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("education", edu)}>
+                      ×
+                    </button>
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Categories */}
+        <div className="px-4 mb-6">
+          <h2 className="text-lg font-semibold mb-4">表演类别</h2>
+          <div className="grid grid-cols-3 gap-3">
+            {categories.map((category) => (
+              <div key={category.name} className="bg-white rounded-2xl p-4 text-center shadow-sm">
+                <div className="text-2xl mb-2">{category.icon}</div>
+                <div className="font-medium text-sm">{category.name}</div>
+                <div className="text-xs text-gray-500">{category.count}位求职者</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Recommended Performers */}
+        <div className="px-4">
+          <h2 className="text-lg font-semibold mb-4">推荐求职者</h2>
+          <div className="space-y-4">
+            {performers.map((performer) => (
+              <div key={performer.id} className="bg-white rounded-2xl p-4 shadow-sm">
+                <div className="flex items-start space-x-3">
+                  <Avatar className="h-12 w-12">
+                    <AvatarImage src={performer.avatar} />
+                    <AvatarFallback>{performer.name[0]}</AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-1">
+                      <h3 className="font-medium">{performer.name}</h3>
+                      <div className="flex items-center space-x-1">
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <Heart className="h-4 w-4" />
+                        </Button>
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <MessageCircle className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
+                      <span>{performer.age}岁</span>
+                      <span>•</span>
+                      <span>{performer.specialty}</span>
+                      <span>•</span>
+                      <span>{performer.experience}</span>
+                      <span>•</span>
+                      <span>{performer.location}</span>
+                    </div>
+                    <div className="flex items-center space-x-1 mb-2">
+                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                      <span className="text-sm font-medium">{performer.rating}</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1 mb-2">
+                      {performer.tags.map((tag) => (
+                        <Badge key={tag} variant="secondary" className="text-xs">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                    <p className="text-sm text-gray-600 mb-2">{performer.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-green-600">{performer.price}</span>
+                      <Button size="sm" className="rounded-xl" onClick={()=>{
+                        router.push("/candidate/1")
+                      }}>
+                        查看详情
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
+
+      {/* Bottom Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t">
+        <div className="flex justify-around py-2">
+          <Link href="/employer" className="flex flex-col items-center py-2 text-green-600">
+            <Users className="h-5 w-5" />
+            <span className="text-xs mt-1">应聘方</span>
+          </Link>
+          <Link href="/forum" className="flex flex-col items-center py-2 text-gray-400">
+            <MessageCircle className="h-5 w-5" />
+            <span className="text-xs mt-1">论坛</span>
+          </Link>
+          <Link href="/post/create" className="flex flex-col items-center py-2 text-gray-400">
+            <div className="bg-green-500 rounded-full p-1">
+              <Plus className="h-4 w-4 text-white" />
+            </div>
+            <span className="text-xs mt-1">发布</span>
+          </Link>
+          <Link href="/messages" className="flex flex-col items-center py-2 text-gray-400">
+            <Mail className="h-5 w-5" />
+            <span className="text-xs mt-1">消息</span>
+          </Link>
+          <Link href="/profile/employer" className="flex flex-col items-center py-2 text-gray-400">
+            <User className="h-5 w-5" />
+            <span className="text-xs mt-1">我的</span>
+          </Link>
+        </div>
+      </nav>
+    </div>
+  )
+}
