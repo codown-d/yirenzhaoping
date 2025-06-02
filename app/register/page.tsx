@@ -56,7 +56,7 @@ export default function RegisterPage() {
         <CardContent>
           {step === 1 && (
             <div className="space-y-6">
-              <RadioGroup value={userType} onValueChange={(value) => setUserType(value as "jobseeker" | "employer")}>
+              <RadioGroup value={userType} onValueChange={(value) => setUserType(value as UserType)}>
                 <div className="flex items-center space-x-2 p-4 border rounded-xl">
                   <RadioGroupItem value="jobseeker" id="jobseeker" />
                   <Label htmlFor="jobseeker" className="flex-1 cursor-pointer">
