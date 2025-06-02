@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useAuth } from "@/lib/auth-context"
+import { useAuth, UserType } from "@/lib/auth-context"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -15,7 +15,7 @@ import Link from "next/link"
 export default function RegisterPage() {
   const { login } = useAuth()
   const router = useRouter()
-  const [userType, setUserType] = useState<"jobseeker" | "employer">("jobseeker")
+  const [userType, setUserType] = useState<UserType>(UserType.JobSeeker)
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({
     name: "",
