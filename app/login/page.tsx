@@ -9,7 +9,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { useAuth } from "@/lib/auth-context"
+import { useAuth, UserType } from "@/lib/auth-context"  // 添加UserType导入
 
 export default function LoginPage() {
   const router = useRouter()
@@ -86,9 +86,10 @@ export default function LoginPage() {
       const isEmployer = phone.endsWith('0') || phone.endsWith('2') || phone.endsWith('4') || phone.endsWith('6') || phone.endsWith('8')
       const userData = {
         name: isEmployer ? "星光文化传媒" : "李小华",
-        userType: isEmployer ? "employer" as const : "jobseeker" as const,
+        userType: isEmployer ? UserType.Employer : UserType.JobSeeker,  // 修改这里
         phone: phone,
-        avatar: "/placeholder.svg?height=60&width=60"
+        avatar: "/placeholder.svg?height=60&width=60",
+        role: isEmployer? "employer" : "jobseeker"
       }
 
       login(userData)
@@ -123,7 +124,7 @@ export default function LoginPage() {
       const isEmployer = username.includes('公司') || username.includes('团') || username.includes('传媒') || username.includes('文化')
       const userData = {
         name: isEmployer ? username : "张明",
-        userType: isEmployer ? "employer" as const : "jobseeker" as const,
+        userType: isEmployer ? UserType.Employer : UserType.JobSeeker,  // 修改这里
         email: `${username}@example.com`,
         avatar: "/placeholder.svg?height=60&width=60"
       }
@@ -151,7 +152,7 @@ export default function LoginPage() {
       const isEmployer = Math.random() > 0.5
       const userData = {
         name: isEmployer ? "东方歌舞团" : "王小美",
-        userType: isEmployer ? "employer" as const : "jobseeker" as const,
+        userType: isEmployer ? UserType.Employer : UserType.JobSeeker,  // 修改这里
         avatar: "/placeholder.svg?height=60&width=60"
       }
 
