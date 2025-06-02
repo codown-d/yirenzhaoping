@@ -117,26 +117,6 @@ export default function EmployerProfilePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b sticky top-0 z-10">
-        <div className="flex items-center justify-between p-4">
-          <div className="flex items-center">
-            <Button variant="ghost" size="sm" asChild className="mr-2">
-              <Link href="/employer">
-                <ArrowLeft className="h-5 w-5 mr-2" />
-                返回
-              </Link>
-            </Button>
-            <h1 className="text-xl font-bold text-green-600">个人中心</h1>
-          </div>
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/settings">
-              <Settings className="h-5 w-5" />
-            </Link>
-          </Button>
-        </div>
-      </header>
-
       <main className="max-w-4xl mx-auto p-4 pb-20">
         {/* Profile Header */}
         <Card className="rounded-2xl mb-6">

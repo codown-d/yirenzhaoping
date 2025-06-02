@@ -84,8 +84,7 @@ export default function JobDetailPage() {
           <div className="flex items-center h-16">
             <Button variant="ghost" size="sm" asChild className="mr-4">
               <Link href="/">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                返回
+                <ArrowLeft className="h-4 w-4" />
               </Link>
             </Button>
             <h1 className="text-xl font-semibold">演出机会详情</h1>

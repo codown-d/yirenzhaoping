@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
+import { useAuth, UserType } from "@/lib/auth-context"
 
 export default function ForumPage() {
   const [activeTab, setActiveTab] = useState("hot")
@@ -57,27 +58,9 @@ export default function ForumPage() {
     },
   ]
 
+  const { role } = useAuth()
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Mobile Header */}
-      <header className="bg-white shadow-sm border-b sticky top-0 z-50">
-        <div className="px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <Button variant="ghost" size="sm" asChild className="mr-3 p-2">
-                <Link href="/">
-                  <ArrowLeft className="h-5 w-5" />
-                </Link>
-              </Button>
-              <h1 className="text-lg font-semibold">论坛</h1>
-            </div>
-            <Button size="sm" className="h-8 px-3 rounded-xl">
-              <Plus className="h-4 w-4 mr-1" />
-              发帖
-            </Button>
-          </div>
-        </div>
-      </header>
 
       <main className="px-4 py-4 pb-20">
         {/* Search */}
@@ -111,6 +94,48 @@ export default function ForumPage() {
             ))}
           </div>
         </div>
+
+        {/* Post Creation Card */}
+        <Card className="rounded-2xl shadow-sm mb-4 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-3">
+              <Avatar className="h-10 w-10">
+                <AvatarFallback className="bg-green-100 text-green-600">我</AvatarFallback>
+              </Avatar>
+              <div className="flex-1">
+                <Button
+                  variant="outline"
+                  className="w-full justify-start text-gray-500 bg-white hover:bg-gray-50 rounded-xl h-10"
+                  asChild
+                >
+                  <Link href="/post/create">
+                    分享你的表演经验、技巧或心得...
+                  </Link>
+                </Button>
+              </div>
+            </div>
+            <div className="flex items-center justify-between mt-3 pt-3 border-t border-green-200">
+              <div className="flex space-x-4">
+                <Button variant="ghost" size="sm" className="text-green-600 hover:bg-green-100" asChild>
+                  <Link href="/post/create">
+                    <Plus className="h-4 w-4 mr-1" />
+                    发布动态
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="sm" className="text-green-600 hover:bg-green-100" asChild>
+                  <Link href="/post/create">
+                    <Hash className="h-4 w-4 mr-1" />
+                    参与话题
+                  </Link>
+                </Button>
+              </div>
+              <Badge className="bg-green-100 text-green-700 hover:bg-green-200">
+                <TrendingUp className="h-3 w-3 mr-1" />
+                热门
+              </Badge>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-4">
@@ -208,43 +233,19 @@ export default function ForumPage() {
         </Tabs>
       </main>
 
-      {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
-        <div className="flex justify-around items-center">
-          <Link href="/" className="flex flex-col items-center py-2 text-gray-500">
-            <div className="w-6 h-6 mb-1">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-              </svg>
-            </div>
-            <span className="text-xs">首页</span>
+      {/* Floating Action Button */}
+      <div className="fixed bottom-20 right-4 z-40">
+        <Button
+          size="lg"
+          className="h-14 w-14 rounded-full shadow-lg bg-green-500 hover:bg-green-600 border-4 border-white"
+          asChild
+        >
+          <Link href={role=== UserType.Employer?"/post/employer":"/post/jobseeker"}>
+            <Plus className="h-6 w-6" />
           </Link>
-          <Link href="/forum" className="flex flex-col items-center py-2 text-green-600">
-            <div className="w-6 h-6 mb-1">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
-              </svg>
-            </div>
-            <span className="text-xs">论坛</span>
-          </Link>
-          <Link href="/messages" className="flex flex-col items-center py-2 text-gray-500">
-            <div className="w-6 h-6 mb-1">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-              </svg>
-            </div>
-            <span className="text-xs">消息</span>
-          </Link>
-          <Link href="/profile" className="flex flex-col items-center py-2 text-gray-500">
-            <div className="w-6 h-6 mb-1">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-              </svg>
-            </div>
-            <span className="text-xs">我的</span>
-          </Link>
-        </div>
-      </nav>
+        </Button>
+      </div>
+   
     </div>
   )
 }

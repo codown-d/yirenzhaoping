@@ -60,7 +60,7 @@ export function CarouselBanner({
   if (slides.length === 0) return null
 
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl shadow-sm" style={{ height }}>
+    <div className="relative w-full overflow-hidden shadow-sm" style={{ height }}>
       {/* 轮播内容 */}
       <div 
         className="flex transition-transform duration-500 ease-in-out h-full"
