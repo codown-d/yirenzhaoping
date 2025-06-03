@@ -177,9 +177,9 @@ export default function CandidateDetailPage() {
                   </div>
                 </div>
               </CardHeader>
-              {/* <CardContent>
+              <CardContent>
                 <div className="space-y-4">
-                  <div>
+                  {/* <div>
                     <h4 className="font-medium mb-2">专业技能</h4>
                     <div className="flex flex-wrap gap-2">
                       {candidate.skills.map((skill, index) => (
@@ -189,7 +189,7 @@ export default function CandidateDetailPage() {
                       ))}
                     </div>
                   </div>
-                  <Separator />
+                  <Separator /> */}
                   <div>
                     <h4 className="font-medium mb-2">自我介绍</h4>
                     <CardContent>
@@ -220,7 +220,7 @@ export default function CandidateDetailPage() {
                     </CardContent>
                   </div>
                 </div>
-              </CardContent> */}
+              </CardContent>
             </Card>
 
             {/* Videos */}
