@@ -330,9 +330,9 @@ export default function JobseekerPage() {
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-1">
                       <h3 className="font-medium">{opportunity.title}</h3>
-                      {opportunity.urgent && (
+                      {/* {opportunity.urgent && (
                         <Badge className="bg-red-100 text-red-800 text-xs">急招</Badge>
-                      )}
+                      )} */}
                     </div>
                     <p className="text-sm text-gray-600 mb-2">{opportunity.company}</p>
                   </div>
@@ -346,32 +346,32 @@ export default function JobseekerPage() {
                 <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
                   <span>{opportunity.location}</span>
                   <span>•</span>
-                  <span>{opportunity.type}</span>
+                  <span>{opportunity.requiredMajor}</span>
                   <span>•</span>
                   <span className="text-green-600 font-medium">{opportunity.salary}/月</span>
                 </div>
 
                 {/* 需求专业和到岗时间 */}
                 <div className="space-y-1 mb-2">
-                  <div className="flex items-center space-x-1 text-sm text-gray-600">
+                  {/* <div className="flex items-center space-x-1 text-sm text-gray-600">
                     <GraduationCap className="h-4 w-4" />
                     <span>需求专业：{opportunity.requiredMajor}</span>
-                  </div>
+                  </div> */}
                   <div className="flex items-center space-x-1 text-sm text-gray-600">
                     <Clock className="h-4 w-4" />
                     <span>到岗时间：{opportunity.startTime}</span>
                   </div>
                 </div>
                 
-                <div className="flex flex-wrap gap-1 mb-2">
+                {/* <div className="flex flex-wrap gap-1 mb-2">
                   {opportunity.tags.map((tag) => (
                     <Badge key={tag} variant="secondary" className="text-xs">
                       {tag}
                     </Badge>
                   ))}
-                </div>
+                </div> */}
                 
-                <p className="text-sm text-gray-600 mb-3">{opportunity.description}</p>
+                {/* <p className="text-sm text-gray-600 mb-3">{opportunity.description}</p> */}
                 
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-gray-500">{opportunity.posted}</span>

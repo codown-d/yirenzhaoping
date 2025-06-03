@@ -27,19 +27,13 @@ export default function EmployerFilterPage() {
 
   // 专业列表
   const specialtyOptions = [
-    "古典舞",
-    "民族舞",
-    "芭蕾舞",
-    "现代舞",
-    "街舞",
+    "舞蹈",
+    "表演",
     "武术",
     "杂技",
-    "声乐",
-    "器乐",
+    "音乐",
     "戏曲",
-    "表演",
-    "主持",
-    "模特",
+    "其他",
   ]
 
   // 学历列表
@@ -202,7 +196,7 @@ export default function EmployerFilterPage() {
         </div>
 
         {/* 经验筛选 */}
-        <div className="bg-white rounded-2xl p-4 mb-4">
+        {/* <div className="bg-white rounded-2xl p-4 mb-4">
           <h3 className="text-base font-medium mb-3">经验要求</h3>
           <RadioGroup value={experience} onValueChange={setExperience} className="space-y-2">
             <div className="flex items-center space-x-2">
@@ -226,10 +220,10 @@ export default function EmployerFilterPage() {
               <Label htmlFor="exp-5+">5年以上</Label>
             </div>
           </RadioGroup>
-        </div>
+        </div> */}
 
         {/* 学历筛选 */}
-        <div className="bg-white rounded-2xl p-4 mb-4">
+        {/* <div className="bg-white rounded-2xl p-4 mb-4">
           <h3 className="text-base font-medium mb-3">学历要求</h3>
           <div className="flex flex-wrap gap-2">
             {educationOptions.map((edu) => (
@@ -246,7 +240,7 @@ export default function EmployerFilterPage() {
               </Badge>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Fixed Bottom Button */}

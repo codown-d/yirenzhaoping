@@ -16,6 +16,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Progress } from "@/components/ui/progress"
 import Link from "next/link"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Label } from "@/components/ui/label"
 
 export default function JobseekerProfilePage() {
   const router = useRouter()
@@ -274,12 +276,6 @@ export default function JobseekerProfilePage() {
                         <span className="text-xs font-medium">实名认证</span>
                       </div>
                     )}
-                    {jobseekerData.vipStatus.isVip && (
-                      <div className="flex items-center space-x-1 bg-gradient-to-r from-purple-400 to-pink-500 text-white px-2 py-1 rounded-full">
-                        <Crown className="h-4 w-4" />
-                        <span className="text-xs font-medium">{jobseekerData.vipStatus.level}</span>
-                      </div>
-                    )}
                   </div>
                   {/* <Button variant="outline" size="sm" className="rounded-xl">
                     <Edit className="h-4 w-4 mr-2" />
@@ -304,16 +300,32 @@ export default function JobseekerProfilePage() {
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mb-4">
+                {/* <div className="flex flex-wrap gap-2 mb-4">
                   {jobseekerData.skills.map((skill, index) => (
                     <Badge key={index} variant="secondary">
                       {skill}
                     </Badge>
                   ))}
-                </div>
+                </div> */}
 
                 {/* Profile Completion */}
-                <div className="bg-blue-50 rounded-lg p-3">
+                
+                <RadioGroup defaultValue="active" className="flex mb-4">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="active" id="active" />
+                    <Label htmlFor="active">在职正在找工作</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="passive" id="passive" />
+                    <Label htmlFor="passive">离职正在找工作</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="passive3" id="passive3" />
+                    <Label htmlFor="passive3">在职暂不找工作</Label>
+                  </div>
+                </RadioGroup>
+                <div className="flex justify-between">
+                <div className="bg-blue-50 rounded-lg p-3 flex-1 mr-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium">资料完整度</span>
                     <span className="text-sm text-blue-600">{jobseekerData.profileCompletion}%</span>
@@ -321,13 +333,16 @@ export default function JobseekerProfilePage() {
                   <Progress value={jobseekerData.profileCompletion} className="h-2" />
                   <p className="text-xs text-gray-600 mt-1">完善资料可获得更多工作机会</p>
                 </div>
+                
+                <Button>编辑</Button>
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           <Card className="rounded-xl">
             <CardContent className="p-4 text-center">
               <Eye className="h-6 w-6 mx-auto text-blue-500 mb-2" />
@@ -359,7 +374,7 @@ export default function JobseekerProfilePage() {
               <div className="text-sm text-gray-600">面试邀请</div>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
 
         {/* VIP功能卡片 */}
         <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 mb-6">
@@ -369,26 +384,30 @@ export default function JobseekerProfilePage() {
                 <Crown className="h-5 w-5 text-purple-600" />
                 <CardTitle className="text-lg">VIP会员服务</CardTitle>
               </div>
-              {jobseekerData.vipStatus.isVip && (
+              {/* {jobseekerData.vipStatus.isVip && (
                 <Badge variant="secondary" className="bg-purple-100 text-purple-800">
                   剩余{jobseekerData.vipStatus.remainingDays}天
                 </Badge>
-              )}
+              )} */}
             </div>
           </CardHeader>
           <CardContent>
             {jobseekerData.vipStatus.isVip ? (
               <div className="space-y-4">
+                 <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600">金额</span>
+                  <span className="font-medium text-purple-700">$260</span>
+                </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-600">当前等级</span>
                   <span className="font-medium text-purple-700">{jobseekerData.vipStatus.level}</span>
                 </div>
-                <div className="flex items-center justify-between">
+                {/* <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-600">到期时间</span>
                   <span className="font-medium">{jobseekerData.vipStatus.expireDate}</span>
-                </div>
+                </div> */}
 
-                <div className="bg-white rounded-lg p-3 space-y-2">
+                {/* <div className="bg-white rounded-lg p-3 space-y-2">
                   <h4 className="font-medium text-sm mb-2">专享权益</h4>
                   <div className="grid grid-cols-2 gap-2 text-xs">
                     <div className="flex items-center space-x-1">
@@ -408,7 +427,7 @@ export default function JobseekerProfilePage() {
                       <span>专属职位推荐</span>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 <Button variant="outline" className="w-full rounded-xl border-purple-300 text-purple-700 hover:bg-purple-50">
                   续费会员
@@ -711,15 +730,15 @@ export default function JobseekerProfilePage() {
         {/* Quick Actions */}
         <div className="grid grid-cols-2 gap-4 mt-6 mb-4">
           <Button asChild className="h-12 rounded-xl">
-            <Link href="/post/create">
+            <Link href="#">
               <FileText className="h-5 w-5 mr-2" />
-              发布求职信息
+              我要发布
             </Link>
           </Button>
           <Button variant="outline" asChild className="h-12 rounded-xl">
-            <Link href="/candidate/1">
+            <Link href="#">
               <Eye className="h-5 w-5 mr-2" />
-              预览我的简历
+              我的论坛
             </Link>
           </Button>
         </div>
@@ -727,9 +746,9 @@ export default function JobseekerProfilePage() {
         {/* Customer Service */}
         <div className="mb-4">
           <Button variant="outline" asChild className="w-full h-12 rounded-xl border-blue-200 text-blue-600 hover:bg-blue-50">
-            <Link href="/customer-service">
+            <Link href="#">
               <Headphones className="h-5 w-5 mr-2" />
-              联系客服
+              客服
             </Link>
           </Button>
         </div>
@@ -737,15 +756,15 @@ export default function JobseekerProfilePage() {
         {/* Legal and Policy Links */}
         <div className="grid grid-cols-2 gap-4 mb-4">
           <Button variant="outline" asChild className="h-12 rounded-xl border-gray-200 text-gray-600 hover:bg-gray-50">
-            <Link href="/terms">
+            <Link href="#">
               <FileText className="h-5 w-5 mr-2" />
-              用户协议
+              用户协议与隐私政策
             </Link>
           </Button>
           <Button variant="outline" asChild className="h-12 rounded-xl border-orange-200 text-orange-600 hover:bg-orange-50">
-            <Link href="/violations">
+            <Link href="#">
               <AlertTriangle className="h-5 w-5 mr-2" />
-              违规公示
+              违规账号公示
             </Link>
           </Button>
         </div>
@@ -753,7 +772,7 @@ export default function JobseekerProfilePage() {
         {/* Settings and Logout */}
         <div className="grid grid-cols-2 gap-4 mt-4">
           <Button variant="outline" asChild className="h-12 rounded-xl">
-            <Link href="/settings">
+            <Link href="#">
               <Settings className="h-5 w-5 mr-2" />
               设置
             </Link>

@@ -1,27 +1,55 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useAuth, useUserType, useIsAuthenticated } from "@/lib/auth-context"
-import { useRouter } from "next/navigation"
+import { useState } from "react";
+import { useAuth, useUserType, useIsAuthenticated } from "@/lib/auth-context";
+import { useRouter } from "next/navigation";
 import {
-  ArrowLeft, User, Edit, Settings, Heart, Star, Eye, MessageCircle,
-  Briefcase, Award, Building, MapPin, Phone, Mail, Calendar,
-  TrendingUp, Clock, FileText, Camera, Users, Plus, Search, LogOut, Shield, CheckCircle, Crown, Zap, Headphones, AlertTriangle,
-  Bookmark, Bell, History
-} from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Progress } from "@/components/ui/progress"
-import Link from "next/link"
+  ArrowLeft,
+  User,
+  Edit,
+  Settings,
+  Heart,
+  Star,
+  Eye,
+  MessageCircle,
+  Briefcase,
+  Award,
+  Building,
+  MapPin,
+  Phone,
+  Mail,
+  Calendar,
+  TrendingUp,
+  Clock,
+  FileText,
+  Camera,
+  Users,
+  Plus,
+  Search,
+  LogOut,
+  Shield,
+  CheckCircle,
+  Crown,
+  Zap,
+  Headphones,
+  AlertTriangle,
+  Bookmark,
+  Bell,
+  History,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Progress } from "@/components/ui/progress";
+import Link from "next/link";
 
 export default function EmployerProfilePage() {
-  const router = useRouter()
-  const { user, logout } = useAuth()
-  const userType = useUserType()
-  const isAuthenticated = useIsAuthenticated()
+  const router = useRouter();
+  const { user, logout } = useAuth();
+  const userType = useUserType();
+  const isAuthenticated = useIsAuthenticated();
 
   // 注释：允许未登录用户访问，显示默认数据
 
@@ -43,7 +71,7 @@ export default function EmployerProfilePage() {
       isVip: true,
       level: "黄金会员",
       expireDate: "2024-12-31",
-      remainingDays: 298
+      remainingDays: 298,
     },
     profileViews: 234,
     jobViews: 1580,
@@ -65,7 +93,7 @@ export default function EmployerProfilePage() {
         views: 156,
         posted: "3天前",
         status: "招聘中",
-        urgent: true
+        urgent: true,
       },
       {
         id: 2,
@@ -75,8 +103,8 @@ export default function EmployerProfilePage() {
         views: 89,
         posted: "1周前",
         status: "招聘中",
-        urgent: false
-      }
+        urgent: false,
+      },
     ],
     candidates: [
       {
@@ -88,7 +116,7 @@ export default function EmployerProfilePage() {
         status: "待面试",
         appliedFor: "古典舞演员",
         appliedDate: "2024-01-15",
-        avatar: "/placeholder.svg?height=40&width=40"
+        avatar: "/placeholder.svg?height=40&width=40",
       },
       {
         id: 2,
@@ -99,8 +127,8 @@ export default function EmployerProfilePage() {
         status: "已面试",
         appliedFor: "武术指导",
         appliedDate: "2024-01-12",
-        avatar: "/placeholder.svg?height=40&width=40"
-      }
+        avatar: "/placeholder.svg?height=40&width=40",
+      },
     ],
     // 新增功能数据
     followedCandidates: [
@@ -114,7 +142,7 @@ export default function EmployerProfilePage() {
         location: "北京",
         followDate: "2024-01-10",
         isActive: true,
-        lastActive: "2小时前"
+        lastActive: "2小时前",
       },
       {
         id: 2,
@@ -126,7 +154,7 @@ export default function EmployerProfilePage() {
         location: "上海",
         followDate: "2024-01-08",
         isActive: true,
-        lastActive: "1天前"
+        lastActive: "1天前",
       },
       {
         id: 3,
@@ -138,8 +166,8 @@ export default function EmployerProfilePage() {
         location: "北京",
         followDate: "2024-01-05",
         isActive: false,
-        lastActive: "1周前"
-      }
+        lastActive: "1周前",
+      },
     ],
     messages: [
       {
@@ -149,7 +177,7 @@ export default function EmployerProfilePage() {
         content: "李小华申请了古典舞演员职位",
         time: "2024-01-20 14:30",
         isRead: false,
-        avatar: "/placeholder.svg?height=32&width=32"
+        avatar: "/placeholder.svg?height=32&width=32",
       },
       {
         id: 2,
@@ -158,7 +186,7 @@ export default function EmployerProfilePage() {
         content: "您的职位已被推荐给50位匹配候选人",
         time: "2024-01-19 10:15",
         isRead: false,
-        avatar: "/placeholder.svg?height=32&width=32"
+        avatar: "/placeholder.svg?height=32&width=32",
       },
       {
         id: 3,
@@ -167,7 +195,7 @@ export default function EmployerProfilePage() {
         content: "明天下午2点与王明的面试",
         time: "2024-01-18 09:00",
         isRead: true,
-        avatar: "/placeholder.svg?height=32&width=32"
+        avatar: "/placeholder.svg?height=32&width=32",
       },
       {
         id: 4,
@@ -176,8 +204,8 @@ export default function EmployerProfilePage() {
         content: "张丽询问了职位详情",
         time: "2024-01-17 16:45",
         isRead: true,
-        avatar: "/placeholder.svg?height=32&width=32"
-      }
+        avatar: "/placeholder.svg?height=32&width=32",
+      },
     ],
     collections: [
       {
@@ -190,7 +218,7 @@ export default function EmployerProfilePage() {
         education: "北京舞蹈学院",
         location: "北京",
         collectedDate: "2024-01-15",
-        status: "求职中"
+        status: "求职中",
       },
       {
         id: 2,
@@ -202,7 +230,7 @@ export default function EmployerProfilePage() {
         education: "上海戏剧学院",
         location: "上海",
         collectedDate: "2024-01-12",
-        status: "求职中"
+        status: "求职中",
       },
       {
         id: 3,
@@ -210,8 +238,8 @@ export default function EmployerProfilePage() {
         title: "舞蹈演员招聘模板",
         description: "适用于各类舞蹈演员招聘",
         collectedDate: "2024-01-10",
-        status: "可用"
-      }
+        status: "可用",
+      },
     ],
     browsingHistory: [
       {
@@ -224,7 +252,7 @@ export default function EmployerProfilePage() {
         education: "中央民族大学",
         location: "北京",
         viewDate: "2024-01-20 15:30",
-        viewCount: 2
+        viewCount: 2,
       },
       {
         id: 2,
@@ -236,7 +264,7 @@ export default function EmployerProfilePage() {
         education: "北京舞蹈学院",
         location: "北京",
         viewDate: "2024-01-19 11:20",
-        viewCount: 1
+        viewCount: 1,
       },
       {
         id: 3,
@@ -244,7 +272,7 @@ export default function EmployerProfilePage() {
         title: "音乐剧演员招聘模板",
         description: "专业音乐剧演员招聘模板",
         viewDate: "2024-01-18 14:15",
-        viewCount: 3
+        viewCount: 3,
       },
       {
         id: 4,
@@ -256,30 +284,40 @@ export default function EmployerProfilePage() {
         education: "上海戏剧学院",
         location: "上海",
         viewDate: "2024-01-17 09:45",
-        viewCount: 1
-      }
-    ]
-  }
+        viewCount: 1,
+      },
+    ],
+  };
 
   const getActivityIcon = (type: string) => {
     switch (type) {
-      case "post": return <Briefcase className="h-4 w-4" />
-      case "view": return <Eye className="h-4 w-4" />
-      case "interview": return <MessageCircle className="h-4 w-4" />
-      case "update": return <Edit className="h-4 w-4" />
-      default: return <Clock className="h-4 w-4" />
+      case "post":
+        return <Briefcase className="h-4 w-4" />;
+      case "view":
+        return <Eye className="h-4 w-4" />;
+      case "interview":
+        return <MessageCircle className="h-4 w-4" />;
+      case "update":
+        return <Edit className="h-4 w-4" />;
+      default:
+        return <Clock className="h-4 w-4" />;
     }
-  }
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "待面试": return "bg-yellow-500"
-      case "已面试": return "bg-blue-500"
-      case "已录用": return "bg-green-500"
-      case "已拒绝": return "bg-red-500"
-      default: return "bg-gray-500"
+      case "待面试":
+        return "bg-yellow-500";
+      case "已面试":
+        return "bg-blue-500";
+      case "已录用":
+        return "bg-green-500";
+      case "已拒绝":
+        return "bg-red-500";
+      default:
+        return "bg-gray-500";
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -291,9 +329,14 @@ export default function EmployerProfilePage() {
               <div className="relative">
                 <Avatar className="h-20 w-20">
                   <AvatarImage src={employerData.avatar} />
-                  <AvatarFallback className="text-2xl">{employerData.name[0]}</AvatarFallback>
+                  <AvatarFallback className="text-2xl">
+                    {employerData.name[0]}
+                  </AvatarFallback>
                 </Avatar>
-                <Button size="sm" className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full p-0">
+                <Button
+                  size="sm"
+                  className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full p-0"
+                >
                   <Camera className="h-4 w-4" />
                 </Button>
               </div>
@@ -308,12 +351,12 @@ export default function EmployerProfilePage() {
                         <span className="text-xs font-medium">企业认证</span>
                       </div>
                     )}
-                    {employerData.vipStatus.isVip && (
+                    {/* {employerData.vipStatus.isVip && (
                       <div className="flex items-center space-x-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 py-1 rounded-full">
                         <Crown className="h-4 w-4" />
                         <span className="text-xs font-medium">{employerData.vipStatus.level}</span>
                       </div>
-                    )}
+                    )} */}
                   </div>
                   {/* <Button variant="outline" size="sm" className="rounded-xl">
                     <Edit className="h-4 w-4 mr-2" />
@@ -321,7 +364,9 @@ export default function EmployerProfilePage() {
                   </Button> */}
                 </div>
 
-                <p className="text-lg text-gray-700 mb-2">{employerData.title}</p>
+                <p className="text-lg text-gray-700 mb-2">
+                  {employerData.title}
+                </p>
 
                 <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-3">
                   <div className="flex items-center">
@@ -342,20 +387,32 @@ export default function EmployerProfilePage() {
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mb-4">
+                {/* <div className="flex flex-wrap gap-2 mb-4">
                   <Badge variant="secondary">{employerData.industry}</Badge>
                   <Badge variant="outline">国有企业</Badge>
                   <Badge variant="outline">文化艺术</Badge>
-                </div>
+                </div> */}
 
                 {/* Profile Completion */}
-                <div className="bg-blue-50 rounded-lg p-3">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium">企业资料完整度</span>
-                    <span className="text-sm text-blue-600">{employerData.profileCompletion}%</span>
+                <div className="flex justify-between">
+                  <div className="bg-blue-50 rounded-lg p-3 flex-1 mr-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium">
+                        企业资料完整度
+                      </span>
+                      <span className="text-sm text-blue-600">
+                        {employerData.profileCompletion}%{" "}
+                      </span>
+                    </div>
+                    <Progress
+                      value={employerData.profileCompletion}
+                      className="h-2"
+                    />
+                    <p className="text-xs text-gray-600 mt-1">
+                      完善企业资料可吸引更多优秀人才
+                    </p>
                   </div>
-                  <Progress value={employerData.profileCompletion} className="h-2" />
-                  <p className="text-xs text-gray-600 mt-1">完善企业资料可吸引更多优秀人才</p>
+                  <Button>编辑</Button>
                 </div>
               </div>
             </div>
@@ -363,7 +420,7 @@ export default function EmployerProfilePage() {
         </Card>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           <Card className="rounded-xl">
             <CardContent className="p-4 text-center">
               <Eye className="h-6 w-6 mx-auto text-blue-500 mb-2" />
@@ -395,7 +452,7 @@ export default function EmployerProfilePage() {
               <div className="text-sm text-gray-600">面试安排</div>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
 
         {/* VIP功能卡片 */}
         <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200 mb-6">
@@ -405,17 +462,27 @@ export default function EmployerProfilePage() {
                 <Crown className="h-5 w-5 text-yellow-600" />
                 <CardTitle className="text-lg">VIP会员服务</CardTitle>
               </div>
-              {employerData.vipStatus.isVip && (
+              {/* {employerData.vipStatus.isVip && (
                 <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">
                   剩余{employerData.vipStatus.remainingDays}天
                 </Badge>
-              )}
+              )} */}
             </div>
           </CardHeader>
           <CardContent>
             {employerData.vipStatus.isVip ? (
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600">金额</span>
+                  <span className="font-medium text-purple-700">$260</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600">当前等级</span>
+                  <span className="font-medium text-purple-700">
+                    {employerData.vipStatus.level}
+                  </span>
+                </div>
+                {/* <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-600">当前等级</span>
                   <span className="font-medium text-yellow-700">{employerData.vipStatus.level}</span>
                 </div>
@@ -444,15 +511,20 @@ export default function EmployerProfilePage() {
                       <span>数据分析</span>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                <Button variant="outline" className="w-full rounded-xl border-yellow-300 text-yellow-700 hover:bg-yellow-50">
+                <Button
+                  variant="outline"
+                  className="w-full rounded-xl border-yellow-300 text-yellow-700 hover:bg-yellow-50"
+                >
                   续费会员
                 </Button>
               </div>
             ) : (
               <div className="space-y-4">
-                <p className="text-sm text-gray-600">开通VIP会员，享受更多专属服务</p>
+                <p className="text-sm text-gray-600">
+                  开通VIP会员，享受更多专属服务
+                </p>
 
                 <div className="bg-white rounded-lg p-3">
                   <h4 className="font-medium text-sm mb-2">会员套餐</h4>
@@ -499,13 +571,18 @@ export default function EmployerProfilePage() {
                     <Users className="h-5 w-5 mr-2" />
                     我的关注
                   </CardTitle>
-                  <Badge variant="secondary">{employerData.followedCandidates.length} 位候选人</Badge>
+                  <Badge variant="secondary">
+                    {employerData.followedCandidates.length} 位候选人
+                  </Badge>
                 </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {employerData.followedCandidates.map((candidate) => (
-                    <div key={candidate.id} className="flex items-center space-x-4 p-4 border rounded-lg">
+                    <div
+                      key={candidate.id}
+                      className="flex items-center space-x-4 p-4 border rounded-lg"
+                    >
                       <Avatar className="h-12 w-12">
                         <AvatarImage src={candidate.avatar} />
                         <AvatarFallback>{candidate.name[0]}</AvatarFallback>
@@ -514,19 +591,27 @@ export default function EmployerProfilePage() {
                         <div className="flex items-center justify-between mb-1">
                           <h4 className="font-medium">{candidate.name}</h4>
                           <div className="flex items-center space-x-2">
-                            <Badge variant={candidate.isActive ? "default" : "secondary"}>
+                            <Badge
+                              variant={
+                                candidate.isActive ? "default" : "secondary"
+                              }
+                            >
                               {candidate.isActive ? "活跃" : "不活跃"}
                             </Badge>
                           </div>
                         </div>
-                        <p className="text-sm text-gray-600 mb-1">{candidate.title}</p>
+                        <p className="text-sm text-gray-600 mb-1">
+                          {candidate.title}
+                        </p>
                         <div className="flex items-center space-x-4 text-sm text-gray-600">
                           <span>{candidate.experience}经验</span>
                           <span>{candidate.education}</span>
                           <span>{candidate.location}</span>
                           <span>最后活跃: {candidate.lastActive}</span>
                         </div>
-                        <p className="text-xs text-gray-500 mt-1">关注于 {candidate.followDate}</p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          关注于 {candidate.followDate}
+                        </p>
                       </div>
                       <div className="flex space-x-2">
                         <Button size="sm" variant="outline">
@@ -555,7 +640,11 @@ export default function EmployerProfilePage() {
                   </CardTitle>
                   <div className="flex items-center space-x-2">
                     <Badge className="bg-red-100 text-red-800">
-                      {employerData.messages.filter(msg => !msg.isRead).length} 条未读
+                      {
+                        employerData.messages.filter((msg) => !msg.isRead)
+                          .length
+                      }{" "}
+                      条未读
                     </Badge>
                     <Button size="sm" variant="outline">
                       全部标记已读
@@ -566,35 +655,51 @@ export default function EmployerProfilePage() {
               <CardContent>
                 <div className="space-y-3">
                   {employerData.messages.map((message) => (
-                    <div key={message.id} className={`flex items-start space-x-3 p-4 border rounded-lg ${!message.isRead ? 'bg-blue-50 border-blue-200' : 'bg-white'}`}>
+                    <div
+                      key={message.id}
+                      className={`flex items-start space-x-3 p-4 border rounded-lg ${
+                        !message.isRead
+                          ? "bg-blue-50 border-blue-200"
+                          : "bg-white"
+                      }`}
+                    >
                       <Avatar className="h-10 w-10">
                         <AvatarImage src={message.avatar} />
                         <AvatarFallback>
-                          {message.type === 'system' ? <Bell className="h-4 w-4" /> :
-                            message.type === 'application' ? <Users className="h-4 w-4" /> :
-                              message.type === 'interview' ? <Calendar className="h-4 w-4" /> :
-                                <MessageCircle className="h-4 w-4" />}
+                          {message.type === "system" ? (
+                            <Bell className="h-4 w-4" />
+                          ) : message.type === "application" ? (
+                            <Users className="h-4 w-4" />
+                          ) : message.type === "interview" ? (
+                            <Calendar className="h-4 w-4" />
+                          ) : (
+                            <MessageCircle className="h-4 w-4" />
+                          )}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
-                          <h4 className="font-medium text-sm">{message.title}</h4>
+                          <h4 className="font-medium text-sm">
+                            {message.title}
+                          </h4>
                           <div className="flex items-center space-x-2">
                             {!message.isRead && (
                               <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                             )}
-                            <span className="text-xs text-gray-500">{message.time}</span>
+                            <span className="text-xs text-gray-500">
+                              {message.time}
+                            </span>
                           </div>
                         </div>
-                        <p className="text-sm text-gray-600">{message.content}</p>
+                        <p className="text-sm text-gray-600">
+                          {message.content}
+                        </p>
                         <div className="flex space-x-2 mt-2">
                           <Button size="sm" variant="outline">
                             查看详情
                           </Button>
-                          {message.type === 'application' && (
-                            <Button size="sm">
-                              查看简历
-                            </Button>
+                          {message.type === "application" && (
+                            <Button size="sm">查看简历</Button>
                           )}
                         </div>
                       </div>
@@ -614,7 +719,9 @@ export default function EmployerProfilePage() {
                     <Bookmark className="h-5 w-5 mr-2" />
                     我的收藏
                   </CardTitle>
-                  <Badge variant="secondary">{employerData.collections.length} 项收藏</Badge>
+                  <Badge variant="secondary">
+                    {employerData.collections.length} 项收藏
+                  </Badge>
                 </div>
               </CardHeader>
               <CardContent>
@@ -623,18 +730,22 @@ export default function EmployerProfilePage() {
                     <div key={item.id} className="border rounded-lg p-4">
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex-1">
-                          {item.type === 'candidate' ? (
+                          {item.type === "candidate" ? (
                             <div className="flex items-start space-x-3">
                               <Avatar className="h-10 w-10">
                                 <AvatarImage src={item.avatar} />
-                                <AvatarFallback>{item.name?.[0] || 'U'}</AvatarFallback>
+                                <AvatarFallback>
+                                  {item.name?.[0] || "U"}
+                                </AvatarFallback>
                               </Avatar>
                               <div className="flex-1">
                                 <div className="flex items-center space-x-2 mb-1">
                                   <h4 className="font-medium">{item.name}</h4>
                                   <Badge variant="default">候选人</Badge>
                                 </div>
-                                <p className="text-sm text-gray-600">{item.title}</p>
+                                <p className="text-sm text-gray-600">
+                                  {item.title}
+                                </p>
                                 <div className="flex items-center space-x-4 text-sm text-gray-500 mt-1">
                                   <span>{item.experience}经验</span>
                                   <span>{item.education}</span>
@@ -648,7 +759,9 @@ export default function EmployerProfilePage() {
                                 <h4 className="font-medium">{item.title}</h4>
                                 <Badge variant="secondary">模板</Badge>
                               </div>
-                              <p className="text-sm text-gray-600">{item.description}</p>
+                              <p className="text-sm text-gray-600">
+                                {item.description}
+                              </p>
                             </div>
                           )}
                           <div className="flex items-center space-x-4 text-xs text-gray-500 mt-2">
@@ -662,12 +775,10 @@ export default function EmployerProfilePage() {
                           <Button size="sm" variant="outline">
                             <Bookmark className="h-4 w-4" />
                           </Button>
-                          {item.type === 'candidate' && (
-                            <Button size="sm">
-                              联系
-                            </Button>
+                          {item.type === "candidate" && (
+                            <Button size="sm">联系</Button>
                           )}
-                          {item.type === 'template' && (
+                          {item.type === "template" && (
                             <Button size="sm" variant="outline">
                               使用
                             </Button>
@@ -691,7 +802,9 @@ export default function EmployerProfilePage() {
                     我的足迹
                   </CardTitle>
                   <div className="flex items-center space-x-2">
-                    <Badge variant="secondary">{employerData.browsingHistory.length} 条记录</Badge>
+                    <Badge variant="secondary">
+                      {employerData.browsingHistory.length} 条记录
+                    </Badge>
                     <Button size="sm" variant="outline">
                       清空记录
                     </Button>
@@ -704,23 +817,30 @@ export default function EmployerProfilePage() {
                     <div key={item.id} className="border rounded-lg p-4">
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex-1">
-                          {item.type === 'candidate' ? (
+                          {item.type === "candidate" ? (
                             <div className="flex items-start space-x-3">
                               <Avatar className="h-10 w-10">
                                 <AvatarImage src={item.avatar} />
-                                <AvatarFallback>{item.name?.[0] || 'U'}</AvatarFallback>
+                                <AvatarFallback>
+                                  {item.name?.[0] || "U"}
+                                </AvatarFallback>
                               </Avatar>
                               <div className="flex-1">
                                 <div className="flex items-center space-x-2 mb-1">
                                   <h4 className="font-medium">{item.name}</h4>
                                   <Badge variant="default">候选人</Badge>
                                   {item.viewCount > 1 && (
-                                    <Badge variant="outline" className="text-xs">
+                                    <Badge
+                                      variant="outline"
+                                      className="text-xs"
+                                    >
                                       浏览 {item.viewCount} 次
                                     </Badge>
                                   )}
                                 </div>
-                                <p className="text-sm text-gray-600">{item.title}</p>
+                                <p className="text-sm text-gray-600">
+                                  {item.title}
+                                </p>
                                 <div className="flex items-center space-x-4 text-sm text-gray-500 mt-1">
                                   <span>{item.experience}经验</span>
                                   <span>{item.education}</span>
@@ -739,7 +859,9 @@ export default function EmployerProfilePage() {
                                   </Badge>
                                 )}
                               </div>
-                              <p className="text-sm text-gray-600">{item.description}</p>
+                              <p className="text-sm text-gray-600">
+                                {item.description}
+                              </p>
                             </div>
                           )}
                           <div className="flex items-center space-x-4 text-xs text-gray-500 mt-2">
@@ -754,7 +876,7 @@ export default function EmployerProfilePage() {
                             <Eye className="h-4 w-4 mr-1" />
                             再次查看
                           </Button>
-                          {item.type === 'candidate' && (
+                          {item.type === "candidate" && (
                             <Button size="sm" variant="outline">
                               <Bookmark className="h-4 w-4 mr-1" />
                               收藏
@@ -773,13 +895,13 @@ export default function EmployerProfilePage() {
         {/* Quick Actions */}
         <div className="grid grid-cols-2 gap-4 mt-6 mb-4">
           <Button asChild className="h-12 rounded-xl">
-            <Link href="/post/create">
+            <Link href="#">
               <Plus className="h-5 w-5 mr-2" />
-              发布招聘信息
+              我要发布
             </Link>
           </Button>
           <Button variant="outline" asChild className="h-12 rounded-xl">
-            <Link href="/employer">
+            <Link href="#">
               <Search className="h-5 w-5 mr-2" />
               搜索人才
             </Link>
@@ -788,26 +910,38 @@ export default function EmployerProfilePage() {
 
         {/* Customer Service */}
         <div className="mb-4">
-          <Button variant="outline" asChild className="w-full h-12 rounded-xl border-blue-200 text-blue-600 hover:bg-blue-50">
-            <Link href="/customer-service">
+          <Button
+            variant="outline"
+            asChild
+            className="w-full h-12 rounded-xl border-blue-200 text-blue-600 hover:bg-blue-50"
+          >
+            <Link href="#">
               <Headphones className="h-5 w-5 mr-2" />
-              联系客服
+              客服
             </Link>
           </Button>
         </div>
 
         {/* Legal and Policy Links */}
         <div className="grid grid-cols-2 gap-4 mb-4">
-          <Button variant="outline" asChild className="h-12 rounded-xl border-gray-200 text-gray-600 hover:bg-gray-50">
-            <Link href="/terms">
+          <Button
+            variant="outline"
+            asChild
+            className="h-12 rounded-xl border-gray-200 text-gray-600 hover:bg-gray-50"
+          >
+            <Link href="#">
               <FileText className="h-5 w-5 mr-2" />
-              用户协议
+              用户协议与隐私政策
             </Link>
           </Button>
-          <Button variant="outline" asChild className="h-12 rounded-xl border-orange-200 text-orange-600 hover:bg-orange-50">
-            <Link href="/violations">
+          <Button
+            variant="outline"
+            asChild
+            className="h-12 rounded-xl border-orange-200 text-orange-600 hover:bg-orange-50"
+          >
+            <Link href="#">
               <AlertTriangle className="h-5 w-5 mr-2" />
-              违规公示
+              违规账号公示
             </Link>
           </Button>
         </div>
@@ -815,7 +949,7 @@ export default function EmployerProfilePage() {
         {/* Settings and Logout */}
         <div className="grid grid-cols-2 gap-4 mt-4">
           <Button variant="outline" asChild className="h-12 rounded-xl">
-            <Link href="/settings">
+            <Link href="#">
               <Settings className="h-5 w-5 mr-2" />
               设置
             </Link>
@@ -824,8 +958,8 @@ export default function EmployerProfilePage() {
             variant="outline"
             className="h-12 rounded-xl text-red-600 border-red-200 hover:bg-red-50 hover:border-red-300"
             onClick={() => {
-              logout()
-              router.push('/login')
+              logout();
+              router.push("/login");
             }}
           >
             <LogOut className="h-5 w-5 mr-2" />
@@ -834,5 +968,5 @@ export default function EmployerProfilePage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

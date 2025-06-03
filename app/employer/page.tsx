@@ -189,11 +189,12 @@ export default function EmployerPage() {
   // 表演类别
   const categories = [
     { name: "舞蹈", count: 156, icon: "💃" },
+    { name: "表演", count: 76, icon: "🎭" },
     { name: "武术", count: 89, icon: "🥋" },
     { name: "杂技", count: 67, icon: "🤹" },
-    { name: "声乐", count: 134, icon: "🎵" },
-    { name: "器乐", count: 98, icon: "🎼" },
-    { name: "戏曲", count: 76, icon: "🎭" },
+    { name: "音乐", count: 134, icon: "🎵" },
+    { name: "戏曲", count: 98, icon: "🎼" },
+    { name: "其他", count: 98, icon: "📚" },
   ]
 
   return (
@@ -322,7 +323,7 @@ export default function EmployerPage() {
 
         {/* Categories */}
         <div className="px-4 mb-6">
-          <h2 className="text-lg font-semibold mb-4">表演类别</h2>
+          <h2 className="text-lg font-semibold mb-4">专业类别</h2>
           <div className="grid grid-cols-3 gap-3">
             {categories.map((category) => (
               <div key={category.name} className="bg-white rounded-2xl p-4 text-center shadow-sm">
@@ -347,7 +348,10 @@ export default function EmployerPage() {
                   </Avatar>
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-1">
-                      <h3 className="font-medium">{performer.name}</h3>
+                      <div className="flex items-center space-x-2">
+                         <h3 className="font-medium">{performer.name}</h3>
+                       <span className="ml-4">{performer.age}岁</span>
+                      </div>
                       <div className="flex items-center space-x-1">
                         <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                           <Heart className="h-4 w-4" />
@@ -358,13 +362,10 @@ export default function EmployerPage() {
                       </div>
                     </div>
                     <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
-                      <span>{performer.age}岁</span>
-                      <span>•</span>
+                      <span>兴趣爱好</span>
                       <span>{performer.specialty}</span>
-                      <span>•</span>
-                      <span>{performer.experience}</span>
-                      <span>•</span>
-                      <span>{performer.location}</span>
+                      {/* <span>•</span>
+                      <span>{performer.experience}</span> */}
                     </div>
 
                     {/* 学校和专业信息 */}
@@ -373,8 +374,10 @@ export default function EmployerPage() {
                       <span>{performer.school}</span>
                       <span>•</span>
                       <span>{performer.major}</span>
+                      <span>•</span>
+                      <span>{performer.location}</span>
                     </div>
-                    <div className="flex items-center space-x-1 mb-2">
+                    {/* <div className="flex items-center space-x-1 mb-2">
                       <Star className="h-4 w-4 text-yellow-400 fill-current" />
                       <span className="text-sm font-medium">{performer.rating}</span>
                     </div>
@@ -385,9 +388,9 @@ export default function EmployerPage() {
                         </Badge>
                       ))}
                     </div>
-                    <p className="text-sm text-gray-600 mb-2">{performer.description}</p>
+                    <p className="text-sm text-gray-600 mb-2">{performer.description}</p> */}
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-green-600">{performer.price}</span>
+                      <span className="text-sm font-medium text-green-600"></span>
                       <Button size="sm" className="rounded-xl" onClick={()=>{
                         router.push("/candidate/1")
                       }}>

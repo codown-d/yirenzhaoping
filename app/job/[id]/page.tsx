@@ -47,7 +47,7 @@ export default function JobDetailPage() {
       flexibleSchedule: true
     },
     requirements: ["民族舞", "3年经验", "形象佳", "身高165cm以上", "有团队合作经验"],
-    benefits: ["五险一金", "演出补贴", "舞台机会多", "国内外巡演", "专业培训"],
+    benefits: ["福利", "保险", "晋升"],
     description: `我们正在寻找有经验的民族舞演员加入我们的团队。您将参与团队的常规演出和国内外巡演活动。
 
 职责包括：
@@ -96,6 +96,8 @@ export default function JobDetailPage() {
       "/placeholder.svg?height=200&width=300",
       "/placeholder.svg?height=200&width=300",
       "/placeholder.svg?height=200&width=300",
+      "/placeholder.svg?height=200&width=300",
+      "/placeholder.svg?height=200&width=300",
     ],
   }
 
@@ -124,10 +126,10 @@ export default function JobDetailPage() {
               <CardHeader>
                 <CardTitle className="text-2xl">{job.title}</CardTitle>
                 <div className="flex items-center space-x-4 text-gray-600">
-                  <div className="flex items-center">
+                  {/* <div className="flex items-center">
                     <Building className="h-4 w-4 mr-1" />
                     <span>{job.company}</span>
-                  </div>
+                  </div> */}
                   <div className="flex items-center">
                     <MapPin className="h-4 w-4 mr-1" />
                     <span>{job.location}</span>
@@ -140,18 +142,18 @@ export default function JobDetailPage() {
                     <p className="text-sm text-gray-500">薪资</p>
                     <p className="text-2xl font-bold text-red-500">{job.salary}</p>
                   </div>
-                  <div>
+                  {/* <div>
                     <p className="text-sm text-gray-500">经验</p>
                     <p className="font-medium">{job.experience}</p>
-                  </div>
-                  <div>
+                  </div> */}
+                  {/* <div>
                     <p className="text-sm text-gray-500">学历</p>
                     <p className="font-medium">{job.education}</p>
-                  </div>
-                  <div>
+                  </div> */}
+                  {/* <div>
                     <p className="text-sm text-gray-500">类型</p>
                     <p className="font-medium">{job.performanceType}</p>
-                  </div>
+                  </div> */}
                   <div>
                     <p className="text-sm text-gray-500">到岗时间</p>
                     <p className="font-medium">{job.startTime}</p>
@@ -197,7 +199,7 @@ export default function JobDetailPage() {
                 </div> */}
 
                 <div className="space-y-4">
-                  <div>
+                  {/* <div>
                     <h4 className="font-medium mb-2">演员要求</h4>
                     <div className="flex flex-wrap gap-2">
                       {job.requirements.map((req, index) => (
@@ -206,7 +208,7 @@ export default function JobDetailPage() {
                         </Badge>
                       ))}
                     </div>
-                  </div>
+                  </div> */}
 
                   <div>
                     <h4 className="font-medium mb-2">福利待遇</h4>
@@ -235,7 +237,7 @@ export default function JobDetailPage() {
             </Card>
 
             {/* Upcoming Performances */}
-            <Card className="rounded-xl">
+            {/* <Card className="rounded-xl">
               <CardHeader>
                 <CardTitle>即将项目</CardTitle>
               </CardHeader>
@@ -261,12 +263,12 @@ export default function JobDetailPage() {
                   ))}
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
 
             {/* Company Images */}
             <Card className="rounded-xl">
               <CardHeader>
-                <CardTitle>团队风采</CardTitle>
+                <CardTitle>工作环境图</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -280,11 +282,12 @@ export default function JobDetailPage() {
                     </div>
                   ))}
                 </div>
+                
               </CardContent>
             </Card>
 
             {/* Company Info */}
-            <Card className="rounded-xl">
+            {/* <Card className="rounded-xl">
               <CardHeader>
                 <CardTitle>团队信息</CardTitle>
               </CardHeader>
@@ -315,7 +318,7 @@ export default function JobDetailPage() {
                   </div>
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
 
           {/* Sidebar */}
@@ -336,24 +339,24 @@ export default function JobDetailPage() {
             {/* Actions */}
             <Card className="rounded-xl">
               <CardHeader>
-                <CardTitle>其他操作</CardTitle>
+                <CardTitle>操作</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <Button variant="outline" className="w-full h-12">
                   <MessageCircle className="h-4 w-4 mr-2" />
-                  联系团队
+                  联系
                 </Button>
                 <Button variant="outline" className="w-full h-12">
                   <Heart className="h-4 w-4 mr-2" />
-                  关注团队
+                  关注
                 </Button>
                 <Button variant="outline" className="w-full h-12">
                   <Star className="h-4 w-4 mr-2" />
-                  收藏职位
+                  收藏
                 </Button>
                 <Button variant="outline" className="w-full h-12">
                   <Share2 className="h-4 w-4 mr-2" />
-                  分享职位
+                  返回
                 </Button>
               </CardContent>
             </Card>

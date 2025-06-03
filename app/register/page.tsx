@@ -117,7 +117,7 @@ export default function RegisterPage() {
                     </Button>
                   </div>
                 </div>
-                <div className="space-y-2 md:col-span-2">
+                {/* <div className="space-y-2 md:col-span-2">
                   <Label htmlFor="performanceType">表演类型</Label>
                   <Select>
                     <SelectTrigger>
@@ -131,12 +131,12 @@ export default function RegisterPage() {
                       ))}
                     </SelectContent>
                   </Select>
-                </div>
+                </div> */}
               </div>
               <div className="space-y-2">
                 <Label>求职状态</Label>
                 <RadioGroup defaultValue="active">
-                  <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2">
                     <RadioGroupItem value="active" id="active" />
                     <Label htmlFor="active">在职正在找工作</Label>
                   </div>
@@ -145,8 +145,8 @@ export default function RegisterPage() {
                     <Label htmlFor="passive">离职正在找工作</Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="passive" id="passive" />
-                    <Label htmlFor="passive">在职暂不找工作</Label>
+                    <RadioGroupItem value="passive3" id="passive3" />
+                    <Label htmlFor="passive3">在职暂不找工作</Label>
                   </div>
                 </RadioGroup>
               </div>
@@ -166,16 +166,16 @@ export default function RegisterPage() {
               <h3 className="text-lg font-medium">招募方认证</h3>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="company">团体/公司名称</Label>
+                  <Label htmlFor="company">公司名称</Label>
                   <Input
                     id="company"
-                    placeholder="请输入团体或公司名称"
+                    placeholder="请输入公司名称"
                     value={formData.company}
                     onChange={(e) => setFormData({...formData, company: e.target.value})}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>营业执照/团体资质</Label>
+                  <Label>营业执照</Label>
                   <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center">
                     <Upload className="mx-auto h-12 w-12 text-gray-400" />
                     <p className="mt-2 text-sm text-gray-600">点击上传相关证明文件</p>
@@ -191,7 +191,7 @@ export default function RegisterPage() {
                     <Input id="phone" placeholder="请输入联系电话" />
                   </div>
                 </div>
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <Label htmlFor="performanceType">主要招募类型</Label>
                   <Select>
                     <SelectTrigger>
@@ -205,7 +205,7 @@ export default function RegisterPage() {
                       ))}
                     </SelectContent>
                   </Select>
-                </div>
+                </div> */}
                 <div className="space-y-2">
                   <Label htmlFor="code">短信验证码</Label>
                   <div className="flex space-x-2">

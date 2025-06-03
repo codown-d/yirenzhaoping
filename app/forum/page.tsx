@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Search, Plus, Heart, MessageCircle, Share2, TrendingUp, Hash, ArrowLeft, MoreHorizontal } from "lucide-react"
+import { Search, Plus, Heart, MessageCircle, Share2, TrendingUp, Hash, ArrowLeft, MoreHorizontal, Sheet } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
@@ -62,19 +62,19 @@ export default function ForumPage() {
   return (
     <div className="min-h-screen bg-gray-50">
 
-      <main className="px-4 py-4 pb-20">
+      <main className="px-4 py-4 pb-20  ">
         {/* Search */}
-        <div className="bg-white rounded-2xl shadow-sm p-4 mb-4">
+        {/* <div className="bg-white rounded-2xl shadow-sm p-4 mb-4">
           <div className="relative">
             <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
             <Input placeholder="搜索话题、内容..." className="pl-10 h-12 rounded-xl border-gray-200" />
           </div>
-        </div>
+        </div> */}
 
         {/* Hot Topics */}
         <div className="mb-4">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-lg font-medium">热门话题</h3>
+            <h3 className="text-lg font-medium">话题广场</h3>
             <Button variant="ghost" size="sm" className="text-green-600">
               更多
             </Button>
@@ -95,64 +95,24 @@ export default function ForumPage() {
           </div>
         </div>
 
-        {/* Post Creation Card */}
-        <Card className="rounded-2xl shadow-sm mb-4 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
-          <CardContent className="p-4">
-            <div className="flex items-center space-x-3">
-              <Avatar className="h-10 w-10">
-                <AvatarFallback className="bg-green-100 text-green-600">我</AvatarFallback>
-              </Avatar>
-              <div className="flex-1">
-                <Button
-                  variant="outline"
-                  className="w-full justify-start text-gray-500 bg-white hover:bg-gray-50 rounded-xl h-10"
-                  asChild
-                >
-                  <Link href="/post/create">
-                    分享你的表演经验、技巧或心得...
-                  </Link>
-                </Button>
-              </div>
-            </div>
-            <div className="flex items-center justify-between mt-3 pt-3 border-t border-green-200">
-              <div className="flex space-x-4">
-                <Button variant="ghost" size="sm" className="text-green-600 hover:bg-green-100" asChild>
-                  <Link href="/post/create">
-                    <Plus className="h-4 w-4 mr-1" />
-                    发布动态
-                  </Link>
-                </Button>
-                <Button variant="ghost" size="sm" className="text-green-600 hover:bg-green-100" asChild>
-                  <Link href="/post/create">
-                    <Hash className="h-4 w-4 mr-1" />
-                    参与话题
-                  </Link>
-                </Button>
-              </div>
-              <Badge className="bg-green-100 text-green-700 hover:bg-green-200">
-                <TrendingUp className="h-3 w-3 mr-1" />
-                热门
-              </Badge>
-            </div>
-          </CardContent>
-        </Card>
+   
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-4">
           <TabsList className="grid w-full grid-cols-4 bg-white rounded-xl shadow-sm">
             <TabsTrigger value="hot" className="rounded-xl">
               <TrendingUp className="h-4 w-4 mr-1" />
-              热门
+              热门话题
             </TabsTrigger>
             <TabsTrigger value="latest" className="rounded-xl">
-              最新
+              推荐
             </TabsTrigger>
             <TabsTrigger value="following" className="rounded-xl">
-              关注
+            我的关注
             </TabsTrigger>
-            <TabsTrigger value="my" className="rounded-xl">
+            {/* <TabsTrigger value="my" className="rounded-xl">
               我的
-            </TabsTrigger>
+            </TabsTrigger> */}
           </TabsList>
 
           <TabsContent value={activeTab} className="space-y-4 mt-4">
@@ -172,9 +132,6 @@ export default function ForumPage() {
                           <span className="text-xs text-gray-400">·</span>
                           <span className="text-xs text-gray-400">{post.time}</span>
                         </div>
-                        <Button variant="ghost" size="sm" className="p-1">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
                       </div>
 
                       <div className="mb-3">
@@ -222,6 +179,10 @@ export default function ForumPage() {
                             <Share2 className="h-4 w-4" />
                             <span className="text-sm">{post.shares}</span>
                           </button>
+                          <button className="flex items-center space-x-1 hover:text-green-500 transition-colors">
+                            <Sheet className="h-4 w-4" />
+                            <span className="text-sm">关注</span>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -230,11 +191,56 @@ export default function ForumPage() {
               </Card>
             ))}
           </TabsContent>
-        </Tabs>
+        </Tabs>   
+        <Card className="rounded-2xl shadow-sm mb-4 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-3">
+              <Avatar className="h-10 w-10">
+                <AvatarFallback className="bg-green-100 text-green-600">我</AvatarFallback>
+              </Avatar>
+              <div className="flex-1 flex items-center">
+                <Button
+                  variant="outline"
+                  className="w-[80%] justify-start text-gray-500 bg-white hover:bg-gray-50 rounded-xl h-10"
+                  asChild
+                >
+                  <Link href="#">
+                    分享你的表演经验、技巧或心得...
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="sm" className="text-green-600 hover:bg-green-100" asChild>
+                  <Link href="#">
+                    发布动态
+                  </Link>
+                </Button>
+              </div>
+            </div>
+            <div className="flex items-center justify-between mt-3 pt-3 border-t border-green-200">
+              <div className="flex space-x-2">
+               
+                <Button variant="ghost" size="sm" className="text-green-600 hover:bg-green-100" asChild>
+                  <Link href="#">
+                    <Hash className="h-4 w-4 mr-1" />
+                    参与话题
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="sm" className="text-green-600 hover:bg-green-100" asChild>
+                  <Link href="#">
+                    <Hash className="h-4 w-4 mr-1" />
+                    上传图片视频
+                  </Link>
+                </Button>
+              </div>
+              <Badge className="bg-green-100 text-green-700 hover:bg-green-200">
+                <TrendingUp className="h-3 w-3 mr-1" />
+                热门
+              </Badge>
+            </div>
+          </CardContent>
+        </Card>
       </main>
-
       {/* Floating Action Button */}
-      <div className="fixed bottom-20 right-4 z-40">
+      {/* <div className="fixed bottom-20 right-4 z-40">
         <Button
           size="lg"
           className="h-14 w-14 rounded-full shadow-lg bg-green-500 hover:bg-green-600 border-4 border-white"
@@ -244,7 +250,7 @@ export default function ForumPage() {
             <Plus className="h-6 w-6" />
           </Link>
         </Button>
-      </div>
+      </div> */}
    
     </div>
   )
