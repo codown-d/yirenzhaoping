@@ -61,8 +61,8 @@ export default function RegisterPage() {
                   <RadioGroupItem value="jobseeker" id="jobseeker" />
                   <Label htmlFor="jobseeker" className="flex-1 cursor-pointer">
                     <div>
-                      <h3 className="font-medium">我是表演者</h3>
-                      <p className="text-sm text-gray-600">寻找演出和表演机会</p>
+                      <h3 className="font-medium">我是求职者</h3>
+                      <p className="text-sm text-gray-600">寻找工作和表演机会</p>
                     </div>
                   </Label>
                 </div>
@@ -71,7 +71,7 @@ export default function RegisterPage() {
                   <Label htmlFor="employer" className="flex-1 cursor-pointer">
                     <div>
                       <h3 className="font-medium">我是招募方</h3>
-                      <p className="text-sm text-gray-600">发布演出需求，招募表演人才</p>
+                      <p className="text-sm text-gray-600">发布招聘需求，招募求职者</p>
                     </div>
                   </Label>
                 </div>
@@ -84,7 +84,7 @@ export default function RegisterPage() {
 
           {step === 2 && userType === "jobseeker" && (
             <div className="space-y-4">
-              <h3 className="text-lg font-medium">表演者身份认证</h3>
+              <h3 className="text-lg font-medium">求职者身份认证</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">姓名</Label>

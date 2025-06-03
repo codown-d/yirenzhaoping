@@ -1,5 +1,3 @@
-"use client"
-
 import { ArrowLeft, MapPin, Phone, Mail, Heart, Star, MessageCircle, Share2, Music, Award, GraduationCap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -7,6 +5,15 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
+
+export async function generateStaticParams() {
+  // 为静态导出生成候选人ID参数
+  return [
+    { id: '1' },
+    { id: '2' },
+    { id: '3' },
+  ]
+}
 
 export default function CandidateDetailPage() {
   const candidate = {
@@ -125,7 +132,7 @@ export default function CandidateDetailPage() {
                 <ArrowLeft className="h-4 w-4" />
               </Link>
             </Button>
-            <h1 className="text-xl font-semibold">表演者详情</h1>
+            <h1 className="text-xl font-semibold">求职者详情</h1>
           </div>
         </div>
       </header>

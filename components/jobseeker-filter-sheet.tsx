@@ -33,12 +33,12 @@ export function JobseekerFilterSheet({ open, onOpenChange, onApplyFilters }: Job
   // 福利列表
   const benefitOptions = [
     "五险一金",
-    "演出补贴",
+    "工作补贴",
     "提供住宿",
     "培训机会",
-    "国内巡演",
-    "国际巡演",
-    "节目版权",
+    "国内出差",
+    "国际出差",
+    "项目奖金",
     "灵活工作",
   ]
 

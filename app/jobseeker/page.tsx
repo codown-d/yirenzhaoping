@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useAuth, useUserType, useIsAuthenticated } from "@/lib/auth-context"
 import { useRouter } from "next/navigation"
-import { Search, Filter, MapPin, Menu, Star, Heart, MessageCircle, User, Home, Briefcase, Mail, Plus } from "lucide-react"
+import { Search, Filter, MapPin, Menu, Star, Heart, MessageCircle, User, Home, Briefcase, Mail, Plus, GraduationCap, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -108,7 +108,7 @@ export default function JobseekerPage() {
     }
   }
 
-  // 演出机会数据
+  // 招聘职位数据
   const opportunities = [
     {
       id: 1,
@@ -117,10 +117,12 @@ export default function JobseekerPage() {
       location: "北京",
       salary: "8000-12000",
       type: "全职",
-      tags: ["五险一金", "演出补贴", "培训机会"],
+      tags: ["五险一金", "工作补贴", "培训机会"],
       description: "招聘专业舞蹈演员，要求有扎实的舞蹈基础，形象气质佳，有团队合作精神。",
       posted: "2天前",
-      urgent: true
+      urgent: true,
+      requiredMajor: "舞蹈表演专业",
+      startTime: "立即到岗"
     },
     {
       id: 2,
@@ -132,7 +134,9 @@ export default function JobseekerPage() {
       tags: ["影视经验", "高薪", "知名导演"],
       description: "知名导演新片招聘武术指导，要求有丰富的武术表演和指导经验。",
       posted: "1天前",
-      urgent: false
+      urgent: false,
+      requiredMajor: "武术与民族传统体育",
+      startTime: "1周内到岗"
     },
     {
       id: 3,
@@ -141,10 +145,12 @@ export default function JobseekerPage() {
       location: "广州",
       salary: "6000-8000",
       type: "兼职",
-      tags: ["周末演出", "儿童剧", "轻松愉快"],
-      description: "招聘儿童剧表演演员，要求喜欢孩子，表演生动有趣，周末演出。",
+      tags: ["周末工作", "儿童剧", "轻松愉快"],
+      description: "招聘儿童剧表演演员，要求喜欢孩子，表演生动有趣，周末工作。",
       posted: "3天前",
-      urgent: false
+      urgent: false,
+      requiredMajor: "表演专业",
+      startTime: "2周内到岗"
     }
   ]
 
@@ -152,18 +158,18 @@ export default function JobseekerPage() {
   const bannerSlides = [
     {
       id: 1,
-      title: "发现演出机会",
-      subtitle: "专业艺术表演平台",
-      description: "汇聚全国优质演出机会，为您的艺术才华找到最佳舞台",
+      title: "发现招聘职位",
+      subtitle: "专业求职者招聘平台",
+      description: "汇聚全国优质招聘职位，为您的艺术才华找到最佳工作机会",
       image: "/placeholder.svg?height=200&width=400",
       buttonText: "立即查看",
       backgroundColor: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
     },
     {
       id: 2,
-      title: "丰富演出类型",
+      title: "丰富职位类型",
       subtitle: "覆盖各类表演领域",
-      description: "舞台剧、音乐剧、舞蹈演出、影视拍摄等多种机会等你来",
+      description: "舞台剧、音乐剧、舞蹈表演、影视拍摄等多种职位等你来",
       image: "/placeholder.svg?height=200&width=400",
       buttonText: "浏览职位",
       backgroundColor: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
@@ -208,7 +214,7 @@ export default function JobseekerPage() {
             <div className="relative mb-4">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input
-                placeholder="搜索演出机会、剧团、地区..."
+                placeholder="搜索招聘职位、公司、地区..."
                 className="pl-10 h-12 rounded-xl border-gray-200"
               />
             </div>
@@ -316,7 +322,7 @@ export default function JobseekerPage() {
 
         {/* Recommended Opportunities */}
         <div className="px-4">
-          <h2 className="text-lg font-semibold mb-4">推荐演出机会</h2>
+          <h2 className="text-lg font-semibold mb-4">推荐招聘职位</h2>
           <div className="space-y-4">
             {opportunities.map((opportunity) => (
               <div key={opportunity.id} className="bg-white rounded-2xl p-4 shadow-sm">
@@ -343,6 +349,18 @@ export default function JobseekerPage() {
                   <span>{opportunity.type}</span>
                   <span>•</span>
                   <span className="text-green-600 font-medium">{opportunity.salary}/月</span>
+                </div>
+
+                {/* 需求专业和到岗时间 */}
+                <div className="space-y-1 mb-2">
+                  <div className="flex items-center space-x-1 text-sm text-gray-600">
+                    <GraduationCap className="h-4 w-4" />
+                    <span>需求专业：{opportunity.requiredMajor}</span>
+                  </div>
+                  <div className="flex items-center space-x-1 text-sm text-gray-600">
+                    <Clock className="h-4 w-4" />
+                    <span>到岗时间：{opportunity.startTime}</span>
+                  </div>
                 </div>
                 
                 <div className="flex flex-wrap gap-1 mb-2">

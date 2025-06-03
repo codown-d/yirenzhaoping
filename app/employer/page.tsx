@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useAuth, useUserType, useIsAuthenticated } from "@/lib/auth-context"
 import { useRouter } from "next/navigation"
-import { Search, Filter, MapPin, Menu, Star, Heart, MessageCircle, User, Home, Users, Mail, Plus } from "lucide-react"
+import { Search, Filter, MapPin, Menu, Star, Heart, MessageCircle, User, Home, Users, Mail, Plus, GraduationCap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -106,7 +106,7 @@ export default function EmployerPage() {
     }
   }
 
-  // 表演者数据
+  // 求职者数据
   const performers = [
     {
       id: 1,
@@ -119,7 +119,9 @@ export default function EmployerPage() {
       avatar: "/placeholder.svg?height=60&width=60",
       tags: ["专业院校", "获奖经历", "团队合作"],
       price: "800-1200/天",
-      description: "毕业于北京舞蹈学院，擅长古典舞和民族舞，有丰富的舞台表演经验。"
+      description: "毕业于北京舞蹈学院，擅长古典舞和民族舞，有丰富的舞台表演经验。",
+      school: "北京舞蹈学院",
+      major: "舞蹈表演专业"
     },
     {
       id: 2,
@@ -132,7 +134,9 @@ export default function EmployerPage() {
       avatar: "/placeholder.svg?height=60&width=60",
       tags: ["武术冠军", "影视经验", "教学经验"],
       price: "1000-1500/天",
-      description: "全国武术冠军，参与过多部影视作品拍摄，具有丰富的武术指导经验。"
+      description: "全国武术冠军，参与过多部影视作品拍摄，具有丰富的武术指导经验。",
+      school: "上海体育学院",
+      major: "武术与民族传统体育"
     },
     {
       id: 3,
@@ -145,7 +149,9 @@ export default function EmployerPage() {
       avatar: "/placeholder.svg?height=60&width=60",
       tags: ["海外留学", "芭蕾专业", "形象佳"],
       price: "600-1000/天",
-      description: "俄罗斯芭蕾舞学院毕业，技法扎实，形象气质佳，适合各类演出。"
+      description: "俄罗斯芭蕾舞学院毕业，技法扎实，形象气质佳，适合各类演出。",
+      school: "俄罗斯芭蕾舞学院",
+      major: "芭蕾舞表演专业"
     }
   ]
 
@@ -154,8 +160,8 @@ export default function EmployerPage() {
     {
       id: 1,
       title: "寻找优秀求职者",
-      subtitle: "专业艺术人才招聘平台",
-      description: "汇聚全国优秀表演艺术人才，为您的项目找到最合适的求职者",
+      subtitle: "专业求职者招聘平台",
+      description: "汇聚全国优秀艺术求职者，为您的招聘需求找到最合适的人才",
       image: "/placeholder.svg?height=200&width=400",
       buttonText: "立即招聘",
       backgroundColor: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
@@ -173,7 +179,7 @@ export default function EmployerPage() {
       id: 3,
       title: "高效匹配系统",
       subtitle: "智能推荐合适人选",
-      description: "基于需求智能匹配，快速找到符合要求的求职者",
+      description: "基于招聘需求智能匹配，快速找到符合要求的求职者",
       image: "/placeholder.svg?height=200&width=400",
       buttonText: "开始匹配",
       backgroundColor: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
@@ -359,6 +365,14 @@ export default function EmployerPage() {
                       <span>{performer.experience}</span>
                       <span>•</span>
                       <span>{performer.location}</span>
+                    </div>
+
+                    {/* 学校和专业信息 */}
+                    <div className="flex items-center space-x-1 text-sm text-gray-600 mb-2">
+                      <GraduationCap className="h-4 w-4" />
+                      <span>{performer.school}</span>
+                      <span>•</span>
+                      <span>{performer.major}</span>
                     </div>
                     <div className="flex items-center space-x-1 mb-2">
                       <Star className="h-4 w-4 text-yellow-400 fill-current" />

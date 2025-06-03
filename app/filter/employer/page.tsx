@@ -114,7 +114,7 @@ export default function EmployerFilterPage() {
             >
               <ArrowLeft className="h-4 w-4" />
             </Button>
-            <h1 className="text-lg font-semibold">筛选表演者</h1>
+            <h1 className="text-lg font-semibold">筛选求职者</h1>
           </div>
           <Button variant="ghost" size="sm" onClick={handleReset}>
             重置

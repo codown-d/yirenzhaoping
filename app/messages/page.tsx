@@ -56,7 +56,7 @@ export default function MessagesPage() {
     {
       id: 2,
       title: "新的职位推荐",
-      content: "为您推荐了3个新的演出机会",
+      content: "为您推荐了3个新的招聘职位",
       time: "1天前",
       type: "recommendation",
     },

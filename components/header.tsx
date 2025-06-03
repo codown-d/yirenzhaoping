@@ -17,6 +17,10 @@ import {
   Users,
   Mail,
   Plus,
+  LogOut,
+  Settings,
+  UserCircle,
+  Headphones,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,6 +33,14 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { CarouselBanner } from "@/components/ui/carousel-banner";
 import Link from "next/link";
 
@@ -96,12 +108,16 @@ const Header: React.FC = () => {
                     设置
                   </Link>
                   {isAuthenticated && (
-                    <button
-                      onClick={logout}
-                      className="block w-full text-left py-2 text-red-600 hover:text-red-700"
-                    >
-                      退出登录
-                    </button>
+                    <>
+                      <div className="border-t border-gray-200 my-4"></div>
+                      <button
+                        onClick={logout}
+                        className="flex items-center w-full text-left py-3 px-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                      >
+                        <LogOut className="h-4 w-4 mr-2" />
+                        退出登录
+                      </button>
+                    </>
                   )}
                 </nav>
               </div>
@@ -111,12 +127,51 @@ const Header: React.FC = () => {
         </div>
         <div className="flex items-center space-x-2">
           {isAuthenticated ? (
-            <Avatar className="h-8 w-8">
-              <AvatarImage
-                src={user?.avatar || "/placeholder.svg?height=32&width=32"}
-              />
-              <AvatarFallback>{user?.name?.[0] || "我"}</AvatarFallback>
-            </Avatar>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 rounded-full p-0">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage
+                      src={user?.avatar || "/placeholder.svg?height=32&width=32"}
+                    />
+                    <AvatarFallback>{user?.name?.[0] || "我"}</AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end" forceMount>
+                <DropdownMenuLabel className="font-normal">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium leading-none">
+                      {user?.name || "用户"}
+                    </p>
+                    <p className="text-xs leading-none text-muted-foreground">
+                      {user?.email || user?.phone || ""}
+                    </p>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/profile" className="flex items-center">
+                    <UserCircle className="mr-2 h-4 w-4" />
+                    <span>个人中心</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/settings" className="flex items-center">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>设置</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="text-red-600 focus:text-red-600 focus:bg-red-50"
+                  onClick={logout}
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>退出登录</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <Button
               asChild

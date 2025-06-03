@@ -42,6 +42,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (savedUser) {
           const userData = JSON.parse(savedUser);
           setUser(userData);
+          console.log(userData)
           setRole(userData.userType);
         }
       } catch (error) {

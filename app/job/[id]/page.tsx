@@ -1,5 +1,3 @@
-"use client"
-
 import {
   ArrowLeft,
   MapPin,
@@ -19,6 +17,15 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
 
+export async function generateStaticParams() {
+  // 为静态导出生成职位ID参数
+  return [
+    { id: '1' },
+    { id: '2' },
+    { id: '3' },
+  ]
+}
+
 export default function JobDetailPage() {
   const job = {
     id: 1,
@@ -30,6 +37,15 @@ export default function JobDetailPage() {
     education: "舞蹈相关专业",
     type: "全职",
     performanceType: "民族舞",
+    startTime: "立即到岗",
+    workSchedule: {
+      workDays: "周一至周六",
+      workHours: "9:00-18:00",
+      rehearsalTime: "19:00-21:00",
+      overtime: "演出期间需要",
+      restDay: "周日",
+      flexibleSchedule: true
+    },
     requirements: ["民族舞", "3年经验", "形象佳", "身高165cm以上", "有团队合作经验"],
     benefits: ["五险一金", "演出补贴", "舞台机会多", "国内外巡演", "专业培训"],
     description: `我们正在寻找有经验的民族舞演员加入我们的团队。您将参与团队的常规演出和国内外巡演活动。
@@ -41,12 +57,19 @@ export default function JobDetailPage() {
 • 配合编导完成新节目的创作
 • 参与团队宣传活动
 
+工作时间安排：
+• 工作日：周一至周六 9:00-18:00
+• 晚间排练：19:00-21:00（根据演出安排）
+• 休息日：周日（演出期间可能调整）
+• 演出期间：根据演出时间安排，可能包含晚间和周末
+• 巡演期间：根据行程安排，时间相对灵活
+
 要求：
 • 3年以上专业民族舞表演经验
 • 舞蹈相关专业毕业
 • 形象气质佳，身高165cm以上
 • 有较强的舞台表现力和团队合作精神
-• 能适应巡演生活`,
+• 能适应巡演生活和灵活的工作时间安排`,
     companyInfo: {
       name: "东方歌舞团",
       industry: "表演艺术",
@@ -56,7 +79,7 @@ export default function JobDetailPage() {
       address: "北京市海淀区文化艺术中心",
       website: "www.dongfangdance.com",
     },
-    upcomingPerformances: [
+    upcomingProjects: [
       {
         name: "《锦绣中华》民族舞蹈专场",
         date: "2024-06-15",
@@ -87,7 +110,7 @@ export default function JobDetailPage() {
                 <ArrowLeft className="h-4 w-4" />
               </Link>
             </Button>
-            <h1 className="text-xl font-semibold">演出机会详情</h1>
+            <h1 className="text-xl font-semibold">职位详情</h1>
           </div>
         </div>
       </header>
@@ -112,7 +135,7 @@ export default function JobDetailPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
                   <div>
                     <p className="text-sm text-gray-500">薪资</p>
                     <p className="text-2xl font-bold text-red-500">{job.salary}</p>
@@ -129,7 +152,49 @@ export default function JobDetailPage() {
                     <p className="text-sm text-gray-500">类型</p>
                     <p className="font-medium">{job.performanceType}</p>
                   </div>
+                  <div>
+                    <p className="text-sm text-gray-500">到岗时间</p>
+                    <p className="font-medium">{job.startTime}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">工作时间</p>
+                    <p className="font-medium">{job.workSchedule.workHours}</p>
+                  </div>
                 </div>
+
+                {/* 工作时间详情 */}
+                {/* <div className="bg-blue-50 rounded-xl p-4 mb-6">
+                  <h4 className="font-medium mb-3 flex items-center">
+                    <Clock className="h-4 w-4 mr-2 text-blue-600" />
+                    工作时间安排
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">工作日：</span>
+                      <span className="font-medium">{job.workSchedule.workDays}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">工作时间：</span>
+                      <span className="font-medium">{job.workSchedule.workHours}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">排练时间：</span>
+                      <span className="font-medium">{job.workSchedule.rehearsalTime}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">休息日：</span>
+                      <span className="font-medium">{job.workSchedule.restDay}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">加班安排：</span>
+                      <span className="font-medium">{job.workSchedule.overtime}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">时间灵活性：</span>
+                      <span className="font-medium">{job.workSchedule.flexibleSchedule ? "较灵活" : "固定时间"}</span>
+                    </div>
+                  </div>
+                </div> */}
 
                 <div className="space-y-4">
                   <div>
@@ -172,11 +237,11 @@ export default function JobDetailPage() {
             {/* Upcoming Performances */}
             <Card className="rounded-xl">
               <CardHeader>
-                <CardTitle>即将演出</CardTitle>
+                <CardTitle>即将项目</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {job.upcomingPerformances.map((performance, index) => (
+                  {job.upcomingProjects.map((performance, index) => (
                     <div key={index} className="flex items-start space-x-4 p-3 border rounded-xl">
                       <div className="bg-green-100 p-3 rounded-full">
                         <Music className="h-5 w-5 text-green-600" />

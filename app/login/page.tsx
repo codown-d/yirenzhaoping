@@ -188,7 +188,7 @@ export default function LoginPage() {
               <span className="text-2xl font-bold text-green-600">薏</span>
             </div>
             <CardTitle className="text-2xl font-bold text-green-600">薏仁直聘</CardTitle>
-            <CardDescription className="text-gray-600">艺术表演人才招聘平台</CardDescription>
+            <CardDescription className="text-gray-600">求职者招聘平台</CardDescription>
           </CardHeader>
           <CardContent className="px-6 pb-6">
             {/* 错误和成功提示 */}

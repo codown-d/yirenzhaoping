@@ -104,7 +104,7 @@ export function EmployerFilterSheet({ open, onOpenChange, onApplyFilters }: Empl
       <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl px-0">
         <div className="px-6">
           <SheetHeader className="text-left border-b pb-4 mb-4">
-            <SheetTitle className="text-xl">筛选表演者</SheetTitle>
+            <SheetTitle className="text-xl">筛选求职者</SheetTitle>
           </SheetHeader>
         </div>
 

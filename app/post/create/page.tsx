@@ -71,7 +71,7 @@ export default function CreatePostPage() {
                     <UserCheck className="h-8 w-8 text-blue-600" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">发布求职信息</h3>
-                  <p className="text-gray-600 mb-4">展示您的专业技能和表演经验，寻找心仪的演出机会</p>
+                  <p className="text-gray-600 mb-4">展示您的专业技能和表演经验，寻找心仪的工作机会</p>
                   <div className="flex flex-wrap gap-2 justify-center">
                     <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm">个人简介</span>
                     <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm">作品展示</span>
@@ -89,7 +89,7 @@ export default function CreatePostPage() {
                     <Briefcase className="h-8 w-8 text-green-600" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">发布招聘信息</h3>
-                  <p className="text-gray-600 mb-4">发布演出招聘需求，寻找合适的表演人才</p>
+                  <p className="text-gray-600 mb-4">发布招聘需求，寻找合适的求职者</p>
                   <div className="flex flex-wrap gap-2 justify-center">
                     <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm">职位描述</span>
                     <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm">薪资待遇</span>

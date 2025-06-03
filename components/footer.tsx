@@ -7,12 +7,13 @@ import React from "react";
 
 const Footer = () => {
   
-  const { role } = useAuth()
+  const { role,user } = useAuth()
+  console.log(role,user?.userType)
   return (
     <footer className="fixed bottom-0 left-0 right-0 bg-white border-t">
       <div className="flex justify-around py-2">
         <Link
-          href="/employer"
+          href={role===UserType.Employer?'/employer':'/jobseeker'}
           className="flex flex-col items-center py-2 text-green-600"
         >
           <Users className="h-5 w-5" />
@@ -42,7 +43,7 @@ const Footer = () => {
           <span className="text-xs mt-1">论坛</span>
         </Link>
         <Link
-          href="/profile/employer"
+          href={role===UserType.Employer?'/profile/employer':'/profile/jobseeker'}
           className="flex flex-col items-center py-2 text-gray-400"
         >
           <User className="h-5 w-5" />
