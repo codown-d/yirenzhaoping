@@ -773,7 +773,7 @@ export default function EmployerProfilePage() {
         {/* Quick Actions */}
         <div className="grid grid-cols-2 gap-4 mt-6 mb-4">
           <Button asChild className="h-12 rounded-xl">
-            <Link href="/post/create">
+            <Link href="/post/employer">
               <Plus className="h-5 w-5 mr-2" />
               发布招聘信息
             </Link>

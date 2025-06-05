@@ -711,7 +711,7 @@ export default function JobseekerProfilePage() {
         {/* Quick Actions */}
         <div className="grid grid-cols-2 gap-4 mt-6 mb-4">
           <Button asChild className="h-12 rounded-xl">
-            <Link href="/post/create">
+            <Link href="/post/jobseeker">
               <FileText className="h-5 w-5 mr-2" />
               发布求职信息
             </Link>

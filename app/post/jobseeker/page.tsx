@@ -34,11 +34,22 @@ export default function JobseekerPostPage() {
     personalStatement: "",
   })
 
-  const categories = [
-    "舞蹈表演", "戏曲表演", "武术表演", "杂技表演", 
+  // 分类切换状态
+  const [categoryType, setCategoryType] = useState<'frontend' | 'backend'>('frontend')
+
+  const frontendCategories = [
+    "舞蹈表演", "戏曲表演", "武术表演", "杂技表演",
     "声乐表演", "器乐表演", "话剧表演", "音乐剧表演",
     "影视表演", "商业演出", "教学培训", "其他"
   ]
+
+  const backendCategories = [
+    "导演", "副导演", "执行导演", "编剧",
+    "制片人", "制片助理", "摄影师", "摄像师",
+    "灯光师", "音响师", "舞美设计", "服装设计"
+  ]
+
+  const currentCategories = categoryType === 'frontend' ? frontendCategories : backendCategories
 
   const workTypes = ["全职", "兼职", "临时", "合同制", "实习"]
   
@@ -155,13 +166,56 @@ export default function JobseekerPostPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="category">专业类别 *</Label>
-                  <Select onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}>
+                  <Label htmlFor="categoryType">专业类型 *</Label>
+                  <Select
+                    value={categoryType}
+                    onValueChange={(value: 'frontend' | 'backend') => {
+                      setCategoryType(value)
+                      setFormData(prev => ({ ...prev, category: "" })) // 重置类别选择
+                    }}
+                  >
                     <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="选择类别" />
+                      <SelectValue placeholder="选择专业类型" />
                     </SelectTrigger>
                     <SelectContent>
-                      {categories.map((category) => (
+                      <SelectItem value="frontend">
+                        <div className="flex items-center">
+                          <span className="mr-2">🎭</span>
+                          <div>
+                            <div className="font-medium">前台表演</div>
+                            <div className="text-xs text-gray-500">舞台表演、演出等</div>
+                          </div>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="backend">
+                        <div className="flex items-center">
+                          <span className="mr-2">🎬</span>
+                          <div>
+                            <div className="font-medium">后台制作</div>
+                            <div className="text-xs text-gray-500">导演、制片、技术等</div>
+                          </div>
+                        </div>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="category">具体专业 *</Label>
+                  <Select
+                    value={formData.category}
+                    onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}
+                    disabled={!categoryType}
+                  >
+                    <SelectTrigger className="mt-1">
+                      <SelectValue placeholder={
+                        !categoryType
+                          ? "请先选择专业类型"
+                          : `选择${categoryType === 'frontend' ? '前台表演' : '后台制作'}专业`
+                      } />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {currentCategories.map((category) => (
                         <SelectItem key={category} value={category}>
                           {category}
                         </SelectItem>
@@ -169,18 +223,18 @@ export default function JobseekerPostPage() {
                     </SelectContent>
                   </Select>
                 </div>
+              </div>
 
-                <div>
-                  <Label htmlFor="location">期望工作地点 *</Label>
-                  <Input
-                    id="location"
-                    placeholder="如：北京市朝阳区"
-                    value={formData.location}
-                    onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
-                    className="mt-1"
-                    required
-                  />
-                </div>
+              <div>
+                <Label htmlFor="location">期望工作地点 *</Label>
+                <Input
+                  id="location"
+                  placeholder="如：北京市朝阳区"
+                  value={formData.location}
+                  onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
+                  className="mt-1"
+                  required
+                />
               </div>
             </CardContent>
           </Card>

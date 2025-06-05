@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useAuth, useUserType, useIsAuthenticated } from "@/lib/auth-context"
 import { useRouter } from "next/navigation"
-import { Search, Filter, MapPin, Menu, Star, Heart, MessageCircle, User, Home, Users, Mail, Plus, GraduationCap } from "lucide-react"
+import { Search, Filter, Menu, Star, Heart, MessageCircle, User, Home, Users, Mail, Plus, GraduationCap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -52,10 +52,7 @@ export default function EmployerPage() {
     router.push('/filter/employer')
   }
 
-  // 处理位置筛选点击
-  const handleLocationClick = () => {
-    router.push('/filter/employer')
-  }
+
 
   // 清除筛选条件的辅助函数
   const clearFilter = (type: string, value?: string) => {
@@ -186,8 +183,11 @@ export default function EmployerPage() {
     }
   ]
 
+  // 分类切换状态
+  const [categoryType, setCategoryType] = useState<'frontend' | 'backend'>('frontend')
+
   // 表演类别
-  const categories = [
+  const frontendCategories = [
     { name: "舞蹈", count: 156, icon: "💃" },
     { name: "武术", count: 89, icon: "🥋" },
     { name: "杂技", count: 67, icon: "🤹" },
@@ -195,6 +195,17 @@ export default function EmployerPage() {
     { name: "器乐", count: 98, icon: "🎼" },
     { name: "戏曲", count: 76, icon: "🎭" },
   ]
+
+  const backendCategories = [
+    { name: "导演", count: 45, icon: "🎬" },
+    { name: "编剧", count: 32, icon: "✍️" },
+    { name: "制片", count: 28, icon: "📋" },
+    { name: "摄影", count: 56, icon: "📷" },
+    { name: "灯光", count: 41, icon: "💡" },
+    { name: "音响", count: 38, icon: "🔊" },
+  ]
+
+  const currentCategories = categoryType === 'frontend' ? frontendCategories : backendCategories
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -215,31 +226,21 @@ export default function EmployerPage() {
         {/* Search Section */}
         <div className="px-4 mb-6">
           <div className="bg-white rounded-2xl shadow-sm p-4">
-            <div className="relative mb-4">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                placeholder="搜索求职者、专业、地区..."
-                className="pl-10 h-12 rounded-xl border-gray-200"
-              />
-            </div>
-            
-            <div className="flex space-x-2">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="flex-1 h-10 rounded-xl"
-                onClick={handleLocationClick}
-              >
-                <MapPin className="h-4 w-4 mr-1" />
-                位置
-              </Button>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="flex-1 h-10 rounded-xl"
+            <div className="flex space-x-3">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  placeholder="搜索求职者、专业..."
+                  className="pl-10 h-12 rounded-xl border-gray-200"
+                />
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-12 px-4 rounded-xl"
                 onClick={handleFilterClick}
               >
-                <Filter className="h-4 w-4 mr-1" />
+                <Filter className="h-4 w-4 mr-2" />
                 筛选
                 {hasActiveFilters() && (
                   <Badge className="ml-2 bg-green-500 text-white">
@@ -322,9 +323,37 @@ export default function EmployerPage() {
 
         {/* Categories */}
         <div className="px-4 mb-6">
-          <h2 className="text-lg font-semibold mb-4">表演类别</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold">表演类别</h2>
+            <div className="flex bg-gray-100 rounded-xl p-1">
+              <Button
+                variant={categoryType === 'frontend' ? 'default' : 'ghost'}
+                size="sm"
+                className={`rounded-lg px-4 py-2 text-sm text-black hover:text-[#fff] ${
+                  categoryType === 'frontend'
+                    ? 'bg-white shadow-sm'
+                    : 'hover:bg-gray-200  hover:text-black'
+                }`}
+                onClick={() => setCategoryType('frontend')}
+              >
+                前台
+              </Button>
+              <Button
+                variant={categoryType === 'backend' ? 'default' : 'ghost'}
+                size="sm"
+                className={`rounded-lg px-4 py-2 text-sm  text-black hover:text-[#fff] ${
+                  categoryType === 'backend'
+                    ? 'bg-white shadow-sm '
+                    : 'hover:bg-gray-200 hover:text-black'
+                }`}
+                onClick={() => setCategoryType('backend')}
+              >
+                后台
+              </Button>
+            </div>
+          </div>
           <div className="grid grid-cols-3 gap-3">
-            {categories.map((category) => (
+            {currentCategories.map((category) => (
               <div key={category.name} className="bg-white rounded-2xl p-4 text-center shadow-sm">
                 <div className="text-2xl mb-2">{category.icon}</div>
                 <div className="font-medium text-sm">{category.name}</div>
@@ -365,8 +394,6 @@ export default function EmployerPage() {
                       <span>{performer.specialty}</span>
                       <span>•</span>
                       <span>{performer.experience}</span>
-                      <span>•</span>
-                      <span>{performer.location}</span>
                     </div>
 
                     {/* 学校和专业信息 */}
