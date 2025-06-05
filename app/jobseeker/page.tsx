@@ -318,7 +318,7 @@ export default function JobseekerPage() {
                 className={`rounded-lg px-4 py-2 text-sm  text-black hover:text-[#fff]  ${
                   categoryType === 'frontend'
                     ? 'bg-white shadow-sm'
-                    : 'hover:bg-gray-200'
+                    : 'hover:bg-gray-200  hover:text-black'
                 }`}
                 onClick={() => setCategoryType('frontend')}
               >
@@ -330,7 +330,7 @@ export default function JobseekerPage() {
                 className={`rounded-lg px-4 py-2 text-sm  text-black hover:text-[#fff] ${
                   categoryType === 'backend'
                     ? 'bg-white shadow-sm'
-                    : 'hover:bg-gray-200'
+                    : 'hover:bg-gray-200  hover:text-black'
                 }`}
                 onClick={() => setCategoryType('backend')}
               >
