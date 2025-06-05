@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { ArrowLeft, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -20,6 +20,7 @@ export default function EmployerFilterPage() {
   const [selectedDistrict, setSelectedDistrict] = useState<string>("")
   const [location, setLocation] = useState<string[]>([])
   const [gender, setGender] = useState<string>("")
+  const [categoryType, setCategoryType] = useState<'frontend' | 'backend'>('frontend')
   const [specialties, setSpecialties] = useState<string[]>([])
   const [ageGroup, setAgeGroup] = useState<string>("unlimited")
   const [experience, setExperience] = useState<string>("")
@@ -63,8 +64,8 @@ export default function EmployerFilterPage() {
     { value: "over35", label: "35岁以上" }
   ]
 
-  // 专业列表
-  const specialtyOptions = [
+  // 前台专业列表
+  const frontendSpecialties = [
     "古典舞",
     "民族舞",
     "芭蕾舞",
@@ -79,6 +80,48 @@ export default function EmployerFilterPage() {
     "主持",
     "模特",
   ]
+
+  // 后台专业列表
+  const backendSpecialties = [
+    "导演",
+    "编剧",
+    "制片",
+    "摄影",
+    "灯光",
+    "音响",
+    "舞美设计",
+    "服装设计",
+    "化妆造型",
+    "道具制作",
+    "后期制作",
+    "音效制作",
+  ]
+
+  // 根据当前选择的类别获取专业列表
+  const getCurrentSpecialties = () => {
+    return categoryType === 'frontend' ? frontendSpecialties : backendSpecialties
+  }
+
+  // 页面加载时从 localStorage 读取筛选条件
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const savedFilters = localStorage.getItem('employer_filters')
+        if (savedFilters) {
+          const filters = JSON.parse(savedFilters)
+          if (filters.location) setLocation(filters.location)
+          if (filters.gender) setGender(filters.gender)
+          if (filters.categoryType) setCategoryType(filters.categoryType)
+          if (filters.specialties) setSpecialties(filters.specialties)
+          if (filters.ageGroup) setAgeGroup(filters.ageGroup)
+          if (filters.experience) setExperience(filters.experience)
+          if (filters.education) setEducation(filters.education)
+        }
+      } catch (error) {
+        console.error('Failed to load filters:', error)
+      }
+    }
+  }, [])
 
   // 学历列表
   const educationOptions = ["专科以下", "专科", "本科", "硕士", "博士"]
@@ -158,6 +201,7 @@ export default function EmployerFilterPage() {
     setSelectedDistrict("")
     setLocation([])
     setGender("")
+    setCategoryType('frontend')
     setSpecialties([])
     setAgeGroup("unlimited")
     setExperience("")
@@ -169,6 +213,7 @@ export default function EmployerFilterPage() {
     const filters = {
       location,
       gender,
+      categoryType,
       specialties,
       ageGroup,
       experience,
@@ -322,11 +367,48 @@ export default function EmployerFilterPage() {
           </RadioGroup>
         </div>
 
+        {/* 求职者类别筛选 */}
+        <div className="bg-white rounded-2xl p-4 mb-4">
+          <h3 className="text-base font-medium mb-3">求职者类别</h3>
+          <div className="flex bg-gray-100 rounded-xl p-1">
+            <Button
+              variant={categoryType === 'frontend' ? 'default' : 'ghost'}
+              size="sm"
+              className={`rounded-lg px-4 py-2 text-sm flex-1 text-black hover:text-[#fff] ${
+                categoryType === 'frontend'
+                  ? 'bg-white shadow-sm'
+                  : 'hover:bg-gray-200 hover:text-black'
+              }`}
+              onClick={() => {
+                setCategoryType('frontend')
+                setSpecialties([]) // 清空已选择的专业
+              }}
+            >
+              前台
+            </Button>
+            <Button
+              variant={categoryType === 'backend' ? 'default' : 'ghost'}
+              size="sm"
+              className={`rounded-lg px-4 py-2 text-sm flex-1 text-black hover:text-[#fff] ${
+                categoryType === 'backend'
+                  ? 'bg-white shadow-sm'
+                  : 'hover:bg-gray-200 hover:text-black'
+              }`}
+              onClick={() => {
+                setCategoryType('backend')
+                setSpecialties([]) // 清空已选择的专业
+              }}
+            >
+              后台
+            </Button>
+          </div>
+        </div>
+
         {/* 专业筛选 */}
         <div className="bg-white rounded-2xl p-4 mb-4">
           <h3 className="text-base font-medium mb-3">专业</h3>
           <div className="grid grid-cols-3 gap-2">
-            {specialtyOptions.map((specialty) => (
+            {getCurrentSpecialties().map((specialty) => (
               <div key={specialty} className="flex items-center space-x-2">
                 <Checkbox
                   id={specialty}

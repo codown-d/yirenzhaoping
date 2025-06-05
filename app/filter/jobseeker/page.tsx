@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { ArrowLeft, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -20,6 +20,7 @@ export default function JobseekerFilterPage() {
   const [selectedCity, setSelectedCity] = useState<string>("")
   const [selectedDistrict, setSelectedDistrict] = useState<string>("")
   const [location, setLocation] = useState<string[]>([])
+  const [categoryType, setCategoryType] = useState<'frontend' | 'backend'>('frontend')
   const [jobTypes, setJobTypes] = useState<string[]>([])
   const [salaryRange, setSalaryRange] = useState<[number, number]>([0, 50])
   const [employmentType, setEmploymentType] = useState<string>("unlimited")
@@ -55,8 +56,36 @@ export default function JobseekerFilterPage() {
     }
   }
 
-  // 职位类型列表
-  const jobTypeOptions = ["舞蹈演员", "武术表演", "杂技演员", "声乐演员", "器乐演奏", "戏曲演员", "主持人", "模特"]
+  // 前台职位类型列表
+  const frontendJobTypes = ["舞蹈演员", "武术表演", "杂技演员", "声乐演员", "器乐演奏", "戏曲演员", "主持人", "模特"]
+
+  // 后台职位类型列表
+  const backendJobTypes = ["导演", "编剧", "制片人", "摄影师", "灯光师", "音响师", "舞美设计", "服装设计"]
+
+  // 根据当前选择的类别获取职位类型
+  const getCurrentJobTypes = () => {
+    return categoryType === 'frontend' ? frontendJobTypes : backendJobTypes
+  }
+
+  // 页面加载时从 localStorage 读取筛选条件
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const savedFilters = localStorage.getItem('jobseeker_filters')
+        if (savedFilters) {
+          const filters = JSON.parse(savedFilters)
+          if (filters.location) setLocation(filters.location)
+          if (filters.categoryType) setCategoryType(filters.categoryType)
+          if (filters.jobTypes) setJobTypes(filters.jobTypes)
+          if (filters.salaryRange) setSalaryRange(filters.salaryRange)
+          if (filters.employmentType) setEmploymentType(filters.employmentType)
+          if (filters.benefits) setBenefits(filters.benefits)
+        }
+      } catch (error) {
+        console.error('Failed to load filters:', error)
+      }
+    }
+  }, [])
 
   // 福利列表
   const benefitOptions = [
@@ -144,6 +173,7 @@ export default function JobseekerFilterPage() {
     setSelectedCity("")
     setSelectedDistrict("")
     setLocation([])
+    setCategoryType('frontend')
     setJobTypes([])
     setSalaryRange([0, 50])
     setEmploymentType("unlimited")
@@ -154,15 +184,16 @@ export default function JobseekerFilterPage() {
   const handleApply = () => {
     const filters = {
       location,
+      categoryType,
       jobTypes,
       salaryRange,
       employmentType,
       benefits,
     }
-    
+
     // 保存筛选条件到 localStorage
     localStorage.setItem('jobseeker_filters', JSON.stringify(filters))
-    
+
     // 返回首页
     router.push('/')
   }
@@ -295,11 +326,48 @@ export default function JobseekerFilterPage() {
           )}
         </div>
 
+        {/* 职位类别筛选 */}
+        <div className="bg-white rounded-2xl p-4 mb-4">
+          <h3 className="text-base font-medium mb-3">职位类别</h3>
+          <div className="flex bg-gray-100 rounded-xl p-1">
+            <Button
+              variant={categoryType === 'frontend' ? 'default' : 'ghost'}
+              size="sm"
+              className={`rounded-lg px-4 py-2 text-sm flex-1 text-black hover:text-[#fff] ${
+                categoryType === 'frontend'
+                  ? 'bg-white shadow-sm'
+                  : 'hover:bg-gray-200 hover:text-black'
+              }`}
+              onClick={() => {
+                setCategoryType('frontend')
+                setJobTypes([]) // 清空已选择的职位类型
+              }}
+            >
+              前台
+            </Button>
+            <Button
+              variant={categoryType === 'backend' ? 'default' : 'ghost'}
+              size="sm"
+              className={`rounded-lg px-4 py-2 text-sm flex-1 text-black hover:text-[#fff] ${
+                categoryType === 'backend'
+                  ? 'bg-white shadow-sm'
+                  : 'hover:bg-gray-200 hover:text-black'
+              }`}
+              onClick={() => {
+                setCategoryType('backend')
+                setJobTypes([]) // 清空已选择的职位类型
+              }}
+            >
+              后台
+            </Button>
+          </div>
+        </div>
+
         {/* 职位类型筛选 */}
         <div className="bg-white rounded-2xl p-4 mb-4">
           <h3 className="text-base font-medium mb-3">职位类型</h3>
           <div className="grid grid-cols-2 gap-2">
-            {jobTypeOptions.map((type) => (
+            {getCurrentJobTypes().map((type) => (
               <div key={type} className="flex items-center space-x-2">
                 <Checkbox
                   id={type}

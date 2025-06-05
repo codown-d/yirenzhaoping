@@ -42,6 +42,7 @@ export default function JobseekerPage() {
   const hasActiveFilters = () => {
     return (
       jobseekerFilters.location?.length > 0 ||
+      (jobseekerFilters.categoryType && jobseekerFilters.categoryType !== 'frontend') ||
       jobseekerFilters.jobTypes?.length > 0 ||
       (jobseekerFilters.salaryRange && (jobseekerFilters.salaryRange[0] !== 0 || jobseekerFilters.salaryRange[1] !== 50)) ||
       jobseekerFilters.employmentType !== "" ||
@@ -63,6 +64,10 @@ export default function JobseekerPage() {
         ...jobseekerFilters,
         location: jobseekerFilters.location.filter((item: string) => item !== value),
       }
+      setJobseekerFilters(newFilters)
+      localStorage.setItem('jobseeker_filters', JSON.stringify(newFilters))
+    } else if (type === "categoryType") {
+      const newFilters = { ...jobseekerFilters, categoryType: 'frontend' }
       setJobseekerFilters(newFilters)
       localStorage.setItem('jobseeker_filters', JSON.stringify(newFilters))
     } else if (type === "jobTypes" && value) {
@@ -211,69 +216,7 @@ export default function JobseekerPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* 未登录状态的选择组件 */}
-      {!isAuthenticated && (
-        <div className="px-4 py-6">
-          <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-6 border border-blue-100">
-            <div className="text-center mb-6">
-              <h2 className="text-xl font-bold text-gray-800 mb-2">欢迎来到艺人招聘平台</h2>
-              <p className="text-gray-600">请选择您的身份，开启专属体验</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* 来求职 */}
-              <div
-                className="bg-white rounded-xl p-6 border-2 border-blue-200 hover:border-blue-400 transition-all cursor-pointer group"
-                onClick={() => router.push('/login?type=jobseeker')}
-              >
-                <div className="text-center">
-                  <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
-                    <User className="h-8 w-8 text-blue-600" />
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-800 mb-2">我来求职</h3>
-                  <p className="text-gray-600 text-sm mb-4">寻找表演机会，展示才华</p>
-                  <div className="flex flex-wrap gap-2 justify-center">
-                    <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs">找工作</span>
-                    <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs">展示作品</span>
-                    <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs">职业发展</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* 来招聘 */}
-              <div
-                className="bg-white rounded-xl p-6 border-2 border-green-200 hover:border-green-400 transition-all cursor-pointer group"
-                onClick={() => router.push('/login?type=employer')}
-              >
-                <div className="text-center">
-                  <div className="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-green-200 transition-colors">
-                    <Briefcase className="h-8 w-8 text-green-600" />
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-800 mb-2">我来招聘</h3>
-                  <p className="text-gray-600 text-sm mb-4">发布职位，寻找人才</p>
-                  <div className="flex flex-wrap gap-2 justify-center">
-                    <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs">发布职位</span>
-                    <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs">筛选人才</span>
-                    <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs">团队建设</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="text-center mt-6">
-              <p className="text-sm text-gray-500">
-                已有账户？
-                <button
-                  onClick={() => router.push('/login')}
-                  className="text-blue-600 hover:text-blue-800 font-medium ml-1"
-                >
-                  直接登录
-                </button>
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+  
 
       {/* Main Content */}
       <main className="pb-20">
@@ -308,6 +251,7 @@ export default function JobseekerPage() {
                 {hasActiveFilters() && (
                   <Badge className="ml-2 bg-green-500 text-white">
                     {(jobseekerFilters.location?.length || 0) +
+                     (jobseekerFilters.categoryType && jobseekerFilters.categoryType !== 'frontend' ? 1 : 0) +
                      (jobseekerFilters.jobTypes?.length || 0) +
                      (jobseekerFilters.salaryRange && (jobseekerFilters.salaryRange[0] !== 0 || jobseekerFilters.salaryRange[1] !== 50) ? 1 : 0) +
                      (jobseekerFilters.employmentType ? 1 : 0) +
@@ -333,7 +277,16 @@ export default function JobseekerPage() {
                     </button>
                   </Badge>
                 ))}
-                
+
+                {jobseekerFilters.categoryType && jobseekerFilters.categoryType !== 'frontend' && (
+                  <Badge variant="secondary" className="rounded-full px-3 py-1">
+                    {jobseekerFilters.categoryType === 'backend' ? '后台' : '前台'}
+                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("categoryType")}>
+                      ×
+                    </button>
+                  </Badge>
+                )}
+
                 {jobseekerFilters.jobTypes?.map((type: string) => (
                   <Badge key={type} variant="secondary" className="rounded-full px-3 py-1">
                     {type}
@@ -373,7 +326,50 @@ export default function JobseekerPage() {
             </div>
           </div>
         )}
+    {/* 未登录状态的选择组件 */}
+    {!isAuthenticated && (
+        <div className="px-4 py-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* 来求职 */}
+              <div
+                className="bg-white rounded-xl p-6 border-2 border-blue-200 hover:border-blue-400 transition-all cursor-pointer group"
+                onClick={() => router.push('/login?type=jobseeker')}
+              >
+                <div className="text-center">
+                  <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
+                    <User className="h-8 w-8 text-blue-600" />
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-800 mb-2">我来求职</h3>
+                  <p className="text-gray-600 text-sm mb-4">寻找表演机会，展示才华</p>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs">找工作</span>
+                    <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs">展示作品</span>
+                    <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs">职业发展</span>
+                  </div>
+                </div>
+              </div>
 
+              {/* 来招聘 */}
+              <div
+                className="bg-white rounded-xl p-6 border-2 border-green-200 hover:border-green-400 transition-all cursor-pointer group"
+                onClick={() => router.push('/login?type=employer')}
+              >
+                <div className="text-center">
+                  <div className="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-green-200 transition-colors">
+                    <Briefcase className="h-8 w-8 text-green-600" />
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-800 mb-2">我来招聘</h3>
+                  <p className="text-gray-600 text-sm mb-4">发布职位，寻找人才</p>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs">发布职位</span>
+                    <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs">筛选人才</span>
+                    <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs">团队建设</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      )}
         {/* Categories */}
         <div className="px-4 mb-6">
           <div className="flex items-center justify-between mb-4">

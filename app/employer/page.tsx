@@ -43,8 +43,9 @@ export default function EmployerPage() {
     return (
       employerFilters.location?.length > 0 ||
       employerFilters.gender !== "" ||
+      (employerFilters.categoryType && employerFilters.categoryType !== 'frontend') ||
       employerFilters.specialties?.length > 0 ||
-      (employerFilters.ageRange && (employerFilters.ageRange[0] !== 18 || employerFilters.ageRange[1] !== 45)) ||
+      (employerFilters.ageGroup && employerFilters.ageGroup !== 'unlimited') ||
       employerFilters.experience !== "" ||
       employerFilters.education?.length > 0
     )
@@ -70,6 +71,10 @@ export default function EmployerPage() {
       const newFilters = { ...employerFilters, gender: "" }
       setEmployerFilters(newFilters)
       localStorage.setItem('employer_filters', JSON.stringify(newFilters))
+    } else if (type === "categoryType") {
+      const newFilters = { ...employerFilters, categoryType: 'frontend' }
+      setEmployerFilters(newFilters)
+      localStorage.setItem('employer_filters', JSON.stringify(newFilters))
     } else if (type === "specialties" && value) {
       const newFilters = {
         ...employerFilters,
@@ -77,8 +82,8 @@ export default function EmployerPage() {
       }
       setEmployerFilters(newFilters)
       localStorage.setItem('employer_filters', JSON.stringify(newFilters))
-    } else if (type === "ageRange") {
-      const newFilters = { ...employerFilters, ageRange: [18, 45] }
+    } else if (type === "ageGroup") {
+      const newFilters = { ...employerFilters, ageGroup: 'unlimited' }
       setEmployerFilters(newFilters)
       localStorage.setItem('employer_filters', JSON.stringify(newFilters))
     } else if (type === "experience") {
@@ -102,6 +107,17 @@ export default function EmployerPage() {
       case "1-3": return "1-3年"
       case "3-5": return "3-5年"
       case "5+": return "5年以上"
+      default: return ""
+    }
+  }
+
+  // 格式化年龄段显示
+  const getAgeGroupText = (ageGroup: string) => {
+    switch (ageGroup) {
+      case "unlimited": return "不限"
+      case "under18": return "18岁以下"
+      case "18-35": return "18-35岁"
+      case "over35": return "35岁以上"
       default: return ""
     }
   }
@@ -311,8 +327,9 @@ export default function EmployerPage() {
                   <Badge className="ml-2 bg-green-500 text-white">
                     {(employerFilters.location?.length || 0) +
                      (employerFilters.gender ? 1 : 0) +
+                     (employerFilters.categoryType && employerFilters.categoryType !== 'frontend' ? 1 : 0) +
                      (employerFilters.specialties?.length || 0) +
-                     (employerFilters.ageRange && (employerFilters.ageRange[0] !== 18 || employerFilters.ageRange[1] !== 45) ? 1 : 0) +
+                     (employerFilters.ageGroup && employerFilters.ageGroup !== 'unlimited' ? 1 : 0) +
                      (employerFilters.experience ? 1 : 0) +
                      (employerFilters.education?.length || 0)}
                   </Badge>
@@ -336,7 +353,7 @@ export default function EmployerPage() {
                     </button>
                   </Badge>
                 ))}
-                
+
                 {employerFilters.gender && (
                   <Badge variant="secondary" className="rounded-full px-3 py-1">
                     {employerFilters.gender === "male" ? "男" : "女"}
@@ -345,7 +362,16 @@ export default function EmployerPage() {
                     </button>
                   </Badge>
                 )}
-                
+
+                {employerFilters.categoryType && employerFilters.categoryType !== 'frontend' && (
+                  <Badge variant="secondary" className="rounded-full px-3 py-1">
+                    {employerFilters.categoryType === 'backend' ? '后台' : '前台'}
+                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("categoryType")}>
+                      ×
+                    </button>
+                  </Badge>
+                )}
+
                 {employerFilters.specialties?.map((specialty: string) => (
                   <Badge key={specialty} variant="secondary" className="rounded-full px-3 py-1">
                     {specialty}
@@ -355,10 +381,10 @@ export default function EmployerPage() {
                   </Badge>
                 ))}
                 
-                {employerFilters.ageRange && (employerFilters.ageRange[0] !== 18 || employerFilters.ageRange[1] !== 45) && (
+                {employerFilters.ageGroup && employerFilters.ageGroup !== 'unlimited' && (
                   <Badge variant="secondary" className="rounded-full px-3 py-1">
-                    {employerFilters.ageRange[0]}-{employerFilters.ageRange[1]}岁
-                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("ageRange")}>
+                    {getAgeGroupText(employerFilters.ageGroup)}
+                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("ageGroup")}>
                       ×
                     </button>
                   </Badge>
