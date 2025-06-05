@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowLeft, Users, Tag, Briefcase, UserCheck } from "lucide-react"
+import { ArrowLeft, Users, Tag, Briefcase, UserCheck, Hash } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
@@ -12,6 +12,8 @@ export default function CreatePostPage() {
 
   // 检查用户身份并智能跳转
   useEffect(() => {
+    if (typeof window === 'undefined') return
+
     const userType = localStorage.getItem('userType')
     const searchParams = new URLSearchParams(window.location.search)
     const type = searchParams.get('type')
@@ -62,7 +64,24 @@ export default function CreatePostPage() {
           </div>
 
           {/* 选择卡片 */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* 论坛帖子 */}
+            <Card className="rounded-2xl hover:shadow-lg transition-shadow cursor-pointer group">
+              <Link href="/post/forum">
+                <CardContent className="p-8 text-center">
+                  <div className="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
+                    <Hash className="h-8 w-8 text-purple-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">发布论坛帖子</h3>
+                  <p className="text-gray-600 mb-4">分享经验、讨论话题、展示作品，与同行交流互动</p>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    <span className="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-sm">经验分享</span>
+                    <span className="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-sm">讨论交流</span>
+                    <span className="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-sm">作品展示</span>
+                  </div>
+                </CardContent>
+              </Link>
+            </Card>
             {/* 求职信息 */}
             <Card className="rounded-2xl hover:shadow-lg transition-shadow cursor-pointer group">
               <Link href="/post/jobseeker">
@@ -103,10 +122,19 @@ export default function CreatePostPage() {
           {/* 快速选择 */}
           <div className="bg-white rounded-2xl p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">快速选择</h3>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <Button
                 asChild
-                className="flex-1 h-12 rounded-xl bg-blue-500 hover:bg-blue-600"
+                className="h-12 rounded-xl bg-purple-500 hover:bg-purple-600"
+              >
+                <Link href="/post/forum">
+                  <Hash className="h-5 w-5 mr-2" />
+                  论坛发帖
+                </Link>
+              </Button>
+              <Button
+                asChild
+                className="h-12 rounded-xl bg-blue-500 hover:bg-blue-600"
               >
                 <Link href="/post/jobseeker">
                   <UserCheck className="h-5 w-5 mr-2" />
@@ -115,7 +143,7 @@ export default function CreatePostPage() {
               </Button>
               <Button
                 asChild
-                className="flex-1 h-12 rounded-xl bg-green-500 hover:bg-green-600"
+                className="h-12 rounded-xl bg-green-500 hover:bg-green-600"
               >
                 <Link href="/post/employer">
                   <Briefcase className="h-5 w-5 mr-2" />

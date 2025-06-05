@@ -108,7 +108,7 @@ export default function ForumPage() {
                   className="w-full justify-start text-gray-500 bg-white hover:bg-gray-50 rounded-xl h-10"
                   asChild
                 >
-                  <Link href="/post/create">
+                  <Link href="/post/forum">
                     分享你的表演经验、技巧或心得...
                   </Link>
                 </Button>
@@ -117,13 +117,13 @@ export default function ForumPage() {
             <div className="flex items-center justify-between mt-3 pt-3 border-t border-green-200">
               <div className="flex space-x-4">
                 <Button variant="ghost" size="sm" className="text-green-600 hover:bg-green-100" asChild>
-                  <Link href="/post/create">
+                  <Link href="/post/forum">
                     <Plus className="h-4 w-4 mr-1" />
                     发布动态
                   </Link>
                 </Button>
                 <Button variant="ghost" size="sm" className="text-green-600 hover:bg-green-100" asChild>
-                  <Link href="/post/create">
+                  <Link href="/post/forum">
                     <Hash className="h-4 w-4 mr-1" />
                     参与话题
                   </Link>
@@ -237,10 +237,10 @@ export default function ForumPage() {
       <div className="fixed bottom-20 right-4 z-40">
         <Button
           size="lg"
-          className="h-14 w-14 rounded-full shadow-lg bg-green-500 hover:bg-green-600 border-4 border-white"
+          className="h-14 w-14 rounded-full shadow-lg bg-purple-500 hover:bg-purple-600 border-4 border-white"
           asChild
         >
-          <Link href={role=== UserType.Employer?"/post/employer":"/post/jobseeker"}>
+          <Link href="/post/forum">
             <Plus className="h-6 w-6" />
           </Link>
         </Button>

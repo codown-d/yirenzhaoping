@@ -263,6 +263,24 @@ export default function JobDetailPage() {
               </CardContent>
             </Card>
 
+  <Card className="rounded-xl">
+              <CardHeader>
+                <CardTitle>工作环境照片</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {job.images.map((image, index) => (
+                    <div key={index} className="aspect-video bg-gray-200 rounded-xl overflow-hidden">
+                      <img
+                        src={image || "/placeholder.svg"}
+                        alt={`团队风采 ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
             {/* Company Images */}
             <Card className="rounded-xl">
               <CardHeader>

@@ -1,18 +1,26 @@
-import { ArrowLeft, MapPin, Phone, Mail, Heart, Star, MessageCircle, Share2, Music, Award, GraduationCap } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Separator } from "@/components/ui/separator"
-import Link from "next/link"
+import {
+  ArrowLeft,
+  MapPin,
+  Phone,
+  Mail,
+  Heart,
+  Star,
+  MessageCircle,
+  Share2,
+  Music,
+  Award,
+  GraduationCap,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 
 export async function generateStaticParams() {
   // 为静态导出生成候选人ID参数
-  return [
-    { id: '1' },
-    { id: '2' },
-    { id: '3' },
-  ]
+  return [{ id: "1" }, { id: "2" }, { id: "3" }];
 }
 
 export default function CandidateDetailPage() {
@@ -63,10 +71,19 @@ export default function CandidateDetailPage() {
       },
     ],
     awards: ["全国舞蹈比赛金奖", "亚洲青年舞蹈家大赛银奖"],
-    performances: ["《丝路花雨》主要舞者", "《梁祝》独舞", "《春江花月夜》群舞"],
+    performances: [
+      "《丝路花雨》主要舞者",
+      "《梁祝》独舞",
+      "《春江花月夜》群舞",
+    ],
     videos: [
       {
         title: "古典舞《洛神赋》片段",
+        thumbnail: "/placeholder.svg?height=200&width=300",
+        url: "#",
+      },
+      {
+        title: "民族舞《茉莉花》",
         thumbnail: "/placeholder.svg?height=200&width=300",
         url: "#",
       },
@@ -87,6 +104,11 @@ export default function CandidateDetailPage() {
           url: "/placeholder.svg?height=300&width=400",
           title: "民族舞《茉莉花》",
           description: "亚洲文化节表演",
+        },
+        {
+          url: "/placeholder.svg?height=300&width=400",
+          title: "古典舞独舞",
+          description: "个人代表作品",
         },
         {
           url: "/placeholder.svg?height=300&width=400",
@@ -119,7 +141,7 @@ export default function CandidateDetailPage() {
         },
       ],
     },
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -147,14 +169,18 @@ export default function CandidateDetailPage() {
                 <div className="flex items-start space-x-4">
                   <Avatar className="h-20 w-20">
                     <AvatarImage src={candidate.avatar || "/placeholder.svg"} />
-                    <AvatarFallback className="text-2xl">{candidate.name[0]}</AvatarFallback>
+                    <AvatarFallback className="text-2xl">
+                      {candidate.name[0]}
+                    </AvatarFallback>
                   </Avatar>
                   <div className="flex-1">
                     <CardTitle className="text-2xl">{candidate.name}</CardTitle>
                     <p className="text-gray-600 mt-1">
                       {candidate.age}岁 · {candidate.gender}
                     </p>
-                    <p className="text-lg font-medium mt-2">{candidate.major}</p>
+                    <p className="text-lg font-medium mt-2">
+                      {candidate.major}
+                    </p>
                     <div className="flex items-center text-gray-500 mt-2">
                       <MapPin className="h-4 w-4 mr-1" />
                       <span>{candidate.location}</span>
@@ -181,14 +207,65 @@ export default function CandidateDetailPage() {
                   <Separator />
                   <div>
                     <h4 className="font-medium mb-2">自我介绍</h4>
-                    <p className="text-gray-700 leading-relaxed">{candidate.introduction}</p>
+                    <p className="text-gray-700 leading-relaxed">
+                      {candidate.introduction}
+                    </p>
+                  </div>
+                  <Separator />
+                  <div>
+                    <h4 className="font-medium mb-2">个人展示</h4>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {candidate.images.stage.map((image, index) => (
+                        <div key={index} className="space-y-2">
+                          <div className="aspect-[4/3] bg-gray-200 rounded-xl overflow-hidden">
+                            <img
+                              src={image.url || "/placeholder.svg"}
+                              alt={image.title}
+                              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Videos */}
             <Card className="rounded-xl">
+              <CardHeader>
+                <CardTitle>自我介绍视频</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1  gap-4">
+                  {candidate.videos.slice(-1).map((video, index) => (
+                    <div key={index} className="space-y-2">
+                      <div className="aspect-video bg-gray-200 rounded-xl overflow-hidden relative">
+                        <img
+                          src={video.thumbnail || "/placeholder.svg"}
+                          alt={video.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="bg-black bg-opacity-50 rounded-full p-3">
+                            <svg
+                              className="w-8 h-8 text-white"
+                              fill="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M8 5v14l11-7z" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+            {/* Videos */}
+            {/* <Card className="rounded-xl">
               <CardHeader>
                 <CardTitle>表演视频</CardTitle>
               </CardHeader>
@@ -215,27 +292,34 @@ export default function CandidateDetailPage() {
                   ))}
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
 
             {/* Stage Photos */}
             <Card className="rounded-xl">
               <CardHeader>
-                <CardTitle>舞台风采</CardTitle>
+                <CardTitle>专业视频</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {candidate.images.stage.map((image, index) => (
+                  {candidate.videos.map((video, index) => (
                     <div key={index} className="space-y-2">
-                      <div className="aspect-[4/3] bg-gray-200 rounded-xl overflow-hidden">
+                      <div className="aspect-video bg-gray-200 rounded-xl overflow-hidden relative">
                         <img
-                          src={image.url || "/placeholder.svg"}
-                          alt={image.title}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                          src={video.thumbnail || "/placeholder.svg"}
+                          alt={video.title}
+                          className="w-full h-full object-cover"
                         />
-                      </div>
-                      <div>
-                        <h5 className="font-medium text-sm">{image.title}</h5>
-                        <p className="text-xs text-gray-500">{image.description}</p>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="bg-black bg-opacity-50 rounded-full p-3">
+                            <svg
+                              className="w-8 h-8 text-white"
+                              fill="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M8 5v14l11-7z" />
+                            </svg>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -244,7 +328,7 @@ export default function CandidateDetailPage() {
             </Card>
 
             {/* Training Photos */}
-            <Card className="rounded-xl">
+            {/* <Card className="rounded-xl">
               <CardHeader>
                 <CardTitle>训练日常</CardTitle>
               </CardHeader>
@@ -267,10 +351,10 @@ export default function CandidateDetailPage() {
                   ))}
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
 
             {/* Award Photos */}
-            <Card className="rounded-xl">
+            {/* <Card className="rounded-xl">
               <CardHeader>
                 <CardTitle>获奖时刻</CardTitle>
               </CardHeader>
@@ -293,7 +377,7 @@ export default function CandidateDetailPage() {
                   ))}
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
 
             {/* Performances */}
             <Card className="rounded-xl">
@@ -341,7 +425,10 @@ export default function CandidateDetailPage() {
               <CardContent>
                 <div className="space-y-4">
                   {candidate.experience.map((exp, index) => (
-                    <div key={index} className="border-l-2 border-green-200 pl-4">
+                    <div
+                      key={index}
+                      className="border-l-2 border-green-200 pl-4"
+                    >
                       <h4 className="font-medium">{exp.position}</h4>
                       <p className="text-gray-600">{exp.company}</p>
                       <p className="text-sm text-gray-500">{exp.duration}</p>
@@ -363,20 +450,29 @@ export default function CandidateDetailPage() {
               <CardContent>
                 <div className="space-y-4">
                   {candidate.education.map((edu, index) => (
-                    <div key={index} className="border-l-4 border-blue-200 pl-4 bg-blue-50/50 rounded-r-lg py-3">
+                    <div
+                      key={index}
+                      className="border-l-4 border-blue-200 pl-4 bg-blue-50/50 rounded-r-lg py-3"
+                    >
                       <div className="flex items-start justify-between mb-2">
                         <h4 className="font-semibold text-lg">{edu.school}</h4>
                         <Badge variant="secondary" className="text-xs">
                           {edu.degree}
                         </Badge>
                       </div>
-                      <p className="text-gray-700 font-medium mb-1">{edu.major}</p>
-                      <p className="text-sm text-gray-500 mb-2">{edu.duration}</p>
+                      <p className="text-gray-700 font-medium mb-1">
+                        {edu.major}
+                      </p>
+                      <p className="text-sm text-gray-500 mb-2">
+                        {edu.duration}
+                      </p>
 
                       {/* GPA信息 */}
                       {edu.gpa && (
                         <div className="flex items-center mb-2">
-                          <span className="text-sm text-gray-600 mr-2">GPA:</span>
+                          <span className="text-sm text-gray-600 mr-2">
+                            GPA:
+                          </span>
                           <Badge variant="outline" className="text-xs">
                             {edu.gpa}
                           </Badge>
@@ -387,7 +483,10 @@ export default function CandidateDetailPage() {
                       {edu.honors && edu.honors.length > 0 && (
                         <div className="flex flex-wrap gap-1">
                           {edu.honors.map((honor, honorIndex) => (
-                            <Badge key={honorIndex} className="text-xs bg-yellow-100 text-yellow-800">
+                            <Badge
+                              key={honorIndex}
+                              className="text-xs bg-yellow-100 text-yellow-800"
+                            >
                               {honor}
                             </Badge>
                           ))}
@@ -459,29 +558,47 @@ export default function CandidateDetailPage() {
                     <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-3">
                       <GraduationCap className="h-8 w-8 text-white" />
                     </div>
-                    <h4 className="font-semibold text-lg">{candidate.school}</h4>
-                    <p className="text-sm text-gray-600 mt-1">国内顶尖舞蹈学府</p>
+                    <h4 className="font-semibold text-lg">
+                      {candidate.school}
+                    </h4>
+                    <p className="text-sm text-gray-600 mt-1">
+                      国内顶尖舞蹈学府
+                    </p>
                   </div>
 
                   {/* 详细教育信息 */}
                   <div className="space-y-3 pt-3 border-t">
                     {candidate.education.map((edu, index) => (
-                      <div key={index} className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-3 border border-blue-100">
+                      <div
+                        key={index}
+                        className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-3 border border-blue-100"
+                      >
                         <div className="space-y-2">
                           <div className="flex items-start justify-between">
-                            <h5 className="font-semibold text-sm text-gray-800">{edu.school}</h5>
+                            <h5 className="font-semibold text-sm text-gray-800">
+                              {edu.school}
+                            </h5>
                             <Badge variant="secondary" className="text-xs">
                               {edu.degree}
                             </Badge>
                           </div>
-                          <p className="text-xs text-gray-700 font-medium">{edu.major}</p>
-                          <p className="text-xs text-gray-500">{edu.duration}</p>
+                          <p className="text-xs text-gray-700 font-medium">
+                            {edu.major}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {edu.duration}
+                          </p>
 
                           {/* GPA */}
                           {edu.gpa && (
                             <div className="flex items-center">
-                              <span className="text-xs text-gray-600 mr-1">GPA:</span>
-                              <Badge variant="outline" className="text-xs px-1 py-0">
+                              <span className="text-xs text-gray-600 mr-1">
+                                GPA:
+                              </span>
+                              <Badge
+                                variant="outline"
+                                className="text-xs px-1 py-0"
+                              >
                                 {edu.gpa}
                               </Badge>
                             </div>
@@ -490,13 +607,20 @@ export default function CandidateDetailPage() {
                           {/* 荣誉 */}
                           {edu.honors && edu.honors.length > 0 && (
                             <div className="flex flex-wrap gap-1">
-                              {edu.honors.slice(0, 2).map((honor, honorIndex) => (
-                                <Badge key={honorIndex} className="text-xs bg-yellow-100 text-yellow-700 px-1 py-0">
-                                  {honor}
-                                </Badge>
-                              ))}
+                              {edu.honors
+                                .slice(0, 2)
+                                .map((honor, honorIndex) => (
+                                  <Badge
+                                    key={honorIndex}
+                                    className="text-xs bg-yellow-100 text-yellow-700 px-1 py-0"
+                                  >
+                                    {honor}
+                                  </Badge>
+                                ))}
                               {edu.honors.length > 2 && (
-                                <span className="text-xs text-gray-500">+{edu.honors.length - 2}</span>
+                                <span className="text-xs text-gray-500">
+                                  +{edu.honors.length - 2}
+                                </span>
                               )}
                             </div>
                           )}
@@ -524,5 +648,5 @@ export default function CandidateDetailPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

@@ -343,11 +343,13 @@ export default function EmployerPage() {
                 <div className="flex items-start space-x-3">
                   <Avatar className="h-12 w-12">
                     <AvatarImage src={performer.avatar} />
-                    <AvatarFallback>{performer.name[0]}</AvatarFallback>
+                    <AvatarFallback >{performer.name[0]}</AvatarFallback>
                   </Avatar>
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-1">
-                      <h3 className="font-medium">{performer.name}</h3>
+                      <h3 className="font-medium"onClick={()=>{
+                        router.push("/candidate/1")
+                      }}>{performer.name}</h3>
                       <div className="flex items-center space-x-1">
                         <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                           <Heart className="h-4 w-4" />

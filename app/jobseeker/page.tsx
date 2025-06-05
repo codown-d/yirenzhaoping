@@ -329,7 +329,9 @@ export default function JobseekerPage() {
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-1">
-                      <h3 className="font-medium">{opportunity.title}</h3>
+                      <h3 className="font-medium" onClick={()=>{
+                        router.push("/job/1")
+                      }}>{opportunity.title}</h3>
                       {opportunity.urgent && (
                         <Badge className="bg-red-100 text-red-800 text-xs">急招</Badge>
                       )}
