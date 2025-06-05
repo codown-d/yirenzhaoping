@@ -59,6 +59,9 @@ export default function ForumPage() {
   ]
 
   const { role } = useAuth()
+
+  // 未登录状态按照求职者逻辑处理
+  const effectiveRole = role || UserType.JobSeeker
   return (
     <div className="min-h-screen bg-gray-50">
 
