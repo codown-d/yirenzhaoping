@@ -287,38 +287,46 @@ export default function EmployerProfilePage() {
         {/* Profile Header */}
         <Card className="rounded-2xl mb-6">
           <CardContent className="p-6">
-            <div className="flex items-start space-x-4">
-              <div className="relative">
-                <Avatar className="h-20 w-20">
+            <div className="flex items-start space-x-3">
+              <div className="relative flex-shrink-0">
+                <Avatar className="h-16 w-16 md:h-20 md:w-20">
                   <AvatarImage src={employerData.avatar} />
-                  <AvatarFallback className="text-2xl">{employerData.name[0]}</AvatarFallback>
+                  <AvatarFallback className="text-lg md:text-2xl">{employerData.name[0]}</AvatarFallback>
                 </Avatar>
-                <Button size="sm" className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full p-0">
-                  <Camera className="h-4 w-4" />
+                <Button size="sm" className="absolute -bottom-1 -right-1 h-6 w-6 md:h-8 md:w-8 rounded-full p-0">
+                  <Camera className="h-3 w-3 md:h-4 md:w-4" />
                 </Button>
               </div>
 
-              <div className="flex-1">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center space-x-2">
-                    <h2 className="text-2xl font-bold">{employerData.name}</h2>
-                    {employerData.isVerified && (
-                      <div className="flex items-center space-x-1 bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                        <CheckCircle className="h-4 w-4" />
-                        <span className="text-xs font-medium">企业认证</span>
-                      </div>
-                    )}
-                    {employerData.vipStatus.isVip && (
-                      <div className="flex items-center space-x-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 py-1 rounded-full">
-                        <Crown className="h-4 w-4" />
-                        <span className="text-xs font-medium">{employerData.vipStatus.level}</span>
-                      </div>
-                    )}
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+                  <div className="flex flex-col space-y-2 mb-2 md:mb-0">
+                    <h2 className="text-lg md:text-2xl font-bold truncate">{employerData.name}</h2>
+                    <div className="flex flex-wrap gap-2">
+                      {employerData.isVerified && (
+                        <div className="flex items-center space-x-1 bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                          <CheckCircle className="h-3 w-3 md:h-4 md:w-4" />
+                          <span className="text-xs font-medium">企业认证</span>
+                        </div>
+                      )}
+                      {employerData.vipStatus.isVip && (
+                        <div className="flex items-center space-x-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 py-1 rounded-full">
+                          <Crown className="h-3 w-3 md:h-4 md:w-4" />
+                          <span className="text-xs font-medium">{employerData.vipStatus.level}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  {/* <Button variant="outline" size="sm" className="rounded-xl">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="rounded-xl self-start md:self-center"
+                    onClick={() => router.push('/profile/employer/edit')}
+                  >
                     <Edit className="h-4 w-4 mr-2" />
-                    编辑资料
-                  </Button> */}
+                    <span className="hidden sm:inline">编辑资料</span>
+                    <span className="sm:hidden">编辑</span>
+                  </Button>
                 </div>
 
                 <p className="text-lg text-gray-700 mb-2">{employerData.title}</p>
@@ -426,22 +434,22 @@ export default function EmployerProfilePage() {
 
                 <div className="bg-white rounded-lg p-3 space-y-2">
                   <h4 className="font-medium text-sm mb-2">专享权益</h4>
-                  <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                     <div className="flex items-center space-x-1">
-                      <Zap className="h-3 w-3 text-yellow-600" />
-                      <span>优先推荐</span>
+                      <Zap className="h-3 w-3 text-yellow-600 flex-shrink-0" />
+                      <span className="truncate">优先推荐</span>
                     </div>
                     <div className="flex items-center space-x-1">
-                      <Eye className="h-3 w-3 text-blue-600" />
-                      <span>查看联系方式</span>
+                      <Eye className="h-3 w-3 text-blue-600 flex-shrink-0" />
+                      <span className="truncate">查看联系方式</span>
                     </div>
                     <div className="flex items-center space-x-1">
-                      <MessageCircle className="h-3 w-3 text-green-600" />
-                      <span>无限私信</span>
+                      <MessageCircle className="h-3 w-3 text-green-600 flex-shrink-0" />
+                      <span className="truncate">无限私信</span>
                     </div>
                     <div className="flex items-center space-x-1">
-                      <TrendingUp className="h-3 w-3 text-purple-600" />
-                      <span>数据分析</span>
+                      <TrendingUp className="h-3 w-3 text-purple-600 flex-shrink-0" />
+                      <span className="truncate">数据分析</span>
                     </div>
                   </div>
                 </div>
@@ -503,39 +511,41 @@ export default function EmployerProfilePage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {employerData.followedCandidates.map((candidate) => (
-                    <div key={candidate.id} className="flex items-center space-x-4 p-4 border rounded-lg">
-                      <Avatar className="h-12 w-12">
+                    <div key={candidate.id} className="flex items-start space-x-3 p-3 border rounded-lg hover:shadow-md transition-shadow">
+                      <Avatar className="h-10 w-10 flex-shrink-0">
                         <AvatarImage src={candidate.avatar} />
-                        <AvatarFallback>{candidate.name[0]}</AvatarFallback>
+                        <AvatarFallback className="text-sm">{candidate.name[0]}</AvatarFallback>
                       </Avatar>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
-                          <h4 className="font-medium">{candidate.name}</h4>
-                          <div className="flex items-center space-x-2">
-                            <Badge variant={candidate.isActive ? "default" : "secondary"}>
-                              {candidate.isActive ? "活跃" : "不活跃"}
-                            </Badge>
-                          </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between mb-1">
+                          <h4 className="font-medium text-sm truncate pr-2">{candidate.name}</h4>
+                          <Badge variant={candidate.isActive ? "default" : "secondary"} className="text-xs px-2 py-0.5 flex-shrink-0">
+                            {candidate.isActive ? "活跃" : "不活跃"}
+                          </Badge>
                         </div>
-                        <p className="text-sm text-gray-600 mb-1">{candidate.title}</p>
-                        <div className="flex items-center space-x-4 text-sm text-gray-600">
-                          <span>{candidate.experience}经验</span>
-                          <span>{candidate.education}</span>
-                          <span>{candidate.location}</span>
+                        <p className="text-xs text-gray-600 mb-2 truncate">{candidate.title}</p>
+                        <div className="flex items-center space-x-2 text-xs text-gray-600 mb-1">
+                          <span className="truncate">{candidate.experience}经验</span>
+                          <span>•</span>
+                          <span className="truncate">{candidate.education}</span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-xs text-gray-600 mb-2">
+                          <span className="truncate">{candidate.location}</span>
+                          <span>•</span>
                           <span>最后活跃: {candidate.lastActive}</span>
                         </div>
-                        <p className="text-xs text-gray-500 mt-1">关注于 {candidate.followDate}</p>
-                      </div>
-                      <div className="flex space-x-2">
-                        <Button size="sm" variant="outline">
-                          <MessageCircle className="h-4 w-4 mr-1" />
-                          私信
-                        </Button>
-                        <Button size="sm" variant="outline">
-                          <Heart className="h-4 w-4" />
-                        </Button>
+                        <div className="text-xs text-gray-500 mb-2">关注于 {candidate.followDate}</div>
+                        <div className="flex space-x-2">
+                          <Button size="sm" variant="outline" className="h-7 px-2 text-xs">
+                            <MessageCircle className="h-3 w-3 mr-1" />
+                            私信
+                          </Button>
+                          <Button size="sm" variant="outline" className="h-7 w-7 p-0">
+                            <Heart className="h-3 w-3" />
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   ))}

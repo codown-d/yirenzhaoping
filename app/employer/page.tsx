@@ -228,69 +228,7 @@ export default function EmployerPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* 未登录状态的选择组件 */}
-      {!isAuthenticated && (
-        <div className="px-4 py-6">
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100">
-            <div className="text-center mb-6">
-              <h2 className="text-xl font-bold text-gray-800 mb-2">欢迎来到艺人招聘平台</h2>
-              <p className="text-gray-600">请选择您的身份，开启专属体验</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* 来求职 */}
-              <div
-                className="bg-white rounded-xl p-6 border-2 border-blue-200 hover:border-blue-400 transition-all cursor-pointer group"
-                onClick={() => router.push('/login?type=jobseeker')}
-              >
-                <div className="text-center">
-                  <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
-                    <User className="h-8 w-8 text-blue-600" />
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-800 mb-2">我来求职</h3>
-                  <p className="text-gray-600 text-sm mb-4">寻找表演机会，展示才华</p>
-                  <div className="flex flex-wrap gap-2 justify-center">
-                    <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs">找工作</span>
-                    <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs">展示作品</span>
-                    <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs">职业发展</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* 来招聘 */}
-              <div
-                className="bg-white rounded-xl p-6 border-2 border-green-200 hover:border-green-400 transition-all cursor-pointer group"
-                onClick={() => router.push('/login?type=employer')}
-              >
-                <div className="text-center">
-                  <div className="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-green-200 transition-colors">
-                    <Users className="h-8 w-8 text-green-600" />
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-800 mb-2">我来招聘</h3>
-                  <p className="text-gray-600 text-sm mb-4">发布职位，寻找人才</p>
-                  <div className="flex flex-wrap gap-2 justify-center">
-                    <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs">发布职位</span>
-                    <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs">筛选人才</span>
-                    <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs">团队建设</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="text-center mt-6">
-              <p className="text-sm text-gray-500">
-                已有账户？
-                <button
-                  onClick={() => router.push('/login')}
-                  className="text-green-600 hover:text-green-800 font-medium ml-1"
-                >
-                  直接登录
-                </button>
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+     
 
       {/* Main Content */}
       <main className="pb-20">
@@ -304,27 +242,27 @@ export default function EmployerPage() {
           />
         </div>
 
-        {/* Search Section */}
-        <div className="px-4 mb-6">
-          <div className="bg-white rounded-2xl shadow-sm p-4">
-            <div className="flex space-x-3">
+        {/* Search Section - 移动端优化 */}
+        <div className="px-3 mb-4">
+          <div className="bg-white rounded-xl shadow-sm p-3">
+            <div className="flex space-x-2">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input
                   placeholder="搜索求职者、专业..."
-                  className="pl-10 h-12 rounded-xl border-gray-200"
+                  className="pl-10 h-10 rounded-lg border-gray-200 text-sm"
                 />
               </div>
               <Button
                 variant="outline"
                 size="sm"
-                className="h-12 px-4 rounded-xl"
+                className="h-10 px-3 rounded-lg flex-shrink-0"
                 onClick={handleFilterClick}
               >
-                <Filter className="h-4 w-4 mr-2" />
-                筛选
+                <Filter className="h-4 w-4 mr-1" />
+                <span className="text-xs">筛选</span>
                 {hasActiveFilters() && (
-                  <Badge className="ml-2 bg-green-500 text-white">
+                  <Badge className="ml-1 bg-green-500 text-white text-xs px-1.5 py-0.5">
                     {(employerFilters.location?.length || 0) +
                      (employerFilters.gender ? 1 : 0) +
                      (employerFilters.categoryType && employerFilters.categoryType !== 'frontend' ? 1 : 0) +
@@ -411,19 +349,60 @@ export default function EmployerPage() {
             </div>
           </div>
         )}
+ {/* 未登录状态的选择组件 - 移动端优化 */}
+      {!isAuthenticated && (
+        <div className="px-3 py-4">
+          <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-100">
+            <div className="grid grid-cols-2 gap-3">
+              {/* 来求职 */}
+              <div
+                className="bg-white rounded-lg p-3 border-2 border-blue-200 hover:border-blue-400 transition-all cursor-pointer group active:scale-95"
+                onClick={() => router.push('/login?type=jobseeker')}
+              >
+                <div className="text-center">
+                  <div className="bg-blue-100 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-2 group-hover:bg-blue-200 transition-colors">
+                    <User className="h-5 w-5 text-blue-600" />
+                  </div>
+                  <h3 className="text-sm font-bold text-gray-800 mb-1">我来求职</h3>
+                  <p className="text-gray-600 text-xs mb-2">寻找表演机会</p>
+                  <div className="flex flex-wrap gap-1 justify-center">
+                    <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs">找工作</span>
+                  </div>
+                </div>
+              </div>
 
-        {/* Categories */}
-        <div className="px-4 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">类别</h2>
-            <div className="flex bg-gray-100 rounded-xl p-1">
+              {/* 来招聘 */}
+              <div
+                className="bg-white rounded-lg p-3 border-2 border-green-200 hover:border-green-400 transition-all cursor-pointer group active:scale-95"
+                onClick={() => router.push('/login?type=employer')}
+              >
+                <div className="text-center">
+                  <div className="bg-green-100 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-2 group-hover:bg-green-200 transition-colors">
+                    <Users className="h-5 w-5 text-green-600" />
+                  </div>
+                  <h3 className="text-sm font-bold text-gray-800 mb-1">我来招聘</h3>
+                  <p className="text-gray-600 text-xs mb-2">发布职位招聘</p>
+                  <div className="flex flex-wrap gap-1 justify-center">
+                    <span className="bg-green-50 text-green-700 px-2 py-0.5 rounded-full text-xs">招人才</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+        {/* Categories - 移动端优化 */}
+        <div className="px-3 mb-6">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-base font-semibold">类别</h2>
+            <div className="flex bg-gray-100 rounded-lg p-0.5">
               <Button
                 variant={categoryType === 'frontend' ? 'default' : 'ghost'}
                 size="sm"
-                className={`rounded-lg px-4 py-2 text-sm text-black hover:text-[#fff] ${
+                className={`rounded-md px-3 py-1.5 text-xs text-black hover:text-[#fff] ${
                   categoryType === 'frontend'
                     ? 'bg-white shadow-sm'
-                    : 'hover:bg-gray-200  hover:text-black'
+                    : 'hover:bg-gray-200 hover:text-black'
                 }`}
                 onClick={() => setCategoryType('frontend')}
               >
@@ -432,9 +411,9 @@ export default function EmployerPage() {
               <Button
                 variant={categoryType === 'backend' ? 'default' : 'ghost'}
                 size="sm"
-                className={`rounded-lg px-4 py-2 text-sm  text-black hover:text-[#fff] ${
+                className={`rounded-md px-3 py-1.5 text-xs text-black hover:text-[#fff] ${
                   categoryType === 'backend'
-                    ? 'bg-white shadow-sm '
+                    ? 'bg-white shadow-sm'
                     : 'hover:bg-gray-200 hover:text-black'
                 }`}
                 onClick={() => setCategoryType('backend')}
@@ -443,71 +422,71 @@ export default function EmployerPage() {
               </Button>
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-2">
             {currentCategories.map((category) => (
-              <div key={category.name} className="bg-white rounded-2xl p-4 text-center shadow-sm">
-                <div className="text-2xl mb-2">{category.icon}</div>
-                <div className="font-medium text-sm">{category.name}</div>
+              <div key={category.name} className="bg-white rounded-xl p-3 text-center shadow-sm hover:shadow-md transition-shadow active:scale-95">
+                <div className="text-xl mb-1">{category.icon}</div>
+                <div className="font-medium text-xs text-gray-800">{category.name}</div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Recommended Performers */}
-        <div className="px-4">
-          <h2 className="text-lg font-semibold mb-4">推荐求职者</h2>
-          <div className="space-y-4">
+        {/* Recommended Performers - 移动端优化 */}
+        <div className="px-3">
+          <h2 className="text-base font-semibold mb-3">推荐求职者</h2>
+          <div className="space-y-3">
             {performers.map((performer) => (
-              <div key={performer.id} className="bg-white rounded-2xl p-4 shadow-sm">
+              <div key={performer.id} className="bg-white rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow">
                 <div className="flex items-start space-x-3">
-                  <Avatar className="h-12 w-12">
+                  <Avatar className="h-10 w-10 flex-shrink-0">
                     <AvatarImage src={performer.avatar} />
-                    <AvatarFallback >{performer.name[0]}</AvatarFallback>
+                    <AvatarFallback className="text-sm">{performer.name[0]}</AvatarFallback>
                   </Avatar>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-1">
-                      <h3 className="font-medium"onClick={()=>{
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between mb-1">
+                      <h3 className="font-medium text-sm cursor-pointer hover:text-blue-600 transition-colors truncate" onClick={()=>{
                         router.push("/candidate/1")
                       }}>{performer.name}</h3>
-                      <div className="flex items-center space-x-1">
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                          <Heart className="h-4 w-4" />
+                      <div className="flex items-center space-x-1 flex-shrink-0 ml-2">
+                        <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
+                          <Heart className="h-3.5 w-3.5" />
                         </Button>
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                          <MessageCircle className="h-4 w-4" />
+                        <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
+                          <MessageCircle className="h-3.5 w-3.5" />
                         </Button>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
+                    <div className="flex items-center space-x-2 text-xs text-gray-600 mb-2">
                       <span>{performer.age}岁</span>
                       <span>•</span>
-                      <span>{performer.specialty}</span>
+                      <span className="truncate">{performer.specialty}</span>
                       <span>•</span>
-                      <span>{performer.experience}</span>
+                      <span className="truncate">{performer.experience}</span>
                     </div>
 
-                    {/* 学校和专业信息 */}
-                    <div className="flex items-center space-x-1 text-sm text-gray-600 mb-2">
-                      <GraduationCap className="h-4 w-4" />
-                      <span>{performer.school}</span>
+                    {/* 学校和专业信息 - 移动端紧凑布局 */}
+                    <div className="flex items-center space-x-1 text-xs text-gray-600 mb-2">
+                      <GraduationCap className="h-3 w-3 flex-shrink-0" />
+                      <span className="truncate">{performer.school}</span>
                       <span>•</span>
-                      <span>{performer.major}</span>
+                      <span className="truncate">{performer.major}</span>
                     </div>
                     <div className="flex items-center space-x-1 mb-2">
-                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                      <span className="text-sm font-medium">{performer.rating}</span>
+                      <Star className="h-3 w-3 text-yellow-400 fill-current flex-shrink-0" />
+                      <span className="text-xs font-medium">{performer.rating}</span>
                     </div>
                     <div className="flex flex-wrap gap-1 mb-2">
                       {performer.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-xs">
+                        <Badge key={tag} variant="secondary" className="text-xs px-2 py-0.5">
                           {tag}
                         </Badge>
                       ))}
                     </div>
-                    <p className="text-sm text-gray-600 mb-2">{performer.description}</p>
+                    <p className="text-xs text-gray-600 mb-2 line-clamp-2">{performer.description}</p>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-green-600">{performer.price}</span>
-                      <Button size="sm" className="rounded-xl" onClick={()=>{
+                      <span className="text-xs font-medium text-green-600">{performer.price}</span>
+                      <Button size="sm" className="rounded-lg h-7 px-3 text-xs" onClick={()=>{
                         router.push("/candidate/1")
                       }}>
                         查看详情

@@ -253,60 +253,68 @@ export default function JobseekerProfilePage() {
         {/* Profile Header */}
         <Card className="rounded-2xl mb-6">
           <CardContent className="p-6">
-            <div className="flex items-start space-x-4">
-              <div className="relative">
-                <Avatar className="h-20 w-20">
+            <div className="flex items-start space-x-3">
+              <div className="relative flex-shrink-0">
+                <Avatar className="h-16 w-16 md:h-20 md:w-20">
                   <AvatarImage src={jobseekerData.avatar} />
-                  <AvatarFallback className="text-2xl">{jobseekerData.name[0]}</AvatarFallback>
+                  <AvatarFallback className="text-lg md:text-2xl">{jobseekerData.name[0]}</AvatarFallback>
                 </Avatar>
-                <Button size="sm" className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full p-0">
-                  <Camera className="h-4 w-4" />
+                <Button size="sm" className="absolute -bottom-1 -right-1 h-6 w-6 md:h-8 md:w-8 rounded-full p-0">
+                  <Camera className="h-3 w-3 md:h-4 md:w-4" />
                 </Button>
               </div>
 
-              <div className="flex-1">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center space-x-2">
-                    <h2 className="text-2xl font-bold">{jobseekerData.name}</h2>
-                    {jobseekerData.isVerified && (
-                      <div className="flex items-center space-x-1 bg-green-100 text-green-800 px-2 py-1 rounded-full">
-                        <CheckCircle className="h-4 w-4" />
-                        <span className="text-xs font-medium">实名认证</span>
-                      </div>
-                    )}
-                    {jobseekerData.vipStatus.isVip && (
-                      <div className="flex items-center space-x-1 bg-gradient-to-r from-purple-400 to-pink-500 text-white px-2 py-1 rounded-full">
-                        <Crown className="h-4 w-4" />
-                        <span className="text-xs font-medium">{jobseekerData.vipStatus.level}</span>
-                      </div>
-                    )}
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+                  <div className="flex flex-col space-y-2 mb-2 md:mb-0">
+                    <h2 className="text-lg md:text-2xl font-bold truncate">{jobseekerData.name}</h2>
+                    <div className="flex flex-wrap gap-2">
+                      {jobseekerData.isVerified && (
+                        <div className="flex items-center space-x-1 bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                          <CheckCircle className="h-3 w-3 md:h-4 md:w-4" />
+                          <span className="text-xs font-medium">实名认证</span>
+                        </div>
+                      )}
+                      {jobseekerData.vipStatus.isVip && (
+                        <div className="flex items-center space-x-1 bg-gradient-to-r from-purple-400 to-pink-500 text-white px-2 py-1 rounded-full">
+                          <Crown className="h-3 w-3 md:h-4 md:w-4" />
+                          <span className="text-xs font-medium">{jobseekerData.vipStatus.level}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  {/* <Button variant="outline" size="sm" className="rounded-xl">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="rounded-xl self-start md:self-center"
+                    onClick={() => router.push('/profile/jobseeker/edit')}
+                  >
                     <Edit className="h-4 w-4 mr-2" />
-                    编辑资料
-                  </Button> */}
+                    <span className="hidden sm:inline">编辑资料</span>
+                    <span className="sm:hidden">编辑</span>
+                  </Button>
                 </div>
 
                 <p className="text-lg text-gray-700 mb-2">{jobseekerData.title}</p>
 
-                <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-3">
+                <div className="flex flex-wrap gap-2 md:gap-4 text-xs md:text-sm text-gray-600 mb-3">
                   <div className="flex items-center">
-                    <MapPin className="h-4 w-4 mr-1" />
-                    {jobseekerData.location}
+                    <MapPin className="h-3 w-3 md:h-4 md:w-4 mr-1" />
+                    <span className="truncate max-w-[120px] md:max-w-none">{jobseekerData.location}</span>
                   </div>
                   <div className="flex items-center">
-                    <Briefcase className="h-4 w-4 mr-1" />
-                    {jobseekerData.experience}经验
+                    <Briefcase className="h-3 w-3 md:h-4 md:w-4 mr-1" />
+                    <span>{jobseekerData.experience}经验</span>
                   </div>
                   <div className="flex items-center">
-                    <GraduationCap className="h-4 w-4 mr-1" />
-                    {jobseekerData.education}
+                    <GraduationCap className="h-3 w-3 md:h-4 md:w-4 mr-1" />
+                    <span className="truncate max-w-[100px] md:max-w-none">{jobseekerData.education}</span>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-1.5 md:gap-2 mb-4">
                   {jobseekerData.skills.map((skill, index) => (
-                    <Badge key={index} variant="secondary">
+                    <Badge key={index} variant="secondary" className="text-xs px-2 py-1">
                       {skill}
                     </Badge>
                   ))}
@@ -390,22 +398,22 @@ export default function JobseekerProfilePage() {
 
                 <div className="bg-white rounded-lg p-3 space-y-2">
                   <h4 className="font-medium text-sm mb-2">专享权益</h4>
-                  <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                     <div className="flex items-center space-x-1">
-                      <Zap className="h-3 w-3 text-purple-600" />
-                      <span>简历置顶</span>
+                      <Zap className="h-3 w-3 text-purple-600 flex-shrink-0" />
+                      <span className="truncate">简历置顶</span>
                     </div>
                     <div className="flex items-center space-x-1">
-                      <Eye className="h-3 w-3 text-blue-600" />
-                      <span>查看谁看过我</span>
+                      <Eye className="h-3 w-3 text-blue-600 flex-shrink-0" />
+                      <span className="truncate">查看谁看过我</span>
                     </div>
                     <div className="flex items-center space-x-1">
-                      <MessageCircle className="h-3 w-3 text-green-600" />
-                      <span>优先沟通</span>
+                      <MessageCircle className="h-3 w-3 text-green-600 flex-shrink-0" />
+                      <span className="truncate">优先沟通</span>
                     </div>
                     <div className="flex items-center space-x-1">
-                      <Briefcase className="h-3 w-3 text-orange-600" />
-                      <span>专属职位推荐</span>
+                      <Briefcase className="h-3 w-3 text-orange-600 flex-shrink-0" />
+                      <span className="truncate">专属职位推荐</span>
                     </div>
                   </div>
                 </div>
@@ -467,41 +475,42 @@ export default function JobseekerProfilePage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {jobseekerData.followedCompanies.map((company) => (
-                    <div key={company.id} className="flex items-center space-x-4 p-4 border rounded-lg">
-                      <Avatar className="h-12 w-12">
+                    <div key={company.id} className="flex items-start space-x-3 p-3 border rounded-lg hover:shadow-md transition-shadow">
+                      <Avatar className="h-10 w-10 flex-shrink-0">
                         <AvatarImage src={company.logo} />
-                        <AvatarFallback>{company.name[0]}</AvatarFallback>
+                        <AvatarFallback className="text-sm">{company.name[0]}</AvatarFallback>
                       </Avatar>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
-                          <h4 className="font-medium">{company.name}</h4>
-                          <div className="flex items-center space-x-2">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between mb-1">
+                          <h4 className="font-medium text-sm truncate pr-2">{company.name}</h4>
+                          <div className="flex items-center space-x-1 flex-shrink-0">
                             {company.newJobs > 0 && (
-                              <Badge className="bg-red-100 text-red-800 text-xs">
-                                {company.newJobs} 个新职位
+                              <Badge className="bg-red-100 text-red-800 text-xs px-1.5 py-0.5">
+                                {company.newJobs}新
                               </Badge>
                             )}
-                            <Badge variant={company.isActive ? "default" : "secondary"}>
+                            <Badge variant={company.isActive ? "default" : "secondary"} className="text-xs px-2 py-0.5">
                               {company.isActive ? "活跃" : "不活跃"}
                             </Badge>
                           </div>
                         </div>
-                        <div className="flex items-center space-x-4 text-sm text-gray-600">
-                          <span>{company.industry}</span>
-                          <span>{company.location}</span>
-                          <span>关注于 {company.followDate}</span>
+                        <div className="flex items-center space-x-2 text-xs text-gray-600 mb-2">
+                          <span className="truncate">{company.industry}</span>
+                          <span>•</span>
+                          <span className="truncate">{company.location}</span>
                         </div>
-                      </div>
-                      <div className="flex space-x-2">
-                        <Button size="sm" variant="outline">
-                          <MessageCircle className="h-4 w-4 mr-1" />
-                          私信
-                        </Button>
-                        <Button size="sm" variant="outline">
-                          <Heart className="h-4 w-4" />
-                        </Button>
+                        <div className="text-xs text-gray-500 mb-2">关注于 {company.followDate}</div>
+                        <div className="flex space-x-2">
+                          <Button size="sm" variant="outline" className="h-7 px-2 text-xs">
+                            <MessageCircle className="h-3 w-3 mr-1" />
+                            私信
+                          </Button>
+                          <Button size="sm" variant="outline" className="h-7 w-7 p-0">
+                            <Heart className="h-3 w-3" />
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -519,12 +528,13 @@ export default function JobseekerProfilePage() {
                     <Bell className="h-5 w-5 mr-2" />
                     我的消息
                   </CardTitle>
-                  <div className="flex items-center space-x-2">
-                    <Badge className="bg-red-100 text-red-800">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Badge className="bg-red-100 text-red-800 text-xs px-2 py-1">
                       {jobseekerData.messages.filter(msg => !msg.isRead).length} 条未读
                     </Badge>
-                    <Button size="sm" variant="outline">
-                      全部标记已读
+                    <Button size="sm" variant="outline" className="text-xs px-2 py-1 h-7">
+                      <span className="hidden sm:inline">全部标记已读</span>
+                      <span className="sm:hidden">标记已读</span>
                     </Button>
                   </div>
                 </div>
@@ -532,32 +542,32 @@ export default function JobseekerProfilePage() {
               <CardContent>
                 <div className="space-y-3">
                   {jobseekerData.messages.map((message) => (
-                    <div key={message.id} className={`flex items-start space-x-3 p-4 border rounded-lg ${!message.isRead ? 'bg-blue-50 border-blue-200' : 'bg-white'}`}>
-                      <Avatar className="h-10 w-10">
+                    <div key={message.id} className={`flex items-start space-x-3 p-3 border rounded-lg hover:shadow-md transition-shadow ${!message.isRead ? 'bg-blue-50 border-blue-200' : 'bg-white'}`}>
+                      <Avatar className="h-8 w-8 flex-shrink-0">
                         <AvatarImage src={message.avatar} />
-                        <AvatarFallback>
-                          {message.type === 'system' ? <Bell className="h-4 w-4" /> :
-                            message.type === 'interview' ? <Calendar className="h-4 w-4" /> :
-                              <MessageCircle className="h-4 w-4" />}
+                        <AvatarFallback className="text-xs">
+                          {message.type === 'system' ? <Bell className="h-3 w-3" /> :
+                            message.type === 'interview' ? <Calendar className="h-3 w-3" /> :
+                              <MessageCircle className="h-3 w-3" />}
                         </AvatarFallback>
                       </Avatar>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
-                          <h4 className="font-medium text-sm">{message.title}</h4>
-                          <div className="flex items-center space-x-2">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between mb-1">
+                          <h4 className="font-medium text-sm truncate pr-2">{message.title}</h4>
+                          <div className="flex items-center space-x-1 flex-shrink-0">
                             {!message.isRead && (
                               <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                             )}
                             <span className="text-xs text-gray-500">{message.time}</span>
                           </div>
                         </div>
-                        <p className="text-sm text-gray-600">{message.content}</p>
-                        <div className="flex space-x-2 mt-2">
-                          <Button size="sm" variant="outline">
+                        <p className="text-xs text-gray-600 mb-2 line-clamp-2">{message.content}</p>
+                        <div className="flex space-x-2">
+                          <Button size="sm" variant="outline" className="h-7 px-2 text-xs">
                             查看详情
                           </Button>
                           {message.type === 'interview' && (
-                            <Button size="sm">
+                            <Button size="sm" className="h-7 px-2 text-xs">
                               回复
                             </Button>
                           )}
@@ -583,46 +593,46 @@ export default function JobseekerProfilePage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {jobseekerData.collections.map((item) => (
-                    <div key={item.id} className="border rounded-lg p-4">
+                    <div key={item.id} className="border rounded-lg p-3 hover:shadow-md transition-shadow">
                       <div className="flex items-start justify-between mb-2">
-                        <div className="flex-1">
+                        <div className="flex-1 min-w-0">
                           <div className="flex items-center space-x-2 mb-1">
-                            <h4 className="font-medium">{item.title}</h4>
-                            <Badge variant={item.type === 'job' ? 'default' : 'secondary'}>
+                            <h4 className="font-medium text-sm truncate">{item.title}</h4>
+                            <Badge variant={item.type === 'job' ? 'default' : 'secondary'} className="text-xs px-2 py-0.5 flex-shrink-0">
                               {item.type === 'job' ? '职位' : '企业'}
                             </Badge>
                           </div>
                           {item.type === 'job' ? (
                             <>
-                              <p className="text-sm text-gray-600">{item.company}</p>
-                              <p className="text-sm text-gray-500">{item.location} · {item.salary}</p>
+                              <p className="text-xs text-gray-600 truncate">{item.company}</p>
+                              <p className="text-xs text-gray-500">{item.location} · {item.salary}</p>
                             </>
                           ) : (
                             <>
-                              <p className="text-sm text-gray-600">{item.description}</p>
-                              <p className="text-sm text-gray-500">{item.location}</p>
+                              <p className="text-xs text-gray-600 line-clamp-2">{item.description}</p>
+                              <p className="text-xs text-gray-500">{item.location}</p>
                             </>
                           )}
-                          <div className="flex items-center space-x-4 text-xs text-gray-500 mt-2">
+                          <div className="flex items-center space-x-2 text-xs text-gray-500 mt-2">
                             <span>收藏于 {item.collectedDate}</span>
-                            <Badge variant="outline" className="text-xs">
+                            <Badge variant="outline" className="text-xs px-1.5 py-0.5">
                               {item.status}
                             </Badge>
                           </div>
                         </div>
-                        <div className="flex space-x-2">
-                          <Button size="sm" variant="outline">
-                            <Bookmark className="h-4 w-4" />
+                        <div className="flex flex-col space-y-1 ml-2 flex-shrink-0">
+                          <Button size="sm" variant="outline" className="h-7 w-7 p-0">
+                            <Bookmark className="h-3 w-3" />
                           </Button>
                           {item.type === 'job' && (
-                            <Button size="sm">
+                            <Button size="sm" className="h-7 px-2 text-xs">
                               申请
                             </Button>
                           )}
                           {item.type === 'company' && (
-                            <Button size="sm" variant="outline">
+                            <Button size="sm" variant="outline" className="h-7 px-2 text-xs">
                               查看
                             </Button>
                           )}
@@ -644,57 +654,56 @@ export default function JobseekerProfilePage() {
                     <History className="h-5 w-5 mr-2" />
                     我的足迹
                   </CardTitle>
-                  <div className="flex items-center space-x-2">
-                    <Badge variant="secondary">{jobseekerData.browsingHistory.length} 条记录</Badge>
-                    <Button size="sm" variant="outline">
-                      清空记录
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Badge variant="secondary" className="text-xs px-2 py-1">{jobseekerData.browsingHistory.length} 条记录</Badge>
+                    <Button size="sm" variant="outline" className="text-xs px-2 py-1 h-7">
+                      <span className="hidden sm:inline">清空记录</span>
+                      <span className="sm:hidden">清空</span>
                     </Button>
                   </div>
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {jobseekerData.browsingHistory.map((item) => (
-                    <div key={item.id} className="border rounded-lg p-4">
+                    <div key={item.id} className="border rounded-lg p-3 hover:shadow-md transition-shadow">
                       <div className="flex items-start justify-between mb-2">
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2 mb-1">
-                            <h4 className="font-medium">{item.title}</h4>
-                            <Badge variant={item.type === 'job' ? 'default' : 'secondary'}>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center space-x-1 mb-1 flex-wrap">
+                            <h4 className="font-medium text-sm truncate">{item.title}</h4>
+                            <Badge variant={item.type === 'job' ? 'default' : 'secondary'} className="text-xs px-2 py-0.5 flex-shrink-0">
                               {item.type === 'job' ? '职位' : '企业'}
                             </Badge>
                             {item.viewCount > 1 && (
-                              <Badge variant="outline" className="text-xs">
-                                浏览 {item.viewCount} 次
+                              <Badge variant="outline" className="text-xs px-1.5 py-0.5 flex-shrink-0">
+                                {item.viewCount}次
                               </Badge>
                             )}
                           </div>
                           {item.type === 'job' ? (
                             <>
-                              <p className="text-sm text-gray-600">{item.company}</p>
-                              <p className="text-sm text-gray-500">{item.location} · {item.salary}</p>
+                              <p className="text-xs text-gray-600 truncate">{item.company}</p>
+                              <p className="text-xs text-gray-500">{item.location} · {item.salary}</p>
                             </>
                           ) : (
                             <>
-                              <p className="text-sm text-gray-600">{item.description}</p>
-                              <p className="text-sm text-gray-500">{item.location}</p>
+                              <p className="text-xs text-gray-600 line-clamp-2">{item.description}</p>
+                              <p className="text-xs text-gray-500">{item.location}</p>
                             </>
                           )}
-                          <div className="flex items-center space-x-4 text-xs text-gray-500 mt-2">
-                            <div className="flex items-center space-x-1">
-                              <Clock className="h-3 w-3" />
-                              <span>最后浏览: {item.viewDate}</span>
-                            </div>
+                          <div className="flex items-center space-x-1 text-xs text-gray-500 mt-2">
+                            <Clock className="h-3 w-3 flex-shrink-0" />
+                            <span>最后浏览: {item.viewDate}</span>
                           </div>
                         </div>
-                        <div className="flex space-x-2">
-                          <Button size="sm" variant="outline">
-                            <Eye className="h-4 w-4 mr-1" />
-                            再次查看
+                        <div className="flex flex-col space-y-1 ml-2 flex-shrink-0">
+                          <Button size="sm" variant="outline" className="h-7 px-2 text-xs">
+                            <Eye className="h-3 w-3 mr-1" />
+                            查看
                           </Button>
                           {item.type === 'job' && (
-                            <Button size="sm" variant="outline">
-                              <Bookmark className="h-4 w-4 mr-1" />
+                            <Button size="sm" variant="outline" className="h-7 px-2 text-xs">
+                              <Bookmark className="h-3 w-3 mr-1" />
                               收藏
                             </Button>
                           )}

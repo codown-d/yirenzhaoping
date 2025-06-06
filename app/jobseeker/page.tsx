@@ -229,27 +229,27 @@ export default function JobseekerPage() {
           />
         </div>
 
-        {/* Search Section */}
-        <div className="px-4 mb-6">
-          <div className="bg-white rounded-2xl shadow-sm p-4">
-            <div className="flex space-x-3">
+        {/* Search Section - 移动端优化 */}
+        <div className="px-3 mb-4">
+          <div className="bg-white rounded-xl shadow-sm p-3">
+            <div className="flex space-x-2">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input
                   placeholder="搜索招聘职位、公司..."
-                  className="pl-10 h-12 rounded-xl border-gray-200"
+                  className="pl-10 h-10 rounded-lg border-gray-200 text-sm"
                 />
               </div>
               <Button
                 variant="outline"
                 size="sm"
-                className="h-12 px-4 rounded-xl"
+                className="h-10 px-3 rounded-lg flex-shrink-0"
                 onClick={handleFilterClick}
               >
-                <Filter className="h-4 w-4 mr-2" />
-                筛选
+                <Filter className="h-4 w-4 mr-1" />
+                <span className="text-xs">筛选</span>
                 {hasActiveFilters() && (
-                  <Badge className="ml-2 bg-green-500 text-white">
+                  <Badge className="ml-1 bg-green-500 text-white text-xs px-1.5 py-0.5">
                     {(jobseekerFilters.location?.length || 0) +
                      (jobseekerFilters.categoryType && jobseekerFilters.categoryType !== 'frontend' ? 1 : 0) +
                      (jobseekerFilters.jobTypes?.length || 0) +
@@ -326,62 +326,60 @@ export default function JobseekerPage() {
             </div>
           </div>
         )}
-    {/* 未登录状态的选择组件 */}
+    {/* 未登录状态的选择组件 - 移动端优化 */}
     {!isAuthenticated && (
-        <div className="px-4 py-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="px-3 py-4">
+          <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-4 border border-blue-100">
+            <div className="grid grid-cols-2 gap-3">
               {/* 来求职 */}
               <div
-                className="bg-white rounded-xl p-6 border-2 border-blue-200 hover:border-blue-400 transition-all cursor-pointer group"
+                className="bg-white rounded-lg p-3 border-2 border-blue-200 hover:border-blue-400 transition-all cursor-pointer group active:scale-95"
                 onClick={() => router.push('/login?type=jobseeker')}
               >
                 <div className="text-center">
-                  <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
-                    <User className="h-8 w-8 text-blue-600" />
+                  <div className="bg-blue-100 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-2 group-hover:bg-blue-200 transition-colors">
+                    <User className="h-5 w-5 text-blue-600" />
                   </div>
-                  <h3 className="text-lg font-bold text-gray-800 mb-2">我来求职</h3>
-                  <p className="text-gray-600 text-sm mb-4">寻找表演机会，展示才华</p>
-                  <div className="flex flex-wrap gap-2 justify-center">
-                    <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs">找工作</span>
-                    <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs">展示作品</span>
-                    <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs">职业发展</span>
+                  <h3 className="text-sm font-bold text-gray-800 mb-1">我来求职</h3>
+                  <p className="text-gray-600 text-xs mb-2">寻找表演机会</p>
+                  <div className="flex flex-wrap gap-1 justify-center">
+                    <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs">找工作</span>
                   </div>
                 </div>
               </div>
 
               {/* 来招聘 */}
               <div
-                className="bg-white rounded-xl p-6 border-2 border-green-200 hover:border-green-400 transition-all cursor-pointer group"
+                className="bg-white rounded-lg p-3 border-2 border-green-200 hover:border-green-400 transition-all cursor-pointer group active:scale-95"
                 onClick={() => router.push('/login?type=employer')}
               >
                 <div className="text-center">
-                  <div className="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-green-200 transition-colors">
-                    <Briefcase className="h-8 w-8 text-green-600" />
+                  <div className="bg-green-100 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-2 group-hover:bg-green-200 transition-colors">
+                    <Briefcase className="h-5 w-5 text-green-600" />
                   </div>
-                  <h3 className="text-lg font-bold text-gray-800 mb-2">我来招聘</h3>
-                  <p className="text-gray-600 text-sm mb-4">发布职位，寻找人才</p>
-                  <div className="flex flex-wrap gap-2 justify-center">
-                    <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs">发布职位</span>
-                    <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs">筛选人才</span>
-                    <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs">团队建设</span>
+                  <h3 className="text-sm font-bold text-gray-800 mb-1">我来招聘</h3>
+                  <p className="text-gray-600 text-xs mb-2">发布职位招聘</p>
+                  <div className="flex flex-wrap gap-1 justify-center">
+                    <span className="bg-green-50 text-green-700 px-2 py-0.5 rounded-full text-xs">招人才</span>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
         </div>
       )}
-        {/* Categories */}
-        <div className="px-4 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">类别</h2>
-            <div className="flex bg-gray-100 rounded-xl p-1">
+        {/* Categories - 移动端优化 */}
+        <div className="px-3 mb-6">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-base font-semibold">类别</h2>
+            <div className="flex bg-gray-100 rounded-lg p-0.5">
               <Button
                 variant={categoryType === 'frontend' ? 'default' : 'ghost'}
                 size="sm"
-                className={`rounded-lg px-4 py-2 text-sm  text-black hover:text-[#fff]  ${
+                className={`rounded-md px-3 py-1.5 text-xs text-black hover:text-[#fff] ${
                   categoryType === 'frontend'
                     ? 'bg-white shadow-sm'
-                    : 'hover:bg-gray-200  hover:text-black'
+                    : 'hover:bg-gray-200 hover:text-black'
                 }`}
                 onClick={() => setCategoryType('frontend')}
               >
@@ -390,10 +388,10 @@ export default function JobseekerPage() {
               <Button
                 variant={categoryType === 'backend' ? 'default' : 'ghost'}
                 size="sm"
-                className={`rounded-lg px-4 py-2 text-sm  text-black hover:text-[#fff] ${
+                className={`rounded-md px-3 py-1.5 text-xs text-black hover:text-[#fff] ${
                   categoryType === 'backend'
                     ? 'bg-white shadow-sm'
-                    : 'hover:bg-gray-200  hover:text-black'
+                    : 'hover:bg-gray-200 hover:text-black'
                 }`}
                 onClick={() => setCategoryType('backend')}
               >
@@ -401,72 +399,70 @@ export default function JobseekerPage() {
               </Button>
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-2">
             {currentCategories.map((category) => (
-              <div key={category.name} className="bg-white rounded-2xl p-4 text-center shadow-sm">
-                <div className="text-2xl mb-2">{category.icon}</div>
-                <div className="font-medium text-sm">{category.name}</div>
+              <div key={category.name} className="bg-white rounded-xl p-3 text-center shadow-sm hover:shadow-md transition-shadow active:scale-95">
+                <div className="text-xl mb-1">{category.icon}</div>
+                <div className="font-medium text-xs text-gray-800">{category.name}</div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Recommended Opportunities */}
-        <div className="px-4">
-          <h2 className="text-lg font-semibold mb-4">推荐招聘职位</h2>
-          <div className="space-y-4">
+        {/* Recommended Opportunities - 移动端优化 */}
+        <div className="px-3">
+          <h2 className="text-base font-semibold mb-3">推荐招聘职位</h2>
+          <div className="space-y-3">
             {opportunities.map((opportunity) => (
-              <div key={opportunity.id} className="bg-white rounded-2xl p-4 shadow-sm">
+              <div key={opportunity.id} className="bg-white rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow">
                 <div className="flex items-start justify-between mb-2">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-1">
-                      <h3 className="font-medium" onClick={()=>{
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start space-x-2 mb-1">
+                      <h3 className="font-medium text-sm leading-tight cursor-pointer hover:text-blue-600 transition-colors flex-1" onClick={()=>{
                         router.push("/job/1")
                       }}>{opportunity.title}</h3>
                       {opportunity.urgent && (
-                        <Badge className="bg-red-100 text-red-800 text-xs">急招</Badge>
+                        <Badge className="bg-red-100 text-red-800 text-xs px-1.5 py-0.5 flex-shrink-0">急招</Badge>
                       )}
                     </div>
-                    <p className="text-sm text-gray-600 mb-2">{opportunity.company}</p>
+                    <p className="text-xs text-gray-600 mb-2">{opportunity.company}</p>
                   </div>
-                  <div className="flex items-center space-x-1">
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                      <Heart className="h-4 w-4" />
-                    </Button>
-                  </div>
+                  <Button variant="ghost" size="sm" className="h-7 w-7 p-0 flex-shrink-0 ml-2">
+                    <Heart className="h-3.5 w-3.5" />
+                  </Button>
                 </div>
-                
-                <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
+
+                <div className="flex items-center space-x-2 text-xs text-gray-600 mb-2">
                   <span>{opportunity.type}</span>
                   <span>•</span>
                   <span className="text-green-600 font-medium">{opportunity.salary}/月</span>
                 </div>
 
-                {/* 需求专业和到岗时间 */}
+                {/* 需求专业和到岗时间 - 移动端紧凑布局 */}
                 <div className="space-y-1 mb-2">
-                  <div className="flex items-center space-x-1 text-sm text-gray-600">
-                    <GraduationCap className="h-4 w-4" />
-                    <span>需求专业：{opportunity.requiredMajor}</span>
+                  <div className="flex items-center space-x-1 text-xs text-gray-600">
+                    <GraduationCap className="h-3 w-3 flex-shrink-0" />
+                    <span className="truncate">需求专业：{opportunity.requiredMajor}</span>
                   </div>
-                  <div className="flex items-center space-x-1 text-sm text-gray-600">
-                    <Clock className="h-4 w-4" />
+                  <div className="flex items-center space-x-1 text-xs text-gray-600">
+                    <Clock className="h-3 w-3 flex-shrink-0" />
                     <span>到岗时间：{opportunity.startTime}</span>
                   </div>
                 </div>
-                
+
                 <div className="flex flex-wrap gap-1 mb-2">
                   {opportunity.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary" className="text-xs">
+                    <Badge key={tag} variant="secondary" className="text-xs px-2 py-0.5">
                       {tag}
                     </Badge>
                   ))}
                 </div>
-                
-                <p className="text-sm text-gray-600 mb-3">{opportunity.description}</p>
-                
+
+                <p className="text-xs text-gray-600 mb-3 line-clamp-2">{opportunity.description}</p>
+
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-gray-500">{opportunity.posted}</span>
-                  <Button size="sm" className="rounded-xl" onClick={()=>{
+                  <Button size="sm" className="rounded-lg h-7 px-3 text-xs" onClick={()=>{
                         router.push("/job/1")
                       }}>
                     立即申请

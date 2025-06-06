@@ -377,7 +377,7 @@ export default function JobseekerPostPage() {
           </Card>
 
           {/* 作品展示 */}
-          <Card className="rounded-2xl">
+          {/* <Card className="rounded-2xl">
             <CardHeader>
               <CardTitle className="flex items-center">
                 <Upload className="h-5 w-5 mr-2" />
@@ -443,7 +443,7 @@ export default function JobseekerPostPage() {
                 )}
               </div>
             </CardContent>
-          </Card>
+          </Card> */}
 
           {/* 联系方式 */}
           <Card className="rounded-2xl">
