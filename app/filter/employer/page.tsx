@@ -2,13 +2,25 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowLeft, X } from "lucide-react"
+import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
+import { FilterPageHeader } from "@/components/ui/page-header"
+import {
+  LOCATION_DATA,
+  AGE_GROUP_OPTIONS,
+  FRONTEND_SPECIALTIES,
+  BACKEND_SPECIALTIES,
+  EDUCATION_OPTIONS,
+  getProvinces,
+  getCities,
+  getDistricts,
+  getSpecialtiesByCategory
+} from "@/constants"
 
 
 export default function EmployerFilterPage() {
@@ -26,80 +38,9 @@ export default function EmployerFilterPage() {
   const [experience, setExperience] = useState<string>("")
   const [education, setEducation] = useState<string[]>([])
 
-  // 省市区数据
-  const locationData: Record<string, Record<string, string[]>> = {
-    "北京市": {
-      "北京市": ["东城区", "西城区", "朝阳区", "丰台区", "石景山区", "海淀区", "门头沟区", "房山区", "通州区", "顺义区", "昌平区", "大兴区", "怀柔区", "平谷区", "密云区", "延庆区"]
-    },
-    "上海市": {
-      "上海市": ["黄浦区", "徐汇区", "长宁区", "静安区", "普陀区", "虹口区", "杨浦区", "闵行区", "宝山区", "嘉定区", "浦东新区", "金山区", "松江区", "青浦区", "奉贤区", "崇明区"]
-    },
-    "广东省": {
-      "广州市": ["荔湾区", "越秀区", "海珠区", "天河区", "白云区", "黄埔区", "番禺区", "花都区", "南沙区", "从化区", "增城区"],
-      "深圳市": ["罗湖区", "福田区", "南山区", "宝安区", "龙岗区", "盐田区", "龙华区", "坪山区", "光明区", "大鹏新区"],
-      "珠海市": ["香洲区", "斗门区", "金湾区"],
-      "东莞市": ["东城街道", "南城街道", "万江街道", "莞城街道", "石碣镇", "石龙镇", "茶山镇", "石排镇"]
-    },
-    "江苏省": {
-      "南京市": ["玄武区", "秦淮区", "建邺区", "鼓楼区", "浦口区", "栖霞区", "雨花台区", "江宁区", "六合区", "溧水区", "高淳区"],
-      "苏州市": ["虎丘区", "吴中区", "相城区", "姑苏区", "吴江区", "常熟市", "张家港市", "昆山市", "太仓市"],
-      "无锡市": ["锡山区", "惠山区", "滨湖区", "梁溪区", "新吴区", "江阴市", "宜兴市"]
-    },
-    "浙江省": {
-      "杭州市": ["上城区", "拱墅区", "西湖区", "滨江区", "萧山区", "余杭区", "临平区", "钱塘区", "富阳区", "临安区", "桐庐县", "淳安县", "建德市"],
-      "宁波市": ["海曙区", "江北区", "北仑区", "镇海区", "鄞州区", "奉化区", "象山县", "宁海县", "余姚市", "慈溪市"],
-      "温州市": ["鹿城区", "龙湾区", "瓯海区", "洞头区", "永嘉县", "平阳县", "苍南县", "文成县", "泰顺县", "瑞安市", "乐清市"]
-    },
-    "四川省": {
-      "成都市": ["锦江区", "青羊区", "金牛区", "武侯区", "成华区", "龙泉驿区", "青白江区", "新都区", "温江区", "双流区", "郫都区", "新津区"],
-      "绵阳市": ["涪城区", "游仙区", "安州区", "江油市", "三台县", "盐亭县", "梓潼县", "北川羌族自治县", "平武县"]
-    }
-  }
-
-  // 年龄段选项
-  const ageGroupOptions = [
-    { value: "unlimited", label: "不限" },
-    { value: "under18", label: "18岁以下" },
-    { value: "18-35", label: "18-35岁" },
-    { value: "over35", label: "35岁以上" }
-  ]
-
-  // 前台专业列表
-  const frontendSpecialties = [
-    "古典舞",
-    "民族舞",
-    "芭蕾舞",
-    "现代舞",
-    "街舞",
-    "武术",
-    "杂技",
-    "声乐",
-    "器乐",
-    "戏曲",
-    "表演",
-    "主持",
-    "模特",
-  ]
-
-  // 后台专业列表
-  const backendSpecialties = [
-    "导演",
-    "编剧",
-    "制片",
-    "摄影",
-    "灯光",
-    "音响",
-    "舞美设计",
-    "服装设计",
-    "化妆造型",
-    "道具制作",
-    "后期制作",
-    "音效制作",
-  ]
-
   // 根据当前选择的类别获取专业列表
   const getCurrentSpecialties = () => {
-    return categoryType === 'frontend' ? frontendSpecialties : backendSpecialties
+    return getSpecialtiesByCategory(categoryType)
   }
 
   // 页面加载时从 localStorage 读取筛选条件
@@ -123,21 +64,7 @@ export default function EmployerFilterPage() {
     }
   }, [])
 
-  // 学历列表
-  const educationOptions = ["专科以下", "专科", "本科", "硕士", "博士"]
 
-  // 获取省份列表
-  const getProvinces = () => Object.keys(locationData)
-
-  // 获取城市列表
-  const getCities = (province: string) => {
-    return province ? Object.keys(locationData[province] || {}) : []
-  }
-
-  // 获取区县列表
-  const getDistricts = (province: string, city: string) => {
-    return province && city ? locationData[province]?.[city] || [] : []
-  }
 
   // 处理省份选择
   const handleProvinceChange = (province: string) => {
@@ -229,25 +156,12 @@ export default function EmployerFilterPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b sticky top-0 z-10">
-        <div className="flex items-center justify-between p-4">
-          <div className="flex items-center">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => router.back()}
-              className="mr-2"
-            >
-              <ArrowLeft className="h-4 w-4" />
-            </Button>
-            <h1 className="text-lg font-semibold">筛选求职者</h1>
-          </div>
-          <Button variant="ghost" size="sm" onClick={handleReset}>
-            重置
-          </Button>
-        </div>
-      </div>
+      {/* 头部组件 */}
+      <FilterPageHeader
+        title="筛选求职者"
+        onReset={handleReset}
+        onApply={handleApply}
+      />
 
       {/* Content */}
       <div className="p-4 pb-24">
@@ -431,7 +345,7 @@ export default function EmployerFilterPage() {
               <SelectValue placeholder="请选择年龄段" />
             </SelectTrigger>
             <SelectContent>
-              {ageGroupOptions.map((option) => (
+              {AGE_GROUP_OPTIONS.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>
@@ -471,7 +385,7 @@ export default function EmployerFilterPage() {
         <div className="bg-white rounded-2xl p-4 mb-4">
           <h3 className="text-base font-medium mb-3">学历要求</h3>
           <div className="flex flex-wrap gap-2">
-            {educationOptions.map((edu) => (
+            {EDUCATION_OPTIONS.map((edu) => (
               <Badge
                 key={edu}
                 variant={education.includes(edu) ? "default" : "outline"}

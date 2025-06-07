@@ -183,7 +183,7 @@ export default function FilterDemoPage() {
         </div>
       </header>
 
-      <main className="px-4 py-4 pb-20">
+      <main className="px-4 py-4 pb-24">
         {/* 切换标签 */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-4">
           <TabsList className="grid w-full grid-cols-2 bg-white rounded-xl shadow-sm">

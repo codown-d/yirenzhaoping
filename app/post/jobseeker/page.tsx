@@ -129,7 +129,7 @@ export default function JobseekerPostPage() {
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto p-4 pb-20">
+      <main className="max-w-2xl mx-auto p-4 pb-24">
         <form id="jobseeker-post-form" onSubmit={handleSubmit} className="space-y-6">
           {/* 基本信息 */}
           <Card className="rounded-2xl">

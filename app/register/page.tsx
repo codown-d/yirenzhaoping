@@ -7,252 +7,184 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Upload } from "lucide-react"
+import { Eye, EyeOff } from "lucide-react"
 import Link from "next/link"
 
 export default function RegisterPage() {
   const { login } = useAuth()
   const router = useRouter()
-  const [userType, setUserType] = useState<UserType>(UserType.JobSeeker)
-  const [step, setStep] = useState(1)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
-    name: "",
     phone: "",
-    company: ""
+    password: "",
+    confirmPassword: "",
+    verificationCode: ""
   })
 
-  const handleNext = () => {
-    if (step === 2) {
+  const handleSubmit = async () => {
+    // 基本验证
+    if (!formData.phone || !formData.password || !formData.confirmPassword || !formData.verificationCode) {
+      alert("请填写所有必填项")
+      return
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("两次输入的密码不一致")
+      return
+    }
+
+    if (formData.password.length < 6) {
+      alert("密码长度不能少于6位")
+      return
+    }
+
+    setIsLoading(true)
+
+    try {
+      // 模拟注册API调用
+      await new Promise(resolve => setTimeout(resolve, 1000))
+
       // 注册成功，保存用户信息
       const userData = {
-        name: userType === "employer" ? formData.company || "新注册公司" : formData.name || "新用户",
-        userType: userType,
+        name: "新用户",
+        userType: UserType.JobSeeker, // 默认为求职者，用户可以后续切换
         phone: formData.phone,
         avatar: "/placeholder.svg?height=60&width=60"
       }
 
       login(userData)
-      setStep(step + 1)
-    } else {
-      setStep(step + 1)
+      router.push("/") // 直接跳转到首页
+    } catch (error) {
+      alert("注册失败，请重试")
+    } finally {
+      setIsLoading(false)
     }
   }
 
-  const handleBack = () => {
-    setStep(step - 1)
+  const handleGetVerificationCode = () => {
+    if (!formData.phone) {
+      alert("请先输入手机号")
+      return
+    }
+    // 模拟发送验证码
+    alert("验证码已发送到您的手机")
   }
-
-  const performanceTypes = ["舞蹈", "表演", "武术", "杂技", "音乐", "戏曲", "其他"]
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <Card className="w-full max-w-2xl rounded-xl">
+      <Card className="w-full max-w-md rounded-xl">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold text-green-600">薏仁直聘</CardTitle>
-          <CardDescription>{step === 1 ? "选择您的身份" : step === 2 ? "身份认证" : "完善信息"}</CardDescription>
+          <CardDescription>创建您的账户</CardDescription>
         </CardHeader>
         <CardContent>
-          {step === 1 && (
-            <div className="space-y-6">
-              <RadioGroup value={userType} onValueChange={(value) => setUserType(value as UserType)}>
-                <div className="flex items-center space-x-2 p-4 border rounded-xl">
-                  <RadioGroupItem value="jobseeker" id="jobseeker" />
-                  <Label htmlFor="jobseeker" className="flex-1 cursor-pointer">
-                    <div>
-                      <h3 className="font-medium">我是求职者</h3>
-                      <p className="text-sm text-gray-600">寻找工作和表演机会</p>
-                    </div>
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2 p-4 border rounded-xl">
-                  <RadioGroupItem value="employer" id="employer" />
-                  <Label htmlFor="employer" className="flex-1 cursor-pointer">
-                    <div>
-                      <h3 className="font-medium">我是招募方</h3>
-                      <p className="text-sm text-gray-600">发布招聘需求，招募求职者</p>
-                    </div>
-                  </Label>
-                </div>
-              </RadioGroup>
-              <Button onClick={handleNext} className="w-full h-12">
-                下一步
-              </Button>
+          <div className="space-y-4">
+            {/* 手机号 */}
+            <div className="space-y-2">
+              <Label htmlFor="phone">手机号</Label>
+              <Input
+                id="phone"
+                type="tel"
+                placeholder="请输入手机号"
+                value={formData.phone}
+                onChange={(e) => setFormData({...formData, phone: e.target.value})}
+              />
             </div>
-          )}
 
-          {step === 2 && userType === "jobseeker" && (
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium">求职者身份认证</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">姓名</Label>
-                  <Input
-                    id="name"
-                    placeholder="请输入真实姓名"
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="idcard">身份证号</Label>
-                  <Input id="idcard" placeholder="请输入身份证号" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone">手机号</Label>
-                  <Input
-                    id="phone"
-                    placeholder="请输入手机号"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="code">验证码</Label>
-                  <div className="flex space-x-2">
-                    <Input id="code" placeholder="验证码" className="flex-1" />
-                    <Button variant="outline" size="sm">
-                      获取
-                    </Button>
-                  </div>
-                </div>
-                <div className="space-y-2 md:col-span-2">
-                  <Label htmlFor="performanceType">表演类型</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="选择您的主要表演类型" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {performanceTypes.map((type) => (
-                        <SelectItem key={type} value={type}>
-                          {type}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label>求职状态</Label>
-                <RadioGroup defaultValue="active">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="active" id="active" />
-                    <Label htmlFor="active">在职正在找工作</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="passive" id="passive" />
-                    <Label htmlFor="passive">离职正在找工作</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="passive" id="passive" />
-                    <Label htmlFor="passive">在职暂不找工作</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-              <div className="flex space-x-4">
-                <Button variant="outline" onClick={handleBack} className="flex-1 h-12">
-                  上一步
-                </Button>
-                <Button onClick={handleNext} className="flex-1 h-12">
-                  下一步
+            {/* 密码 */}
+            <div className="space-y-2">
+              <Label htmlFor="password">密码</Label>
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="请输入密码（至少6位）"
+                  value={formData.password}
+                  onChange={(e) => setFormData({...formData, password: e.target.value})}
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
             </div>
-          )}
 
-          {step === 2 && userType === "employer" && (
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium">招募方认证</h3>
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="company">团体/公司名称</Label>
-                  <Input
-                    id="company"
-                    placeholder="请输入团体或公司名称"
-                    value={formData.company}
-                    onChange={(e) => setFormData({...formData, company: e.target.value})}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>营业执照/团体资质</Label>
-                  <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center">
-                    <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                    <p className="mt-2 text-sm text-gray-600">点击上传相关证明文件</p>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="contact">负责人姓名</Label>
-                    <Input id="contact" placeholder="请输入负责人姓名" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">联系电话</Label>
-                    <Input id="phone" placeholder="请输入联系电话" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="performanceType">主要招募类型</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="选择您主要招募的表演类型" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {performanceTypes.map((type) => (
-                        <SelectItem key={type} value={type}>
-                          {type}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="code">短信验证码</Label>
-                  <div className="flex space-x-2">
-                    <Input id="code" placeholder="验证码" className="flex-1" />
-                    <Button variant="outline" size="sm">
-                      获取验证码
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              <div className="flex space-x-4">
-                <Button variant="outline" onClick={handleBack} className="flex-1 h-12">
-                  上一步
-                </Button>
-                <Button onClick={handleNext} className="flex-1 h-12">
-                  提交认证
+            {/* 确认密码 */}
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">确认密码</Label>
+              <div className="relative">
+                <Input
+                  id="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="请再次输入密码"
+                  value={formData.confirmPassword}
+                  onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
             </div>
-          )}
 
-          {step === 3 && (
-            <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
+            {/* 验证码 */}
+            <div className="space-y-2">
+              <Label htmlFor="verificationCode">短信验证码</Label>
+              <div className="flex space-x-2">
+                <Input
+                  id="verificationCode"
+                  placeholder="请输入验证码"
+                  value={formData.verificationCode}
+                  onChange={(e) => setFormData({...formData, verificationCode: e.target.value})}
+                  className="flex-1"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleGetVerificationCode}
+                  disabled={!formData.phone}
+                >
+                  获取验证码
+                </Button>
               </div>
-              <h3 className="text-lg font-medium">注册成功！</h3>
-              <p className="text-gray-600">您的账户已创建成功，现在可以开始使用薏仁直聘了</p>
-              <Button
-                className="w-full h-12"
-                onClick={() => router.push("/")}
-              >
-                进入首页
-              </Button>
             </div>
-          )}
 
-          {step < 3 && (
-            <div className="mt-6 text-center text-sm">
-              已有账户？{" "}
-              <Link href="/login" className="text-green-600 hover:underline">
-                立即登录
-              </Link>
-            </div>
-          )}
+            {/* 注册按钮 */}
+            <Button
+              onClick={handleSubmit}
+              disabled={isLoading}
+              className="w-full h-12 mt-6"
+            >
+              {isLoading ? "注册中..." : "立即注册"}
+            </Button>
+          </div>
+
+          <div className="mt-6 text-center text-sm">
+            已有账户？{" "}
+            <Link href="/login" className="text-green-600 hover:underline">
+              立即登录
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>

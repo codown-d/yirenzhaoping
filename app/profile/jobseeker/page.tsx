@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useAuth, useUserType, useIsAuthenticated } from "@/lib/auth-context"
 import { useRouter } from "next/navigation"
 import {
-  ArrowLeft, User, Edit, Settings, Heart, Star, Eye, MessageCircle,
+  User, Edit, Settings, Heart, Star, Eye, MessageCircle,
   Briefcase, Award, GraduationCap, MapPin, Phone, Mail, Calendar,
   TrendingUp, Clock, FileText, Camera, Video, Share2, LogOut, Shield, CheckCircle, Crown, Zap, Headphones, AlertTriangle,
   Bookmark, Users, Bell, History
@@ -15,6 +15,8 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Progress } from "@/components/ui/progress"
+import { ProfilePageHeader } from "@/components/ui/page-header"
+import { SAMPLE_JOBSEEKER_PROFILE_COMPLETE } from "@/constants"
 import Link from "next/link"
 
 export default function JobseekerProfilePage() {
@@ -25,215 +27,11 @@ export default function JobseekerProfilePage() {
 
   // 注释：允许未登录用户访问，显示默认数据
 
-  // 模拟求职者数据
+  // 使用常量文件中的数据，支持用户登录状态覆盖
   const jobseekerData = {
-    name: user?.name || "李小华",
-    avatar: user?.avatar || "/placeholder.svg?height=120&width=120",
-    title: "专业古典舞演员",
-    location: "北京市朝阳区",
-    phone: "138****8888",
-    email: "lixiaohua@example.com",
-    experience: "3年",
-    education: "北京舞蹈学院",
-    skills: ["古典舞", "民族舞", "芭蕾基础", "现代舞"],
-    isVerified: true, // 个人实名认证状态
-    verificationDate: "2024-01-10", // 认证时间
-    vipStatus: {
-      isVip: true,
-      level: "白金会员",
-      expireDate: "2024-11-30",
-      remainingDays: 267
-    },
-    profileViews: 156,
-    profileLikes: 89,
-    applications: 12,
-    interviews: 5,
-    profileCompletion: 85,
-    recentActivities: [
-      { type: "application", content: "申请了《梁祝》主演职位", time: "2小时前" },
-      { type: "view", content: "东方歌舞团查看了您的简历", time: "5小时前" },
-      { type: "like", content: "星光艺术团关注了您", time: "1天前" },
-      { type: "update", content: "更新了个人作品集", time: "2天前" },
-    ],
-    savedJobs: [
-      {
-        id: 1,
-        title: "古典舞演员",
-        company: "东方歌舞团",
-        location: "北京",
-        salary: "8K-15K",
-        posted: "2天前"
-      },
-      {
-        id: 2,
-        title: "舞蹈教师",
-        company: "艺术培训中心",
-        location: "上海",
-        salary: "6K-10K",
-        posted: "1周前"
-      }
-    ],
-    myApplications: [
-      {
-        id: 1,
-        title: "民族舞演员",
-        company: "中央民族歌舞团",
-        status: "面试中",
-        appliedDate: "2024-01-15",
-        statusColor: "bg-blue-500"
-      },
-      {
-        id: 2,
-        title: "古典舞独舞演员",
-        company: "国家大剧院",
-        status: "已投递",
-        appliedDate: "2024-01-10",
-        statusColor: "bg-yellow-500"
-      }
-    ],
-    // 新增功能数据
-    followedCompanies: [
-      {
-        id: 1,
-        name: "东方歌舞团",
-        logo: "/placeholder.svg?height=40&width=40",
-        industry: "表演艺术",
-        location: "北京",
-        followDate: "2024-01-10",
-        isActive: true,
-        newJobs: 3
-      },
-      {
-        id: 2,
-        name: "中央芭蕾舞团",
-        logo: "/placeholder.svg?height=40&width=40",
-        industry: "表演艺术",
-        location: "北京",
-        followDate: "2024-01-08",
-        isActive: true,
-        newJobs: 1
-      },
-      {
-        id: 3,
-        name: "上海歌剧院",
-        logo: "/placeholder.svg?height=40&width=40",
-        industry: "表演艺术",
-        location: "上海",
-        followDate: "2024-01-05",
-        isActive: false,
-        newJobs: 0
-      }
-    ],
-    messages: [
-      {
-        id: 1,
-        type: "system",
-        title: "简历被查看",
-        content: "您的简历被东方歌舞团查看了",
-        time: "2024-01-20 14:30",
-        isRead: false,
-        avatar: "/placeholder.svg?height=32&width=32"
-      },
-      {
-        id: 2,
-        type: "interview",
-        title: "面试邀请",
-        content: "中央芭蕾舞团邀请您参加面试",
-        time: "2024-01-19 10:15",
-        isRead: false,
-        avatar: "/placeholder.svg?height=32&width=32"
-      },
-      {
-        id: 3,
-        type: "system",
-        title: "职位推荐",
-        content: "为您推荐了3个匹配的职位",
-        time: "2024-01-18 09:00",
-        isRead: true,
-        avatar: "/placeholder.svg?height=32&width=32"
-      },
-      {
-        id: 4,
-        type: "message",
-        title: "私信消息",
-        content: "某艺术团向您发送了私信",
-        time: "2024-01-17 16:45",
-        isRead: true,
-        avatar: "/placeholder.svg?height=32&width=32"
-      }
-    ],
-    collections: [
-      {
-        id: 1,
-        type: "job",
-        title: "民族舞演员",
-        company: "东方歌舞团",
-        location: "北京",
-        salary: "8K-15K",
-        collectedDate: "2024-01-15",
-        status: "招聘中"
-      },
-      {
-        id: 2,
-        type: "job",
-        title: "芭蕾舞演员",
-        company: "中央芭蕾舞团",
-        location: "北京",
-        salary: "12K-20K",
-        collectedDate: "2024-01-12",
-        status: "招聘中"
-      },
-      {
-        id: 3,
-        type: "company",
-        title: "上海歌剧院",
-        description: "国际知名歌剧院",
-        location: "上海",
-        collectedDate: "2024-01-10",
-        status: "活跃"
-      }
-    ],
-    browsingHistory: [
-      {
-        id: 1,
-        type: "job",
-        title: "现代舞演员",
-        company: "某现代舞团",
-        location: "深圳",
-        salary: "10K-18K",
-        viewDate: "2024-01-20 15:30",
-        viewCount: 3
-      },
-      {
-        id: 2,
-        type: "job",
-        title: "舞蹈编导",
-        company: "艺术学院",
-        location: "广州",
-        salary: "15K-25K",
-        viewDate: "2024-01-19 11:20",
-        viewCount: 1
-      },
-      {
-        id: 3,
-        type: "company",
-        title: "北京现代舞团",
-        description: "专业现代舞团体",
-        location: "北京",
-        viewDate: "2024-01-18 14:15",
-        viewCount: 2
-      },
-      {
-        id: 4,
-        type: "job",
-        title: "音乐剧演员",
-        company: "某音乐剧公司",
-        location: "上海",
-        salary: "12K-22K",
-        viewDate: "2024-01-17 09:45",
-        viewCount: 1
-      }
-    ]
+    ...SAMPLE_JOBSEEKER_PROFILE_COMPLETE,
+    name: user?.name || SAMPLE_JOBSEEKER_PROFILE_COMPLETE.name,
+    avatar: user?.avatar || SAMPLE_JOBSEEKER_PROFILE_COMPLETE.avatar,
   }
 
   const getActivityIcon = (type: string) => {
@@ -248,8 +46,14 @@ export default function JobseekerProfilePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* 头部组件 */}
+      <ProfilePageHeader
+        title="个人中心"
+        showEdit={true}
+        onEdit={() => router.push('/profile/jobseeker/edit')}
+      />
 
-      <main className="max-w-4xl mx-auto p-4 pb-20">
+      <main className="max-w-4xl mx-auto p-4 pb-24">
         {/* Profile Header */}
         <Card className="rounded-2xl mb-6">
           <CardContent className="p-6">
@@ -283,16 +87,6 @@ export default function JobseekerProfilePage() {
                       )}
                     </div>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="rounded-xl self-start md:self-center"
-                    onClick={() => router.push('/profile/jobseeker/edit')}
-                  >
-                    <Edit className="h-4 w-4 mr-2" />
-                    <span className="hidden sm:inline">编辑资料</span>
-                    <span className="sm:hidden">编辑</span>
-                  </Button>
                 </div>
 
                 <p className="text-lg text-gray-700 mb-2">{jobseekerData.title}</p>

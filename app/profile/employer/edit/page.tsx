@@ -151,7 +151,7 @@ export default function EditEmployerProfilePage() {
         </div>
       </header>
 
-      <main className="pb-20">
+      <main className="pb-24">
         <form onSubmit={handleSubmit} className="space-y-6 p-4">
           {/* 公司基本信息 */}
           <Card className="rounded-xl">

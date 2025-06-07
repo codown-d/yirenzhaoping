@@ -1,5 +1,4 @@
 import {
-  ArrowLeft,
   MapPin,
   Phone,
   Mail,
@@ -16,6 +15,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { SubPageHeader } from "@/components/ui/page-header";
+import { SAMPLE_CANDIDATE_DETAIL } from "@/constants";
 import Link from "next/link";
 
 export async function generateStaticParams() {
@@ -24,140 +25,13 @@ export async function generateStaticParams() {
 }
 
 export default function CandidateDetailPage() {
-  const candidate = {
-    id: 1,
-    name: "李小华",
-    age: 24,
-    gender: "女",
-    major: "古典舞",
-    location: "北京市朝阳区",
-    school: "北京舞蹈学院",
-    avatar: "/placeholder.svg?height=120&width=120",
-    skills: ["古典舞", "民族舞", "芭蕾基础", "现代舞"],
-    phone: "138****8888",
-    email: "lixiaohua@example.com",
-    introduction:
-      "我是一名专业的古典舞演员，毕业于北京舞蹈学院。有5年的舞台表演经验，擅长古典舞、民族舞，并具备芭蕾舞基础。曾参与多个大型舞蹈演出，希望能加入专业团队，展示自己的舞蹈才华。",
-    experience: [
-      {
-        company: "东方歌舞团",
-        position: "舞蹈演员",
-        duration: "2021.06 - 2024.03",
-        description: "参与团队的国内外巡演，主要表演民族舞和古典舞节目",
-      },
-      {
-        company: "星光艺术团",
-        position: "舞蹈演员",
-        duration: "2019.08 - 2021.05",
-        description: "参与各类商业演出和文艺晚会",
-      },
-    ],
-    education: [
-      {
-        school: "北京舞蹈学院",
-        major: "中国古典舞表演",
-        degree: "学士学位",
-        duration: "2015.09 - 2019.06",
-        gpa: "3.8/4.0",
-        honors: ["优秀毕业生", "专业第一名"],
-      },
-      {
-        school: "北京舞蹈学院附中",
-        major: "中国古典舞",
-        degree: "中专",
-        duration: "2012.09 - 2015.06",
-        gpa: "优秀",
-        honors: ["三好学生"],
-      },
-    ],
-    awards: ["全国舞蹈比赛金奖", "亚洲青年舞蹈家大赛银奖"],
-    performances: [
-      "《丝路花雨》主要舞者",
-      "《梁祝》独舞",
-      "《春江花月夜》群舞",
-    ],
-    videos: [
-      {
-        title: "古典舞《洛神赋》片段",
-        thumbnail: "/placeholder.svg?height=200&width=300",
-        url: "#",
-      },
-      {
-        title: "民族舞《茉莉花》",
-        thumbnail: "/placeholder.svg?height=200&width=300",
-        url: "#",
-      },
-      {
-        title: "民族舞《茉莉花》",
-        thumbnail: "/placeholder.svg?height=200&width=300",
-        url: "#",
-      },
-    ],
-    images: {
-      stage: [
-        {
-          url: "/placeholder.svg?height=300&width=400",
-          title: "《洛神赋》舞台表演",
-          description: "2023年国家大剧院演出",
-        },
-        {
-          url: "/placeholder.svg?height=300&width=400",
-          title: "民族舞《茉莉花》",
-          description: "亚洲文化节表演",
-        },
-        {
-          url: "/placeholder.svg?height=300&width=400",
-          title: "古典舞独舞",
-          description: "个人代表作品",
-        },
-        {
-          url: "/placeholder.svg?height=300&width=400",
-          title: "古典舞独舞",
-          description: "个人代表作品",
-        },
-      ],
-      training: [
-        {
-          url: "/placeholder.svg?height=300&width=400",
-          title: "日常训练",
-          description: "基本功练习",
-        },
-        {
-          url: "/placeholder.svg?height=300&width=400",
-          title: "排练现场",
-          description: "新剧目排练",
-        },
-      ],
-      awards: [
-        {
-          url: "/placeholder.svg?height=300&width=400",
-          title: "全国舞蹈比赛颁奖",
-          description: "获得金奖",
-        },
-        {
-          url: "/placeholder.svg?height=300&width=400",
-          title: "亚洲青年舞蹈家大赛",
-          description: "银奖获得者",
-        },
-      ],
-    },
-  };
+  // 使用常量文件中的数据
+  const candidate = SAMPLE_CANDIDATE_DETAIL;
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-16">
-            <Button variant="ghost" size="sm" asChild className="mr-4">
-              <Link href="/">
-                <ArrowLeft className="h-4 w-4" />
-              </Link>
-            </Button>
-            <h1 className="text-xl font-semibold">求职者详情</h1>
-          </div>
-        </div>
-      </header>
+      {/* 头部组件 */}
+      <SubPageHeader title="求职者详情" />
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

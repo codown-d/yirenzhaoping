@@ -3,14 +3,18 @@
 import { useState, useEffect } from "react"
 import { useAuth, useUserType, useIsAuthenticated } from "@/lib/auth-context"
 import { useRouter } from "next/navigation"
-import { Search, Filter, Menu, Star, Heart, MessageCircle, User, Home, Users, Mail, Plus, GraduationCap } from "lucide-react"
+import { Search, Filter, Star, Heart, MessageCircle, User, Users, GraduationCap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { CarouselBanner } from "@/components/ui/carousel-banner"
-import Link from "next/link"
+import {
+  getEmployerCategoriesByType,
+  getAgeGroupText,
+  SAMPLE_PERFORMERS,
+  EMPLOYER_BANNER_SLIDES
+} from "@/constants"
 
 export default function EmployerPage() {
   const router = useRouter()
@@ -50,13 +54,6 @@ export default function EmployerPage() {
       employerFilters.education?.length > 0
     )
   }
-
-  // 跳转到筛选页面
-  const handleFilterClick = () => {
-    router.push('/filter/employer')
-  }
-
-
 
   // 清除筛选条件的辅助函数
   const clearFilter = (type: string, value?: string) => {
@@ -122,116 +119,32 @@ export default function EmployerPage() {
     }
   }
 
-  // 求职者数据
-  const performers = [
-    {
-      id: 1,
-      name: "李小华",
-      age: 25,
-      specialty: "古典舞",
-      experience: "3年",
-      location: "北京",
-      rating: 4.8,
-      avatar: "/placeholder.svg?height=60&width=60",
-      tags: ["专业院校", "获奖经历", "团队合作"],
-      price: "800-1200/天",
-      description: "毕业于北京舞蹈学院，擅长古典舞和民族舞，有丰富的舞台表演经验。",
-      school: "北京舞蹈学院",
-      major: "舞蹈表演专业"
-    },
-    {
-      id: 2,
-      name: "王明",
-      age: 28,
-      specialty: "武术",
-      experience: "5年",
-      location: "上海",
-      rating: 4.9,
-      avatar: "/placeholder.svg?height=60&width=60",
-      tags: ["武术冠军", "影视经验", "教学经验"],
-      price: "1000-1500/天",
-      description: "全国武术冠军，参与过多部影视作品拍摄，具有丰富的武术指导经验。",
-      school: "上海体育学院",
-      major: "武术与民族传统体育"
-    },
-    {
-      id: 3,
-      name: "张美丽",
-      age: 23,
-      specialty: "芭蕾舞",
-      experience: "2年",
-      location: "广州",
-      rating: 4.7,
-      avatar: "/placeholder.svg?height=60&width=60",
-      tags: ["海外留学", "芭蕾专业", "形象佳"],
-      price: "600-1000/天",
-      description: "俄罗斯芭蕾舞学院毕业，技法扎实，形象气质佳，适合各类演出。",
-      school: "俄罗斯芭蕾舞学院",
-      major: "芭蕾舞表演专业"
-    }
-  ]
-
-  // Banner轮播数据
-  const bannerSlides = [
-    {
-      id: 1,
-      title: "寻找优秀求职者",
-      subtitle: "专业求职者招聘平台",
-      description: "汇聚全国优秀艺术求职者，为您的招聘需求找到最合适的人才",
-      image: "/placeholder.svg?height=200&width=400",
-      buttonText: "立即招聘",
-      backgroundColor: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-    },
-    {
-      id: 2,
-      title: "海量人才资源",
-      subtitle: "覆盖各类表演艺术",
-      description: "舞蹈、戏曲、武术、杂技等各类专业求职者应有尽有",
-      image: "/placeholder.svg?height=200&width=400",
-      buttonText: "浏览人才",
-      backgroundColor: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
-    },
-    {
-      id: 3,
-      title: "高效匹配系统",
-      subtitle: "智能推荐合适人选",
-      description: "基于招聘需求智能匹配，快速找到符合要求的求职者",
-      image: "/placeholder.svg?height=200&width=400",
-      buttonText: "开始匹配",
-      backgroundColor: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
-    }
-  ]
+  // 使用常量文件中的数据
+  const performers = SAMPLE_PERFORMERS
+  const bannerSlides = EMPLOYER_BANNER_SLIDES
 
   // 分类切换状态
   const [categoryType, setCategoryType] = useState<'frontend' | 'backend'>('frontend')
+  const [searchValue, setSearchValue] = useState("")
 
-  // 表演类别
-  const frontendCategories = [
-    { name: "舞蹈", count: 156, icon: "💃" },
-    { name: "武术", count: 89, icon: "🥋" },
-    { name: "杂技", count: 67, icon: "🤹" },
-    { name: "声乐", count: 134, icon: "🎵" },
-    { name: "器乐", count: 98, icon: "🎼" },
-    { name: "戏曲", count: 76, icon: "🎭" },
-  ]
+  // 跳转到筛选页面
+  const handleFilterClick = () => {
+    router.push('/filter/employer')
+  }
 
-  const backendCategories = [
-    { name: "导演", count: 45, icon: "🎬" },
-    { name: "编剧", count: 32, icon: "✍️" },
-    { name: "制片", count: 28, icon: "📋" },
-    { name: "摄影", count: 56, icon: "📷" },
-    { name: "灯光", count: 41, icon: "💡" },
-    { name: "音响", count: 38, icon: "🔊" },
-  ]
+  // 搜索处理函数
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    console.log('搜索:', searchValue)
+    // 这里可以添加搜索逻辑
+  }
 
-  const currentCategories = categoryType === 'frontend' ? frontendCategories : backendCategories
+  const currentCategories = getEmployerCategoriesByType(categoryType)
 
   return (
     <div className="min-h-screen bg-gray-50">
-     
-
       {/* Main Content */}
-      <main className="pb-20">
+      <main className="pb-24">
         {/* Banner轮播 */}
         <div className="mb-6">
           <CarouselBanner
@@ -245,11 +158,14 @@ export default function EmployerPage() {
         {/* Search Section - 移动端优化 */}
         <div className="px-3 mb-4">
           <div className="bg-white rounded-xl shadow-sm p-3">
-            <div className="flex space-x-2">
+            <form onSubmit={handleSearchSubmit} className="flex space-x-2">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input
+                  type="text"
                   placeholder="搜索求职者、专业..."
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
                   className="pl-10 h-10 rounded-lg border-gray-200 text-sm"
                 />
               </div>
@@ -258,6 +174,7 @@ export default function EmployerPage() {
                 size="sm"
                 className="h-10 px-3 rounded-lg flex-shrink-0"
                 onClick={handleFilterClick}
+                type="button"
               >
                 <Filter className="h-4 w-4 mr-1" />
                 <span className="text-xs">筛选</span>
@@ -273,7 +190,7 @@ export default function EmployerPage() {
                   </Badge>
                 )}
               </Button>
-            </div>
+            </form>
           </div>
         </div>
 

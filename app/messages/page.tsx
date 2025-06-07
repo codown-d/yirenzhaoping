@@ -1,70 +1,31 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowLeft, Search } from "lucide-react"
+import { Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { PageHeader, SubPageHeader } from "@/components/ui/page-header"
+import { SAMPLE_CONVERSATIONS, SAMPLE_SYSTEM_MESSAGES } from "@/constants"
 import Link from "next/link"
 
 export default function MessagesPage() {
   const [activeTab, setActiveTab] = useState("all")
 
-  const conversations = [
-    {
-      id: 1,
-      name: "东方歌舞团",
-      avatar: "/placeholder.svg?height=40&width=40",
-      lastMessage: "您好，我们对您的简历很感兴趣，希望能进一步沟通",
-      time: "10:30",
-      unread: 2,
-      type: "employer",
-      online: true,
-    },
-    {
-      id: 2,
-      name: "李小华",
-      avatar: "/placeholder.svg?height=40&width=40",
-      lastMessage: "谢谢您的指导，我会继续努力练习的",
-      time: "昨天",
-      unread: 0,
-      type: "performer",
-      online: false,
-    },
-    {
-      id: 3,
-      name: "星光马戏团",
-      avatar: "/placeholder.svg?height=40&width=40",
-      lastMessage: "面试时间定在明天下午2点，请准时参加",
-      time: "昨天",
-      unread: 1,
-      type: "employer",
-      online: true,
-    },
-  ]
-
-  const systemMessages = [
-    {
-      id: 1,
-      title: "简历被查看",
-      content: "您的简历被东方歌舞团查看了",
-      time: "2小时前",
-      type: "view",
-    },
-    {
-      id: 2,
-      title: "新的职位推荐",
-      content: "为您推荐了3个新的招聘职位",
-      time: "1天前",
-      type: "recommendation",
-    },
-  ]
+  // 使用常量文件中的数据
+  const conversations = SAMPLE_CONVERSATIONS
+  const systemMessages = SAMPLE_SYSTEM_MESSAGES
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <main className="px-4 py-4 pb-20">
+      {/* 头部组件 */}
+      <PageHeader
+        title="消息"
+      />
+
+      <main className="px-4 py-4 pb-24">
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-4">
           <TabsList className="grid w-full grid-cols-3 bg-white rounded-xl shadow-sm">

@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useAuth, useUserType, useIsAuthenticated } from "@/lib/auth-context"
 import { useRouter } from "next/navigation"
 import {
-  ArrowLeft, User, Edit, Settings, Heart, Star, Eye, MessageCircle,
+  User, Edit, Settings, Heart, Star, Eye, MessageCircle,
   Briefcase, Award, Building, MapPin, Phone, Mail, Calendar,
   TrendingUp, Clock, FileText, Camera, Users, Plus, Search, LogOut, Shield, CheckCircle, Crown, Zap, Headphones, AlertTriangle,
   Bookmark, Bell, History
@@ -15,6 +15,8 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Progress } from "@/components/ui/progress"
+import { ProfilePageHeader } from "@/components/ui/page-header"
+import { SAMPLE_EMPLOYER_PROFILE_COMPLETE } from "@/constants"
 import Link from "next/link"
 
 export default function EmployerProfilePage() {
@@ -25,240 +27,11 @@ export default function EmployerProfilePage() {
 
   // 注释：允许未登录用户访问，显示默认数据
 
-  // 模拟招聘方数据
+  // 使用常量文件中的数据，支持用户登录状态覆盖
   const employerData = {
-    name: user?.name || "张总",
-    avatar: user?.avatar || "/placeholder.svg?height=120&width=120",
-    title: "东方歌舞团 - 人事总监",
-    company: "东方歌舞团",
-    location: "北京市朝阳区",
-    phone: "138****9999",
-    email: "zhang@dongfang.com",
-    establishedYear: "1952年",
-    employeeCount: "200-500人",
-    industry: "文艺表演",
-    isVerified: true, // 企业认证状态
-    verificationDate: "2024-01-15", // 认证时间
-    vipStatus: {
-      isVip: true,
-      level: "黄金会员",
-      expireDate: "2024-12-31",
-      remainingDays: 298
-    },
-    profileViews: 234,
-    jobViews: 1580,
-    applications: 89,
-    interviews: 23,
-    profileCompletion: 92,
-    recentActivities: [
-      { type: "post", content: "发布了《梁祝》主演招聘", time: "1小时前" },
-      { type: "view", content: "查看了李小华的简历", time: "3小时前" },
-      { type: "interview", content: "安排了王明的面试", time: "5小时前" },
-      { type: "update", content: "更新了公司介绍", time: "1天前" },
-    ],
-    activeJobs: [
-      {
-        id: 1,
-        title: "古典舞演员",
-        department: "表演部",
-        applications: 15,
-        views: 156,
-        posted: "3天前",
-        status: "招聘中",
-        urgent: true
-      },
-      {
-        id: 2,
-        title: "民族舞编导",
-        department: "创作部",
-        applications: 8,
-        views: 89,
-        posted: "1周前",
-        status: "招聘中",
-        urgent: false
-      }
-    ],
-    candidates: [
-      {
-        id: 1,
-        name: "李小华",
-        title: "古典舞演员",
-        experience: "3年",
-        education: "北京舞蹈学院",
-        status: "待面试",
-        appliedFor: "古典舞演员",
-        appliedDate: "2024-01-15",
-        avatar: "/placeholder.svg?height=40&width=40"
-      },
-      {
-        id: 2,
-        name: "王明",
-        title: "武术表演",
-        experience: "5年",
-        education: "上海戏剧学院",
-        status: "已面试",
-        appliedFor: "武术指导",
-        appliedDate: "2024-01-12",
-        avatar: "/placeholder.svg?height=40&width=40"
-      }
-    ],
-    // 新增功能数据
-    followedCandidates: [
-      {
-        id: 1,
-        name: "李小华",
-        title: "专业古典舞演员",
-        avatar: "/placeholder.svg?height=40&width=40",
-        experience: "3年",
-        education: "北京舞蹈学院",
-        location: "北京",
-        followDate: "2024-01-10",
-        isActive: true,
-        lastActive: "2小时前"
-      },
-      {
-        id: 2,
-        name: "王明",
-        title: "武术表演专家",
-        avatar: "/placeholder.svg?height=40&width=40",
-        experience: "5年",
-        education: "上海戏剧学院",
-        location: "上海",
-        followDate: "2024-01-08",
-        isActive: true,
-        lastActive: "1天前"
-      },
-      {
-        id: 3,
-        name: "张丽",
-        title: "民族舞编导",
-        avatar: "/placeholder.svg?height=40&width=40",
-        experience: "4年",
-        education: "中央民族大学",
-        location: "北京",
-        followDate: "2024-01-05",
-        isActive: false,
-        lastActive: "1周前"
-      }
-    ],
-    messages: [
-      {
-        id: 1,
-        type: "application",
-        title: "新的简历投递",
-        content: "李小华申请了古典舞演员职位",
-        time: "2024-01-20 14:30",
-        isRead: false,
-        avatar: "/placeholder.svg?height=32&width=32"
-      },
-      {
-        id: 2,
-        type: "system",
-        title: "职位推广",
-        content: "您的职位已被推荐给50位匹配候选人",
-        time: "2024-01-19 10:15",
-        isRead: false,
-        avatar: "/placeholder.svg?height=32&width=32"
-      },
-      {
-        id: 3,
-        type: "interview",
-        title: "面试提醒",
-        content: "明天下午2点与王明的面试",
-        time: "2024-01-18 09:00",
-        isRead: true,
-        avatar: "/placeholder.svg?height=32&width=32"
-      },
-      {
-        id: 4,
-        type: "message",
-        title: "候选人咨询",
-        content: "张丽询问了职位详情",
-        time: "2024-01-17 16:45",
-        isRead: true,
-        avatar: "/placeholder.svg?height=32&width=32"
-      }
-    ],
-    collections: [
-      {
-        id: 1,
-        type: "candidate",
-        name: "李小华",
-        title: "专业古典舞演员",
-        avatar: "/placeholder.svg?height=40&width=40",
-        experience: "3年",
-        education: "北京舞蹈学院",
-        location: "北京",
-        collectedDate: "2024-01-15",
-        status: "求职中"
-      },
-      {
-        id: 2,
-        type: "candidate",
-        name: "王明",
-        title: "武术表演专家",
-        avatar: "/placeholder.svg?height=40&width=40",
-        experience: "5年",
-        education: "上海戏剧学院",
-        location: "上海",
-        collectedDate: "2024-01-12",
-        status: "求职中"
-      },
-      {
-        id: 3,
-        type: "template",
-        title: "舞蹈演员招聘模板",
-        description: "适用于各类舞蹈演员招聘",
-        collectedDate: "2024-01-10",
-        status: "可用"
-      }
-    ],
-    browsingHistory: [
-      {
-        id: 1,
-        type: "candidate",
-        name: "张丽",
-        title: "民族舞编导",
-        avatar: "/placeholder.svg?height=40&width=40",
-        experience: "4年",
-        education: "中央民族大学",
-        location: "北京",
-        viewDate: "2024-01-20 15:30",
-        viewCount: 2
-      },
-      {
-        id: 2,
-        type: "candidate",
-        name: "刘强",
-        title: "现代舞演员",
-        avatar: "/placeholder.svg?height=40&width=40",
-        experience: "2年",
-        education: "北京舞蹈学院",
-        location: "北京",
-        viewDate: "2024-01-19 11:20",
-        viewCount: 1
-      },
-      {
-        id: 3,
-        type: "template",
-        title: "音乐剧演员招聘模板",
-        description: "专业音乐剧演员招聘模板",
-        viewDate: "2024-01-18 14:15",
-        viewCount: 3
-      },
-      {
-        id: 4,
-        type: "candidate",
-        name: "陈美",
-        title: "芭蕾舞演员",
-        avatar: "/placeholder.svg?height=40&width=40",
-        experience: "6年",
-        education: "上海戏剧学院",
-        location: "上海",
-        viewDate: "2024-01-17 09:45",
-        viewCount: 1
-      }
-    ]
+    ...SAMPLE_EMPLOYER_PROFILE_COMPLETE,
+    name: user?.name || SAMPLE_EMPLOYER_PROFILE_COMPLETE.name,
+    avatar: user?.avatar || SAMPLE_EMPLOYER_PROFILE_COMPLETE.avatar,
   }
 
   const getActivityIcon = (type: string) => {
@@ -283,7 +56,15 @@ export default function EmployerProfilePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <main className="max-w-4xl mx-auto p-4 pb-20">
+      {/* 头部组件 */}
+      <ProfilePageHeader
+        title="企业中心"
+        
+        showEdit={true}
+        onEdit={() => router.push('/profile/employer/edit')}
+      />
+
+      <main className="max-w-4xl mx-auto p-4 pb-24">
         {/* Profile Header */}
         <Card className="rounded-2xl mb-6">
           <CardContent className="p-6">
@@ -317,16 +98,6 @@ export default function EmployerProfilePage() {
                       )}
                     </div>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="rounded-xl self-start md:self-center"
-                    onClick={() => router.push('/profile/employer/edit')}
-                  >
-                    <Edit className="h-4 w-4 mr-2" />
-                    <span className="hidden sm:inline">编辑资料</span>
-                    <span className="sm:hidden">编辑</span>
-                  </Button>
                 </div>
 
                 <p className="text-lg text-gray-700 mb-2">{employerData.title}</p>
@@ -624,66 +395,91 @@ export default function EmployerProfilePage() {
                     <Bookmark className="h-5 w-5 mr-2" />
                     我的收藏
                   </CardTitle>
-                  <Badge variant="secondary">{employerData.collections.length} 项收藏</Badge>
+                  <Badge variant="secondary" className="hidden sm:inline-flex">
+                    {employerData.collections.length} 项收藏
+                  </Badge>
+                  <Badge variant="secondary" className="sm:hidden text-xs">
+                    {employerData.collections.length}
+                  </Badge>
                 </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {employerData.collections.map((item) => (
-                    <div key={item.id} className="border rounded-lg p-4">
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="flex-1">
-                          {item.type === 'candidate' ? (
-                            <div className="flex items-start space-x-3">
-                              <Avatar className="h-10 w-10">
-                                <AvatarImage src={item.avatar} />
-                                <AvatarFallback>{item.name?.[0] || 'U'}</AvatarFallback>
-                              </Avatar>
-                              <div className="flex-1">
-                                <div className="flex items-center space-x-2 mb-1">
-                                  <h4 className="font-medium">{item.name}</h4>
-                                  <Badge variant="default">候选人</Badge>
-                                </div>
-                                <p className="text-sm text-gray-600">{item.title}</p>
-                                <div className="flex items-center space-x-4 text-sm text-gray-500 mt-1">
-                                  <span>{item.experience}经验</span>
-                                  <span>{item.education}</span>
-                                  <span>{item.location}</span>
-                                </div>
-                              </div>
-                            </div>
-                          ) : (
-                            <div>
+                    <div key={item.id} className="border rounded-lg p-3 sm:p-4">
+                      {item.type === 'candidate' ? (
+                        <div className="space-y-3">
+                          {/* 候选人信息 */}
+                          <div className="flex items-start space-x-3">
+                            <Avatar className="h-10 w-10 flex-shrink-0">
+                              <AvatarImage src={item.avatar} />
+                              <AvatarFallback>{item.name?.[0] || 'U'}</AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1 min-w-0">
                               <div className="flex items-center space-x-2 mb-1">
-                                <h4 className="font-medium">{item.title}</h4>
-                                <Badge variant="secondary">模板</Badge>
+                                <h4 className="font-medium truncate">{item.name}</h4>
+                                <Badge variant="default" className="text-xs flex-shrink-0">候选人</Badge>
                               </div>
-                              <p className="text-sm text-gray-600">{item.description}</p>
+                              <p className="text-sm text-gray-600 truncate">{item.title}</p>
+                              <div className="flex flex-wrap gap-2 text-xs text-gray-500 mt-1">
+                                <span className="bg-gray-100 px-2 py-1 rounded">{item.experience}经验</span>
+                                <span className="bg-gray-100 px-2 py-1 rounded hidden sm:inline">{item.education}</span>
+                                <span className="bg-gray-100 px-2 py-1 rounded">{item.location}</span>
+                              </div>
                             </div>
-                          )}
-                          <div className="flex items-center space-x-4 text-xs text-gray-500 mt-2">
-                            <span>收藏于 {item.collectedDate}</span>
-                            <Badge variant="outline" className="text-xs">
-                              {item.status}
-                            </Badge>
+                          </div>
+
+                          {/* 底部信息和操作 */}
+                          <div className="flex items-center justify-between pt-2 border-t">
+                            <div className="flex items-center space-x-2 text-xs text-gray-500">
+                              <span>收藏于 {item.collectedDate}</span>
+                              <Badge variant="outline" className="text-xs">
+                                {item.status}
+                              </Badge>
+                            </div>
+                            <div className="flex space-x-2">
+                              <Button size="sm" variant="outline" className="h-8 w-8 p-0 sm:w-auto sm:px-3">
+                                <Bookmark className="h-4 w-4" />
+                                <span className="hidden sm:inline ml-1">取消收藏</span>
+                              </Button>
+                              <Button size="sm" className="h-8 px-3">
+                                <span className="hidden sm:inline">联系</span>
+                                <span className="sm:hidden">联系</span>
+                              </Button>
+                            </div>
                           </div>
                         </div>
-                        <div className="flex space-x-2">
-                          <Button size="sm" variant="outline">
-                            <Bookmark className="h-4 w-4" />
-                          </Button>
-                          {item.type === 'candidate' && (
-                            <Button size="sm">
-                              联系
-                            </Button>
-                          )}
-                          {item.type === 'template' && (
-                            <Button size="sm" variant="outline">
-                              使用
-                            </Button>
-                          )}
+                      ) : (
+                        <div className="space-y-3">
+                          {/* 模板信息 */}
+                          <div>
+                            <div className="flex items-center space-x-2 mb-1">
+                              <h4 className="font-medium">{item.title}</h4>
+                              <Badge variant="secondary" className="text-xs">模板</Badge>
+                            </div>
+                            <p className="text-sm text-gray-600">{item.description}</p>
+                          </div>
+
+                          {/* 底部信息和操作 */}
+                          <div className="flex items-center justify-between pt-2 border-t">
+                            <div className="flex items-center space-x-2 text-xs text-gray-500">
+                              <span>收藏于 {item.collectedDate}</span>
+                              <Badge variant="outline" className="text-xs">
+                                {item.status}
+                              </Badge>
+                            </div>
+                            <div className="flex space-x-2">
+                              <Button size="sm" variant="outline" className="h-8 w-8 p-0 sm:w-auto sm:px-3">
+                                <Bookmark className="h-4 w-4" />
+                                <span className="hidden sm:inline ml-1">取消收藏</span>
+                              </Button>
+                              <Button size="sm" variant="outline" className="h-8 px-3">
+                                使用
+                              </Button>
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -701,9 +497,15 @@ export default function EmployerProfilePage() {
                     我的足迹
                   </CardTitle>
                   <div className="flex items-center space-x-2">
-                    <Badge variant="secondary">{employerData.browsingHistory.length} 条记录</Badge>
-                    <Button size="sm" variant="outline">
-                      清空记录
+                    <Badge variant="secondary" className="hidden sm:inline-flex">
+                      {employerData.browsingHistory.length} 条记录
+                    </Badge>
+                    <Badge variant="secondary" className="sm:hidden text-xs">
+                      {employerData.browsingHistory.length}
+                    </Badge>
+                    <Button size="sm" variant="outline" className="text-xs px-2 sm:px-3">
+                      <span className="hidden sm:inline">清空记录</span>
+                      <span className="sm:hidden">清空</span>
                     </Button>
                   </div>
                 </div>
@@ -711,67 +513,83 @@ export default function EmployerProfilePage() {
               <CardContent>
                 <div className="space-y-4">
                   {employerData.browsingHistory.map((item) => (
-                    <div key={item.id} className="border rounded-lg p-4">
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="flex-1">
-                          {item.type === 'candidate' ? (
-                            <div className="flex items-start space-x-3">
-                              <Avatar className="h-10 w-10">
-                                <AvatarImage src={item.avatar} />
-                                <AvatarFallback>{item.name?.[0] || 'U'}</AvatarFallback>
-                              </Avatar>
-                              <div className="flex-1">
-                                <div className="flex items-center space-x-2 mb-1">
-                                  <h4 className="font-medium">{item.name}</h4>
-                                  <Badge variant="default">候选人</Badge>
-                                  {item.viewCount > 1 && (
-                                    <Badge variant="outline" className="text-xs">
-                                      浏览 {item.viewCount} 次
-                                    </Badge>
-                                  )}
-                                </div>
-                                <p className="text-sm text-gray-600">{item.title}</p>
-                                <div className="flex items-center space-x-4 text-sm text-gray-500 mt-1">
-                                  <span>{item.experience}经验</span>
-                                  <span>{item.education}</span>
-                                  <span>{item.location}</span>
-                                </div>
-                              </div>
-                            </div>
-                          ) : (
-                            <div>
-                              <div className="flex items-center space-x-2 mb-1">
-                                <h4 className="font-medium">{item.title}</h4>
-                                <Badge variant="secondary">模板</Badge>
+                    <div key={item.id} className="border rounded-lg p-3 sm:p-4">
+                      {item.type === 'candidate' ? (
+                        <div className="space-y-3">
+                          {/* 候选人信息 */}
+                          <div className="flex items-start space-x-3">
+                            <Avatar className="h-10 w-10 flex-shrink-0">
+                              <AvatarImage src={item.avatar} />
+                              <AvatarFallback>{item.name?.[0] || 'U'}</AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center space-x-2 mb-1 flex-wrap">
+                                <h4 className="font-medium truncate">{item.name}</h4>
+                                <Badge variant="default" className="text-xs flex-shrink-0">候选人</Badge>
                                 {item.viewCount > 1 && (
-                                  <Badge variant="outline" className="text-xs">
+                                  <Badge variant="outline" className="text-xs flex-shrink-0">
                                     浏览 {item.viewCount} 次
                                   </Badge>
                                 )}
                               </div>
-                              <p className="text-sm text-gray-600">{item.description}</p>
+                              <p className="text-sm text-gray-600 truncate">{item.title}</p>
+                              <div className="flex flex-wrap gap-2 text-xs text-gray-500 mt-1">
+                                <span className="bg-gray-100 px-2 py-1 rounded">{item.experience}经验</span>
+                                <span className="bg-gray-100 px-2 py-1 rounded hidden sm:inline">{item.education}</span>
+                                <span className="bg-gray-100 px-2 py-1 rounded">{item.location}</span>
+                              </div>
                             </div>
-                          )}
-                          <div className="flex items-center space-x-4 text-xs text-gray-500 mt-2">
-                            <div className="flex items-center space-x-1">
-                              <Clock className="h-3 w-3" />
-                              <span>最后浏览: {item.viewDate}</span>
+                          </div>
+
+                          {/* 底部信息和操作 */}
+                          <div className="flex items-center justify-between pt-2 border-t">
+                            <div className="flex items-center space-x-1 text-xs text-gray-500">
+                              <Clock className="h-3 w-3 flex-shrink-0" />
+                              <span className="truncate">最后浏览: {item.viewDate}</span>
+                            </div>
+                            <div className="flex space-x-2 flex-shrink-0">
+                              <Button size="sm" variant="outline" className="h-8 px-2 sm:px-3">
+                                <Eye className="h-4 w-4" />
+                                <span className="hidden sm:inline ml-1">再次查看</span>
+                              </Button>
+                              <Button size="sm" variant="outline" className="h-8 px-2 sm:px-3">
+                                <Bookmark className="h-4 w-4" />
+                                <span className="hidden sm:inline ml-1">收藏</span>
+                              </Button>
                             </div>
                           </div>
                         </div>
-                        <div className="flex space-x-2">
-                          <Button size="sm" variant="outline">
-                            <Eye className="h-4 w-4 mr-1" />
-                            再次查看
-                          </Button>
-                          {item.type === 'candidate' && (
-                            <Button size="sm" variant="outline">
-                              <Bookmark className="h-4 w-4 mr-1" />
-                              收藏
-                            </Button>
-                          )}
+                      ) : (
+                        <div className="space-y-3">
+                          {/* 模板信息 */}
+                          <div>
+                            <div className="flex items-center space-x-2 mb-1 flex-wrap">
+                              <h4 className="font-medium">{item.title}</h4>
+                              <Badge variant="secondary" className="text-xs flex-shrink-0">模板</Badge>
+                              {item.viewCount > 1 && (
+                                <Badge variant="outline" className="text-xs flex-shrink-0">
+                                  浏览 {item.viewCount} 次
+                                </Badge>
+                              )}
+                            </div>
+                            <p className="text-sm text-gray-600">{item.description}</p>
+                          </div>
+
+                          {/* 底部信息和操作 */}
+                          <div className="flex items-center justify-between pt-2 border-t">
+                            <div className="flex items-center space-x-1 text-xs text-gray-500">
+                              <Clock className="h-3 w-3 flex-shrink-0" />
+                              <span className="truncate">最后浏览: {item.viewDate}</span>
+                            </div>
+                            <div className="flex space-x-2 flex-shrink-0">
+                              <Button size="sm" variant="outline" className="h-8 px-2 sm:px-3">
+                                <Eye className="h-4 w-4" />
+                                <span className="hidden sm:inline ml-1">再次查看</span>
+                              </Button>
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </div>
                   ))}
                 </div>

@@ -23,6 +23,7 @@ interface AuthContextType {
   login: (userData: Omit<User, "id" | "isAuthenticated">) => void;
   logout: () => void;
   updateUser: (userData: Partial<User>) => void;
+  switchUserType: (newType: UserType) => void;
   isLoading: boolean;
   role: UserType;
 }
@@ -39,15 +40,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const loadUser = () => {
       try {
         const savedUser = localStorage.getItem("yirenzhaoping_user");
+        const savedUserType = localStorage.getItem("yirenzhaoping_userType");
+
         if (savedUser) {
           const userData = JSON.parse(savedUser);
           setUser(userData);
           console.log(userData)
           setRole(userData.userType);
+        } else if (savedUserType) {
+          // 如果没有用户数据但有保存的用户类型，使用保存的类型
+          setRole(savedUserType as UserType);
         }
       } catch (error) {
         console.error("Failed to load user data:", error);
         localStorage.removeItem("yirenzhaoping_user");
+        localStorage.removeItem("yirenzhaoping_userType");
       } finally {
         setIsLoading(false);
       }
@@ -93,11 +100,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const switchUserType = (newType: UserType) => {
+    setRole(newType);
+    if (user) {
+      const updatedUser = { ...user, userType: newType };
+      setUser(updatedUser);
+      saveUser(updatedUser);
+    }
+    // 保存当前身份类型到 localStorage
+    try {
+      localStorage.setItem("yirenzhaoping_userType", newType);
+    } catch (error) {
+      console.error("Failed to save user type:", error);
+    }
+  };
+
   const value: AuthContextType = {
     user,
     login,
     logout,
     updateUser,
+    switchUserType,
     isLoading,
     role,
   };

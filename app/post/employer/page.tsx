@@ -132,7 +132,7 @@ export default function EmployerPostPage() {
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto p-4 pb-20">
+      <main className="max-w-2xl mx-auto p-4 pb-24">
         <form id="employer-post-form" onSubmit={handleSubmit} className="space-y-6">
           {/* 职位信息 */}
           <Card className="rounded-2xl">

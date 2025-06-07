@@ -55,7 +55,7 @@ export default function CreatePostPage() {
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto p-4 pb-20">
+      <main className="max-w-2xl mx-auto p-4 pb-24">
         <div className="space-y-6">
           {/* 说明文字 */}
           <div className="text-center py-8">

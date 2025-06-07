@@ -11,6 +11,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { CarouselBanner } from "@/components/ui/carousel-banner"
 import Link from "next/link"
+import {
+  getJobseekerCategoriesByType,
+  formatSalary,
+  getEmploymentTypeText,
+  SAMPLE_JOB_OPPORTUNITIES,
+  JOBSEEKER_BANNER_SLIDES
+} from "@/constants"
 
 export default function JobseekerPage() {
   const router = useRouter()
@@ -53,6 +60,13 @@ export default function JobseekerPage() {
   // 跳转到筛选页面
   const handleFilterClick = () => {
     router.push('/filter/jobseeker')
+  }
+
+  // 搜索处理函数
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    console.log('搜索:', searchValue)
+    // 这里可以添加搜索逻辑
   }
 
 
@@ -113,113 +127,22 @@ export default function JobseekerPage() {
     }
   }
 
-  // 招聘职位数据
-  const opportunities = [
-    {
-      id: 1,
-      title: "大型音乐剧《猫》舞蹈演员",
-      company: "星光文化传媒",
-      location: "北京",
-      salary: "8000-12000",
-      type: "全职",
-      tags: ["五险一金", "工作补贴", "培训机会"],
-      description: "招聘专业舞蹈演员，要求有扎实的舞蹈基础，形象气质佳，有团队合作精神。",
-      posted: "2天前",
-      urgent: true,
-      requiredMajor: "舞蹈表演专业",
-      startTime: "立即到岗"
-    },
-    {
-      id: 2,
-      title: "武术指导及表演",
-      company: "东方影视",
-      location: "上海",
-      salary: "10000-15000",
-      type: "合同制",
-      tags: ["影视经验", "高薪", "知名导演"],
-      description: "知名导演新片招聘武术指导，要求有丰富的武术表演和指导经验。",
-      posted: "1天前",
-      urgent: false,
-      requiredMajor: "武术与民族传统体育",
-      startTime: "1周内到岗"
-    },
-    {
-      id: 3,
-      title: "儿童剧表演演员",
-      company: "童话王国剧团",
-      location: "广州",
-      salary: "6000-8000",
-      type: "兼职",
-      tags: ["周末工作", "儿童剧", "轻松愉快"],
-      description: "招聘儿童剧表演演员，要求喜欢孩子，表演生动有趣，周末工作。",
-      posted: "3天前",
-      urgent: false,
-      requiredMajor: "表演专业",
-      startTime: "2周内到岗"
-    }
-  ]
-
-  // Banner轮播数据
-  const bannerSlides = [
-    {
-      id: 1,
-      title: "发现招聘职位",
-      subtitle: "专业求职者招聘平台",
-      description: "汇聚全国优质招聘职位，为您的艺术才华找到最佳工作机会",
-      image: "/placeholder.svg?height=200&width=400",
-      buttonText: "立即查看",
-      backgroundColor: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-    },
-    {
-      id: 2,
-      title: "丰富职位类型",
-      subtitle: "覆盖各类表演领域",
-      description: "舞台剧、音乐剧、舞蹈表演、影视拍摄等多种职位等你来",
-      image: "/placeholder.svg?height=200&width=400",
-      buttonText: "浏览职位",
-      backgroundColor: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
-    },
-    {
-      id: 3,
-      title: "专业成长平台",
-      subtitle: "提升艺术技能",
-      description: "与知名导演合作，参与优质项目，让您的艺术生涯更上一层楼",
-      image: "/placeholder.svg?height=200&width=400",
-      buttonText: "开始申请",
-      backgroundColor: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
-    }
-  ]
+  // 使用常量文件中的数据
+  const opportunities = SAMPLE_JOB_OPPORTUNITIES
+  const bannerSlides = JOBSEEKER_BANNER_SLIDES
 
   // 分类切换状态
   const [categoryType, setCategoryType] = useState<'frontend' | 'backend'>('frontend')
+  const [searchValue, setSearchValue] = useState("")
 
-  // 表演类别
-  const frontendCategories = [
-    { name: "舞蹈", count: 56, icon: "💃" },
-    { name: "表演", count: 43, icon: "🎭" },
-    { name: "武术", count: 28, icon: "🥋" },
-    { name: "杂技", count: 15, icon: "🤹" },
-    { name: "音乐", count: 37, icon: "🎵" },
-    { name: "戏曲", count: 22, icon: "🎪" },
-  ]
-
-  const backendCategories = [
-    { name: "导演", count: 15, icon: "🎬" },
-    { name: "编剧", count: 12, icon: "✍️" },
-    { name: "制片", count: 8, icon: "📋" },
-    { name: "摄影", count: 22, icon: "📷" },
-    { name: "灯光", count: 18, icon: "💡" },
-    { name: "音响", count: 16, icon: "🔊" },
-  ]
-
-  const currentCategories = categoryType === 'frontend' ? frontendCategories : backendCategories
+  const currentCategories = getJobseekerCategoriesByType(categoryType)
 
   return (
     <div className="min-h-screen bg-gray-50">
   
 
       {/* Main Content */}
-      <main className="pb-20">
+      <main className="pb-24">
         <div className="mb-6">
           <CarouselBanner
             slides={bannerSlides}
@@ -228,7 +151,6 @@ export default function JobseekerPage() {
             autoPlayInterval={4000}
           />
         </div>
-
         {/* Search Section - 移动端优化 */}
         <div className="px-3 mb-4">
           <div className="bg-white rounded-xl shadow-sm p-3">

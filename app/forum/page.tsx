@@ -1,62 +1,23 @@
 "use client"
 
 import { useState } from "react"
-import { Search, Plus, Heart, MessageCircle, Share2, TrendingUp, Hash, ArrowLeft, MoreHorizontal } from "lucide-react"
+import { Search, Plus, Heart, MessageCircle, Share2, TrendingUp, Hash, MoreHorizontal } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { PageHeader, SubPageHeader } from "@/components/ui/page-header"
+import { SAMPLE_FORUM_TOPICS, SAMPLE_FORUM_POSTS } from "@/constants"
 import Link from "next/link"
 import { useAuth, UserType } from "@/lib/auth-context"
 
 export default function ForumPage() {
   const [activeTab, setActiveTab] = useState("hot")
 
-  const topics = [
-    { id: 1, name: "舞蹈技巧", count: 234 },
-    { id: 2, name: "招聘信息", count: 156 },
-    { id: 3, name: "武术交流", count: 142 },
-    { id: 4, name: "杂技表演", count: 89 },
-    { id: 5, name: "音乐分享", count: 176 },
-  ]
-
-  const posts = [
-    {
-      id: 1,
-      author: {
-        name: "舞蹈小王子",
-        avatar: "/placeholder.svg?height=40&width=40",
-        title: "古典舞演员",
-      },
-      content:
-        "刚刚结束了一场大型演出，分享一下我的心得体会。这次演出是《丝路花雨》的重排版，我担任主要舞者之一。排练了两个月，每天8小时的高强度训练，但看到观众的反响，一切都值得了...",
-      images: ["/placeholder.svg?height=150&width=200", "/placeholder.svg?height=150&width=200"],
-      topics: ["舞蹈技巧", "招聘信息"],
-      likes: 128,
-      comments: 45,
-      shares: 12,
-      time: "2小时前",
-      isLiked: false,
-    },
-    {
-      id: 2,
-      author: {
-        name: "武术达人",
-        avatar: "/placeholder.svg?height=40&width=40",
-        title: "武术求职者",
-      },
-      content:
-        "给大家分享一个武术表演中的小技巧：如何在长拳表演中提高爆发力。我觉得最重要的是呼吸节奏和发力点的掌握，还有就是要保持身体的协调性...",
-      topics: ["武术交流"],
-      likes: 89,
-      comments: 23,
-      shares: 8,
-      time: "4小时前",
-      isLiked: true,
-    },
-  ]
+  // 使用常量文件中的数据
+  const topics = SAMPLE_FORUM_TOPICS
+  const posts = SAMPLE_FORUM_POSTS
 
   const { role } = useAuth()
 
@@ -64,15 +25,12 @@ export default function ForumPage() {
   const effectiveRole = role || UserType.JobSeeker
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* 头部组件 */}
+      <PageHeader
+        title="论坛"
+      />
 
-      <main className="px-4 py-4 pb-20">
-        {/* Search */}
-        <div className="bg-white rounded-2xl shadow-sm p-4 mb-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-            <Input placeholder="搜索话题、内容..." className="pl-10 h-12 rounded-xl border-gray-200" />
-          </div>
-        </div>
+      <main className="px-4 py-4 pb-24">
 
         {/* Hot Topics */}
         <div className="mb-4">

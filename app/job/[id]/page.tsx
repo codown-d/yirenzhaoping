@@ -1,5 +1,4 @@
 import {
-  ArrowLeft,
   MapPin,
   Building,
   Users,
@@ -15,6 +14,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
+import { SubPageHeader } from "@/components/ui/page-header"
+import { SAMPLE_JOB_DETAIL } from "@/constants"
 import Link from "next/link"
 
 export async function generateStaticParams() {
@@ -27,93 +28,13 @@ export async function generateStaticParams() {
 }
 
 export default function JobDetailPage() {
-  const job = {
-    id: 1,
-    title: "民族舞演员",
-    company: "东方歌舞团",
-    salary: "8K-15K",
-    location: "北京市海淀区",
-    experience: "3-5年",
-    education: "舞蹈相关专业",
-    type: "全职",
-    performanceType: "民族舞",
-    startTime: "立即到岗",
-    workSchedule: {
-      workDays: "周一至周六",
-      workHours: "9:00-18:00",
-      rehearsalTime: "19:00-21:00",
-      overtime: "演出期间需要",
-      restDay: "周日",
-      flexibleSchedule: true
-    },
-    requirements: ["民族舞", "3年经验", "形象佳", "身高165cm以上", "有团队合作经验"],
-    benefits: ["五险一金", "演出补贴", "舞台机会多", "国内外巡演", "专业培训"],
-    description: `我们正在寻找有经验的民族舞演员加入我们的团队。您将参与团队的常规演出和国内外巡演活动。
-
-职责包括：
-• 参与团队日常排练
-• 出演各类民族舞蹈节目
-• 参与国内外巡演和文艺演出
-• 配合编导完成新节目的创作
-• 参与团队宣传活动
-
-工作时间安排：
-• 工作日：周一至周六 9:00-18:00
-• 晚间排练：19:00-21:00（根据演出安排）
-• 休息日：周日（演出期间可能调整）
-• 演出期间：根据演出时间安排，可能包含晚间和周末
-• 巡演期间：根据行程安排，时间相对灵活
-
-要求：
-• 3年以上专业民族舞表演经验
-• 舞蹈相关专业毕业
-• 形象气质佳，身高165cm以上
-• 有较强的舞台表现力和团队合作精神
-• 能适应巡演生活和灵活的工作时间安排`,
-    companyInfo: {
-      name: "东方歌舞团",
-      industry: "表演艺术",
-      size: "50-100人",
-      founded: "1995年",
-      description: "东方歌舞团是一家专业的表演艺术团体，致力于中国传统舞蹈的传承与创新，常年在国内外进行巡演活动。",
-      address: "北京市海淀区文化艺术中心",
-      website: "www.dongfangdance.com",
-    },
-    upcomingProjects: [
-      {
-        name: "《锦绣中华》民族舞蹈专场",
-        date: "2024-06-15",
-        location: "北京国家大剧院",
-      },
-      {
-        name: "亚洲文化艺术节巡演",
-        date: "2024-07-20",
-        location: "多个亚洲国家",
-      },
-    ],
-    images: [
-      "/placeholder.svg?height=200&width=300",
-      "/placeholder.svg?height=200&width=300",
-      "/placeholder.svg?height=200&width=300",
-      "/placeholder.svg?height=200&width=300",
-    ],
-  }
+  // 使用常量文件中的数据
+  const job = SAMPLE_JOB_DETAIL
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-16">
-            <Button variant="ghost" size="sm" asChild className="mr-4">
-              <Link href="/">
-                <ArrowLeft className="h-4 w-4" />
-              </Link>
-            </Button>
-            <h1 className="text-xl font-semibold">职位详情</h1>
-          </div>
-        </div>
-      </header>
+      {/* 头部组件 */}
+      <SubPageHeader title="职位详情" />
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
