@@ -227,6 +227,22 @@ export const BACKEND_JOB_TYPES = [
   "服装设计",
 ];
 
+// 运营职位类型（求职者筛选用）
+export const OPERATIONS_JOB_TYPES = [
+  "票务",
+  "接待",
+  "客服",
+  "安全",
+  "营销",
+  "运营",
+  "活动策划",
+  "媒体宣传",
+  "商务合作",
+  "财务管理",
+  "人事管理",
+  "行政管理",
+];
+
 // 前台专业列表（招聘方筛选用）
 export const FRONTEND_SPECIALTIES = [
   "古典舞",
@@ -258,6 +274,22 @@ export const BACKEND_SPECIALTIES = [
   "道具制作",
   "后期制作",
   "音效制作",
+];
+
+// 运营专业列表（招聘方筛选用）
+export const OPERATIONS_SPECIALTIES = [
+  "票务",
+  "接待",
+  "客服",
+  "安全",
+  "营销",
+  "运营",
+  "活动策划",
+  "媒体宣传",
+  "商务合作",
+  "财务管理",
+  "人事管理",
+  "行政管理",
 ];
 
 // 发布页面用的分类（更详细）
@@ -293,119 +325,142 @@ export const BACKEND_POST_CATEGORIES = [
 
 // ==================== 主页分类展示数据 ====================
 
-export const FRONTEND_CATEGORIES_DISPLAY = [
-  {
-    name: "演员",
-    count: 156,
-    icon: "💃",
-    children: [
-      { name: "舞蹈类", count: 56, icon: "💃" },
-      { name: "表演类", count: 43, icon: "🎭" },
-      { name: "武术类", count: 28, icon: "🥋" },
-      { name: "杂技类", count: 15, icon: "🤹" },
-      { name: "音乐类", count: 37, icon: "🎵" },
-      { name: "模特类", count: 22, icon: "🎪" },
+// 三级分类展示数据结构
+export const ALL_CATEGORIES_DISPLAY = {
+  frontend: {
+    name: "台前",
+    icon: "🎭",
+    count: 312,
+    categories: [
+      {
+        name: "演员",
+        count: 156,
+        icon: "💃",
+        children: [
+          { name: "舞蹈类", count: 56, icon: "💃" },
+          { name: "表演类", count: 43, icon: "🎭" },
+          { name: "武术类", count: 28, icon: "🥋" },
+          { name: "杂技类", count: 15, icon: "🤹" },
+          { name: "音乐类", count: 37, icon: "🎵" },
+          { name: "模特类", count: 22, icon: "🎪" },
+        ],
+      },
+      {
+        name: "主持/互动",
+        count: 156,
+        icon: "🎤",
+        children: [
+          { name: "驻场主持人", count: 56, icon: "🎤" },
+          { name: "角色扮演互动员", count: 56, icon: "🎭" },
+          { name: "古装NPC", count: 44, icon: "👘" },
+        ],
+      },
     ],
   },
-  {
-    name: "主持/互动",
-    count: 156,
-    icon: "💃",
-    children: [
-      { name: "驻场主持人", count: 56, icon: "💃" },
-      { name: "角色扮演互动员", count: 56, icon: "💃" },
-      { name: "古装NPC", count: 56, icon: "💃" },
+  backend: {
+    name: "幕后",
+    icon: "🎬",
+    count: 245,
+    categories: [
+      {
+        name: "艺术创作",
+        count: 15,
+        icon: "🎨",
+        children: [
+          { name: "导演", count: 15, icon: "🎬" },
+          { name: "分幕编剧", count: 12, icon: "✍️" },
+          { name: "舞蹈编排师", count: 8, icon: "💃" },
+          { name: "服装设计师", count: 22, icon: "👗" },
+          { name: "道具造型师", count: 22, icon: "🎭" },
+          { name: "舞美设计师", count: 22, icon: "🎨" },
+          { name: "特效设计师", count: 22, icon: "✨" },
+        ],
+      },
+      {
+        name: "技术制作",
+        count: 15,
+        icon: "⚙️",
+        children: [
+          { name: "灯光控制师", count: 15, icon: "💡" },
+          { name: "音响工程师", count: 12, icon: "🔊" },
+          { name: "舞台机械操作员", count: 8, icon: "⚙️" },
+          { name: "焰火控制员", count: 22, icon: "🎆" },
+          { name: "水景特效师", count: 22, icon: "💧" },
+          { name: "多媒体投影师", count: 22, icon: "📽️" },
+          { name: "道具制作师", count: 22, icon: "🔨" },
+          { name: "武器维护员", count: 22, icon: "⚔️" },
+          { name: "动物演员驯导师", count: 22, icon: "🐎" },
+        ],
+      },
+      {
+        name: "支持保障",
+        count: 15,
+        icon: "🛡️",
+        children: [
+          { name: "舞台监督", count: 15, icon: "👨‍💼" },
+          { name: "演出场记", count: 12, icon: "📋" },
+          { name: "替补演员", count: 8, icon: "🎭" },
+        ],
+      },
     ],
   },
-];
+  operations: {
+    name: "运营",
+    icon: "📊",
+    count: 180,
+    categories: [
+      {
+        name: "游客服务",
+        count: 45,
+        icon: "🤝",
+        children: [
+          { name: "票务", count: 15, icon: "🎫" },
+          { name: "接待", count: 12, icon: "🤝" },
+          { name: "客户服务", count: 18, icon: "📞" },
+        ],
+      },
+      {
+        name: "安全管理",
+        count: 27,
+        icon: "🛡️",
+        children: [
+          { name: "紧急救护员", count: 15, icon: "🚑" },
+          { name: "设备安全检查员", count: 12, icon: "🔍" },
+        ],
+      },
+      {
+        name: "市场营销",
+        count: 35,
+        icon: "📢",
+        children: [
+          { name: "宣传策划", count: 15, icon: "📝" },
+          { name: "新媒体运营", count: 12, icon: "📱" },
+          { name: "票务渠道营销", count: 8, icon: "🎫" },
+        ],
+      },
+      {
+        name: "综合支持",
+        count: 73,
+        icon: "⚙️",
+        children: [
+          { name: "产品开发", count: 15, icon: "💡" },
+          { name: "广告招商", count: 12, icon: "💰" },
+          { name: "数据运营", count: 8, icon: "📊" },
+          { name: "人力资源", count: 8, icon: "👥" },
+          { name: "后勤", count: 15, icon: "📦" },
+          { name: "工程维修", count: 15, icon: "🔧" },
+        ],
+      },
+    ],
+  },
+};
 
-export const BACKEND_CATEGORIES_DISPLAY = [
-  {
-    name: "艺术创作",
-    count: 15,
-    icon: "🎬",
-    children: [
-      { name: "导演", count: 15, icon: "🎬" },
-      { name: "分幕编剧", count: 12, icon: "✍️" },
-      { name: "舞蹈编排师", count: 8, icon: "📋" },
-      { name: "服装设计师", count: 22, icon: "📷" },
-      { name: "道具造型师", count: 22, icon: "📷" },
-      { name: "舞美设计师", count: 22, icon: "📷" },
-      { name: "特效设计师", count: 22, icon: "📷" },
-    ],
-  },
-  {
-    name: "技术制作",
-    count: 15,
-    icon: "🎬",
-    children: [
-      { name: "灯光控制师", count: 15, icon: "🎬" },
-      { name: "音响工程师", count: 12, icon: "✍️" },
-      { name: "舞台机械操作员", count: 8, icon: "📋" },
-      { name: "焰火控制员", count: 22, icon: "📷" },
-      { name: "水景特效师", count: 22, icon: "📷" },
-      { name: "多媒体投影师", count: 22, icon: "📷" },
-      { name: "道具制作师", count: 22, icon: "📷" },
-      { name: "武器维护员", count: 22, icon: "📷" },
-      { name: "动物演员驯导师", count: 22, icon: "📷" },
-    ],
-  },
-  {
-    name: "支持保障",
-    count: 15,
-    icon: "🎬",
-    children: [
-      { name: "舞台监督", count: 15, icon: "🎬" },
-      { name: "演出场记", count: 12, icon: "✍️" },
-      { name: "替补演员", count: 8, icon: "📋" },
-    ],
-  },
-];
+// 保持向后兼容的单独导出
+export const FRONTEND_CATEGORIES_DISPLAY = ALL_CATEGORIES_DISPLAY.frontend.categories;
 
-export const OPERATIONS_CATEGORIES_DISPLAY = [
-  {
-    name: "游客服务",
-    count: 15,
-    icon: "🎬",
-    children: [
-      { name: "票务", count: 15, icon: "🎬" },
-      { name: "接待", count: 12, icon: "✍️" },
-      { name: "客户服务", count: 8, icon: "📋" },
-    ],
-  },
-  {
-    name: "安全管理",
-    count: 15,
-    icon: "🎬",
-    children: [
-      { name: "紧急救护员", count: 15, icon: "🎬" },
-      { name: "设备安全检查员", count: 12, icon: "✍️" },
-    ],
-  },
-  {
-    name: "市场营销",
-    count: 15,
-    icon: "🎬",
-    children: [
-      { name: "宣传策划", count: 15, icon: "🎬" },
-      { name: "新媒体运营", count: 12, icon: "✍️" },
-      { name: "票务渠道营销", count: 8, icon: "📋" },
-    ],
-  },
-  {
-    name: "综合支持",
-    count: 15,
-    icon: "🎬",
-    children: [
-      { name: "产品开发", count: 15, icon: "🎬" },
-      { name: "广告招商", count: 12, icon: "✍️" },
-      { name: "数据运营", count: 8, icon: "📋" },
-      { name: "人力资源", count: 8, icon: "📋" },
-      { name: "后勤", count: 8, icon: "📋" },
-      { name: "工程维修", count: 8, icon: "📋" },
-    ],
-  },
-];
+export const BACKEND_CATEGORIES_DISPLAY = ALL_CATEGORIES_DISPLAY.backend.categories;
+
+export const OPERATIONS_CATEGORIES_DISPLAY = ALL_CATEGORIES_DISPLAY.operations.categories;
 
 // 招聘方主页分类展示数据
 export const EMPLOYER_FRONTEND_CATEGORIES = [
@@ -424,6 +479,15 @@ export const EMPLOYER_BACKEND_CATEGORIES = [
   { name: "摄影", count: 56, icon: "📷" },
   { name: "灯光", count: 41, icon: "💡" },
   { name: "音响", count: 38, icon: "🔊" },
+];
+
+export const EMPLOYER_OPERATIONS_CATEGORIES = [
+  { name: "票务", count: 25, icon: "🎫" },
+  { name: "接待", count: 18, icon: "🤝" },
+  { name: "客服", count: 22, icon: "📞" },
+  { name: "安全", count: 15, icon: "🛡️" },
+  { name: "营销", count: 28, icon: "📢" },
+  { name: "运营", count: 35, icon: "⚙️" },
 ];
 
 // ==================== 工作相关选项 ====================
@@ -603,17 +667,33 @@ export const getDistricts = (province: string, city: string) => {
 };
 
 // 根据类别获取职位类型
-export const getJobTypesByCategory = (categoryType: "frontend" | "backend") => {
-  return categoryType === "frontend" ? FRONTEND_JOB_TYPES : BACKEND_JOB_TYPES;
+export const getJobTypesByCategory = (categoryType: "frontend" | "backend" | "operations") => {
+  switch (categoryType) {
+    case "frontend":
+      return FRONTEND_JOB_TYPES;
+    case "backend":
+      return BACKEND_JOB_TYPES;
+    case "operations":
+      return OPERATIONS_JOB_TYPES;
+    default:
+      return FRONTEND_JOB_TYPES;
+  }
 };
 
 // 根据类别获取专业列表
 export const getSpecialtiesByCategory = (
-  categoryType: "frontend" | "backend"
+  categoryType: "frontend" | "backend" | "operations"
 ) => {
-  return categoryType === "frontend"
-    ? FRONTEND_SPECIALTIES
-    : BACKEND_SPECIALTIES;
+  switch (categoryType) {
+    case "frontend":
+      return FRONTEND_SPECIALTIES;
+    case "backend":
+      return BACKEND_SPECIALTIES;
+    case "operations":
+      return OPERATIONS_SPECIALTIES;
+    default:
+      return FRONTEND_SPECIALTIES;
+  }
 };
 
 // 根据类别获取发布页面分类
@@ -641,6 +721,16 @@ export const getEmployerCategoriesByType = (
   return categoryType === "frontend"
     ? EMPLOYER_FRONTEND_CATEGORIES
     : EMPLOYER_BACKEND_CATEGORIES;
+};
+
+// 获取三级分类数据
+export const getThreeLevelCategories = (categoryType: "frontend" | "backend" | "operations") => {
+  return ALL_CATEGORIES_DISPLAY[categoryType];
+};
+
+// 获取所有三级分类数据
+export const getAllThreeLevelCategories = () => {
+  return ALL_CATEGORIES_DISPLAY;
 };
 
 // 格式化经验显示

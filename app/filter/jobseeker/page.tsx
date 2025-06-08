@@ -6,23 +6,20 @@ import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Checkbox } from "@/components/ui/checkbox"
+
 import { Slider } from "@/components/ui/slider"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { FilterPageHeader } from "@/components/ui/page-header"
 import {
-  LOCATION_DATA,
-  FRONTEND_JOB_TYPES,
-  BACKEND_JOB_TYPES,
   BENEFIT_OPTIONS,
   getProvinces,
   getCities,
   getDistricts,
-  getJobTypesByCategory,
   formatSalary,
   getEmploymentTypeText
 } from "@/constants"
+import ThreeLevelCategoryFilter from "@/components/ThreeLevelCategoryFilter"
 
 
 export default function JobseekerFilterPage() {
@@ -33,15 +30,21 @@ export default function JobseekerFilterPage() {
   const [selectedCity, setSelectedCity] = useState<string>("")
   const [selectedDistrict, setSelectedDistrict] = useState<string>("")
   const [location, setLocation] = useState<string[]>([])
-  const [categoryType, setCategoryType] = useState<'frontend' | 'backend'>('frontend')
+  const [categoryType, setCategoryType] = useState<'frontend' | 'backend' | 'operations'>('frontend')
   const [jobTypes, setJobTypes] = useState<string[]>([])
   const [salaryRange, setSalaryRange] = useState<[number, number]>([0, 50])
   const [employmentType, setEmploymentType] = useState<string>("unlimited")
   const [benefits, setBenefits] = useState<string[]>([])
 
-  // 根据当前选择的类别获取职位类型
-  const getCurrentJobTypes = () => {
-    return getJobTypesByCategory(categoryType)
+  // 处理分类变化
+  const handleCategoryChange = (category: string) => {
+    setCategoryType(category as 'frontend' | 'backend' | 'operations')
+    setJobTypes([]) // 清空职位类型选择
+  }
+
+  // 处理职位类型变化
+  const handleJobTypesChange = (types: string[]) => {
+    setJobTypes(types)
   }
 
   // 页面加载时从 localStorage 读取筛选条件
@@ -103,14 +106,7 @@ export default function JobseekerFilterPage() {
     setLocation(location.filter(item => item !== locationToRemove))
   }
 
-  // 处理职位类型选择
-  const handleJobTypeChange = (type: string) => {
-    if (jobTypes.includes(type)) {
-      setJobTypes(jobTypes.filter((item) => item !== type))
-    } else {
-      setJobTypes([...jobTypes, type])
-    }
-  }
+
 
   // 处理福利选择
   const handleBenefitChange = (benefit: string) => {
@@ -262,61 +258,13 @@ export default function JobseekerFilterPage() {
           )}
         </div>
 
-        {/* 职位类别筛选 */}
-        <div className="bg-white rounded-2xl p-4 mb-4">
-          <h3 className="text-base font-medium mb-3">职位类别</h3>
-          <div className="flex bg-gray-100 rounded-xl p-1">
-            <Button
-              variant={categoryType === 'frontend' ? 'default' : 'ghost'}
-              size="sm"
-              className={`rounded-lg px-4 py-2 text-sm flex-1 text-black hover:text-[#fff] ${
-                categoryType === 'frontend'
-                  ? 'bg-white shadow-sm'
-                  : 'hover:bg-gray-200 hover:text-black'
-              }`}
-              onClick={() => {
-                setCategoryType('frontend')
-                setJobTypes([]) // 清空已选择的职位类型
-              }}
-            >
-              台前
-            </Button>
-            <Button
-              variant={categoryType === 'backend' ? 'default' : 'ghost'}
-              size="sm"
-              className={`rounded-lg px-4 py-2 text-sm flex-1 text-black hover:text-[#fff] ${
-                categoryType === 'backend'
-                  ? 'bg-white shadow-sm'
-                  : 'hover:bg-gray-200 hover:text-black'
-              }`}
-              onClick={() => {
-                setCategoryType('backend')
-                setJobTypes([]) // 清空已选择的职位类型
-              }}
-            >
-              幕后
-            </Button>
-          </div>
-        </div>
-
-        {/* 职位类型筛选 */}
-        <div className="bg-white rounded-2xl p-4 mb-4">
-          <h3 className="text-base font-medium mb-3">职位类型</h3>
-          <div className="grid grid-cols-2 gap-2">
-            {getCurrentJobTypes().map((type) => (
-              <div key={type} className="flex items-center space-x-2">
-                <Checkbox
-                  id={type}
-                  checked={jobTypes.includes(type)}
-                  onCheckedChange={() => handleJobTypeChange(type)}
-                />
-                <Label htmlFor={type} className="text-sm">
-                  {type}
-                </Label>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* 三级分类筛选 */}
+        <ThreeLevelCategoryFilter
+          selectedCategory={categoryType}
+          selectedJobTypes={jobTypes}
+          onCategoryChange={handleCategoryChange}
+          onJobTypesChange={handleJobTypesChange}
+        />
 
         {/* 薪资范围筛选 */}
         <div className="bg-white rounded-2xl p-4 mb-4">

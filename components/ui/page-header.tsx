@@ -4,12 +4,7 @@ import { ArrowLeft, Search, Menu, User, Bell, RefreshCw, Briefcase, UserCheck } 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+
 import { useRouter } from "next/navigation"
 import { useAuth, useIsAuthenticated, UserType } from "@/lib/auth-context"
 
@@ -284,17 +279,11 @@ export function ProfilePageHeader({
   showRoleSwitch?: boolean
   onEdit?: () => void
 }) {
-  const { role, switchUserType } = useAuth()
+  const { role } = useAuth()
   const router = useRouter()
 
-  const handleRoleSwitch = (newRole: UserType) => {
-    switchUserType(newRole)
-    // 切换身份后跳转到对应的主页
-    if (newRole === UserType.JobSeeker) {
-      router.push('/jobseeker')
-    } else {
-      router.push('/employer')
-    }
+  const handleRoleSwitchClick = () => {
+    router.push('/role-switch')
   }
 
   const getRoleIcon = (userType: UserType) => {
@@ -315,39 +304,14 @@ export function ProfilePageHeader({
       rightContent={
         <div className="flex items-center space-x-2">
           {showRoleSwitch && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 px-2 text-sm flex items-center space-x-1"
-                >
-                  {getRoleIcon(role)}
-                  <span className="hidden sm:inline">{getRoleText(role)}</span>
-                  <RefreshCw className="h-3 w-3 ml-1" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-32">
-                <DropdownMenuItem
-                  onClick={() => handleRoleSwitch(UserType.JobSeeker)}
-                  className={`flex items-center space-x-2 ${
-                    role === UserType.JobSeeker ? 'bg-blue-50 text-blue-700' : ''
-                  }`}
-                >
-                  <UserCheck className="h-4 w-4" />
-                  <span>求职者</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => handleRoleSwitch(UserType.Employer)}
-                  className={`flex items-center space-x-2 ${
-                    role === UserType.Employer ? 'bg-blue-50 text-blue-700' : ''
-                  }`}
-                >
-                  <Briefcase className="h-4 w-4" />
-                  <span>招聘方</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-8 px-2 text-sm flex items-center space-x-1"
+              onClick={handleRoleSwitchClick}
+            >
+              {role==='employer'?'切换为求职者':'切换为招聘方'}
+            </Button>
           )}
 
           {showEdit && onEdit && (

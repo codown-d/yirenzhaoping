@@ -12,10 +12,10 @@ import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/co
 import { CarouselBanner } from "@/components/ui/carousel-banner"
 import Link from "next/link"
 import {
-  getJobseekerCategoriesByType,
   SAMPLE_JOB_OPPORTUNITIES,
   JOBSEEKER_BANNER_SLIDES
 } from "@/constants"
+import ThreeLevelCategories from "@/components/ThreeLevelCategories"
 
 export default function JobseekerPage() {
   const router = useRouter()
@@ -129,11 +129,11 @@ export default function JobseekerPage() {
   const opportunities = SAMPLE_JOB_OPPORTUNITIES
   const bannerSlides = JOBSEEKER_BANNER_SLIDES
 
-  // 分类切换状态
-  const [categoryType, setCategoryType] = useState<'frontend' | 'backend'>('frontend')
-  const [searchValue, setSearchValue] = useState("")
-
-  const currentCategories = getJobseekerCategoriesByType(categoryType)
+  // 处理分类选择
+  const handleCategorySelect = (category: string, subcategory: string, item: string) => {
+    console.log('选择了分类:', { category, subcategory, item })
+    // 这里可以添加跳转到具体分类页面的逻辑
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -200,7 +200,8 @@ export default function JobseekerPage() {
 
                 {jobseekerFilters.categoryType && jobseekerFilters.categoryType !== 'frontend' && (
                   <Badge variant="secondary" className="rounded-full px-3 py-1">
-                    {jobseekerFilters.categoryType === 'backend' ? '后台' : '前台'}
+                    {jobseekerFilters.categoryType === 'backend' ? '幕后' :
+                     jobseekerFilters.categoryType === 'operations' ? '运营' : '台前'}
                     <button className="ml-1 text-gray-500" onClick={() => clearFilter("categoryType")}>
                       ×
                     </button>
@@ -288,45 +289,12 @@ export default function JobseekerPage() {
           </div>
         </div>
       )}
-        {/* Categories - 移动端优化 */}
+        {/* Categories - 三级分类展示 */}
         <div className="px-3 mb-6">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-base font-semibold">类别</h2>
-            <div className="flex bg-gray-100 rounded-lg p-0.5">
-              <Button
-                variant={categoryType === 'frontend' ? 'default' : 'ghost'}
-                size="sm"
-                className={`rounded-md px-3 py-1.5 text-xs text-black hover:text-[#fff] ${
-                  categoryType === 'frontend'
-                    ? 'bg-white shadow-sm'
-                    : 'hover:bg-gray-200 hover:text-black'
-                }`}
-                onClick={() => setCategoryType('frontend')}
-              >
-                台前
-              </Button>
-              <Button
-                variant={categoryType === 'backend' ? 'default' : 'ghost'}
-                size="sm"
-                className={`rounded-md px-3 py-1.5 text-xs text-black hover:text-[#fff] ${
-                  categoryType === 'backend'
-                    ? 'bg-white shadow-sm'
-                    : 'hover:bg-gray-200 hover:text-black'
-                }`}
-                onClick={() => setCategoryType('backend')}
-              >
-                幕后
-              </Button>
-            </div>
-          </div>
-          <div className="grid grid-cols-3 gap-2">
-            {currentCategories.map((category) => (
-              <div key={category.name} className="bg-white rounded-xl p-3 text-center shadow-sm hover:shadow-md transition-shadow active:scale-95">
-                <div className="text-xl mb-1">{category.icon}</div>
-                <div className="font-medium text-xs text-gray-800">{category.name}</div>
-              </div>
-            ))}
-          </div>
+          <ThreeLevelCategories
+            onCategorySelect={handleCategorySelect}
+            selectedCategory="frontend"
+          />
         </div>
 
         {/* Recommended Opportunities - 移动端优化 */}

@@ -6,21 +6,18 @@ import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Checkbox } from "@/components/ui/checkbox"
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { FilterPageHeader } from "@/components/ui/page-header"
 import {
-  LOCATION_DATA,
   AGE_GROUP_OPTIONS,
-  FRONTEND_SPECIALTIES,
-  BACKEND_SPECIALTIES,
   EDUCATION_OPTIONS,
   getProvinces,
   getCities,
-  getDistricts,
-  getSpecialtiesByCategory
+  getDistricts
 } from "@/constants"
+import EmployerThreeLevelCategoryFilter from "@/components/EmployerThreeLevelCategoryFilter"
 
 
 export default function EmployerFilterPage() {
@@ -32,15 +29,21 @@ export default function EmployerFilterPage() {
   const [selectedDistrict, setSelectedDistrict] = useState<string>("")
   const [location, setLocation] = useState<string[]>([])
   const [gender, setGender] = useState<string>("")
-  const [categoryType, setCategoryType] = useState<'frontend' | 'backend'>('frontend')
+  const [categoryType, setCategoryType] = useState<'frontend' | 'backend' | 'operations'>('frontend')
   const [specialties, setSpecialties] = useState<string[]>([])
   const [ageGroup, setAgeGroup] = useState<string>("unlimited")
   const [experience, setExperience] = useState<string>("")
   const [education, setEducation] = useState<string[]>([])
 
-  // 根据当前选择的类别获取专业列表
-  const getCurrentSpecialties = () => {
-    return getSpecialtiesByCategory(categoryType)
+  // 处理分类变化
+  const handleCategoryChange = (category: string) => {
+    setCategoryType(category as 'frontend' | 'backend' | 'operations')
+    setSpecialties([]) // 清空专业选择
+  }
+
+  // 处理专业变化
+  const handleSpecialtiesChange = (types: string[]) => {
+    setSpecialties(types)
   }
 
   // 页面加载时从 localStorage 读取筛选条件
@@ -103,14 +106,7 @@ export default function EmployerFilterPage() {
     setLocation(location.filter(item => item !== locationToRemove))
   }
 
-  // 处理专业选择
-  const handleSpecialtyChange = (specialty: string) => {
-    if (specialties.includes(specialty)) {
-      setSpecialties(specialties.filter((item) => item !== specialty))
-    } else {
-      setSpecialties([...specialties, specialty])
-    }
-  }
+
 
   // 处理学历选择
   const handleEducationChange = (edu: string) => {
@@ -281,61 +277,13 @@ export default function EmployerFilterPage() {
           </RadioGroup>
         </div>
 
-        {/* 求职者类别筛选 */}
-        <div className="bg-white rounded-2xl p-4 mb-4">
-          <h3 className="text-base font-medium mb-3">求职者类别</h3>
-          <div className="flex bg-gray-100 rounded-xl p-1">
-            <Button
-              variant={categoryType === 'frontend' ? 'default' : 'ghost'}
-              size="sm"
-              className={`rounded-lg px-4 py-2 text-sm flex-1 text-black hover:text-[#fff] ${
-                categoryType === 'frontend'
-                  ? 'bg-white shadow-sm'
-                  : 'hover:bg-gray-200 hover:text-black'
-              }`}
-              onClick={() => {
-                setCategoryType('frontend')
-                setSpecialties([]) // 清空已选择的专业
-              }}
-            >
-              台前
-            </Button>
-            <Button
-              variant={categoryType === 'backend' ? 'default' : 'ghost'}
-              size="sm"
-              className={`rounded-lg px-4 py-2 text-sm flex-1 text-black hover:text-[#fff] ${
-                categoryType === 'backend'
-                  ? 'bg-white shadow-sm'
-                  : 'hover:bg-gray-200 hover:text-black'
-              }`}
-              onClick={() => {
-                setCategoryType('backend')
-                setSpecialties([]) // 清空已选择的专业
-              }}
-            >
-              幕后
-            </Button>
-          </div>
-        </div>
-
-        {/* 专业筛选 */}
-        <div className="bg-white rounded-2xl p-4 mb-4">
-          <h3 className="text-base font-medium mb-3">专业</h3>
-          <div className="grid grid-cols-3 gap-2">
-            {getCurrentSpecialties().map((specialty) => (
-              <div key={specialty} className="flex items-center space-x-2">
-                <Checkbox
-                  id={specialty}
-                  checked={specialties.includes(specialty)}
-                  onCheckedChange={() => handleSpecialtyChange(specialty)}
-                />
-                <Label htmlFor={specialty} className="text-sm">
-                  {specialty}
-                </Label>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* 三级分类筛选 */}
+        <EmployerThreeLevelCategoryFilter
+          selectedCategory={categoryType}
+          selectedSpecialties={specialties}
+          onCategoryChange={handleCategoryChange}
+          onSpecialtiesChange={handleSpecialtiesChange}
+        />
 
         {/* 年龄筛选 */}
         <div className="bg-white rounded-2xl p-4 mb-4">
