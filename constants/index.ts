@@ -3,97 +3,409 @@
 // ==================== 地理位置数据 ====================
 
 export const LOCATION_DATA: Record<string, Record<string, string[]>> = {
-  "北京市": {
-    "北京市": ["东城区", "西城区", "朝阳区", "丰台区", "石景山区", "海淀区", "门头沟区", "房山区", "通州区", "顺义区", "昌平区", "大兴区", "怀柔区", "平谷区", "密云区", "延庆区"]
+  北京市: {
+    北京市: [
+      "东城区",
+      "西城区",
+      "朝阳区",
+      "丰台区",
+      "石景山区",
+      "海淀区",
+      "门头沟区",
+      "房山区",
+      "通州区",
+      "顺义区",
+      "昌平区",
+      "大兴区",
+      "怀柔区",
+      "平谷区",
+      "密云区",
+      "延庆区",
+    ],
   },
-  "上海市": {
-    "上海市": ["黄浦区", "徐汇区", "长宁区", "静安区", "普陀区", "虹口区", "杨浦区", "闵行区", "宝山区", "嘉定区", "浦东新区", "金山区", "松江区", "青浦区", "奉贤区", "崇明区"]
+  上海市: {
+    上海市: [
+      "黄浦区",
+      "徐汇区",
+      "长宁区",
+      "静安区",
+      "普陀区",
+      "虹口区",
+      "杨浦区",
+      "闵行区",
+      "宝山区",
+      "嘉定区",
+      "浦东新区",
+      "金山区",
+      "松江区",
+      "青浦区",
+      "奉贤区",
+      "崇明区",
+    ],
   },
-  "广东省": {
-    "广州市": ["荔湾区", "越秀区", "海珠区", "天河区", "白云区", "黄埔区", "番禺区", "花都区", "南沙区", "从化区", "增城区"],
-    "深圳市": ["罗湖区", "福田区", "南山区", "宝安区", "龙岗区", "盐田区", "龙华区", "坪山区", "光明区", "大鹏新区"],
-    "珠海市": ["香洲区", "斗门区", "金湾区"],
-    "东莞市": ["东城街道", "南城街道", "万江街道", "莞城街道", "石碣镇", "石龙镇", "茶山镇", "石排镇"]
+  广东省: {
+    广州市: [
+      "荔湾区",
+      "越秀区",
+      "海珠区",
+      "天河区",
+      "白云区",
+      "黄埔区",
+      "番禺区",
+      "花都区",
+      "南沙区",
+      "从化区",
+      "增城区",
+    ],
+    深圳市: [
+      "罗湖区",
+      "福田区",
+      "南山区",
+      "宝安区",
+      "龙岗区",
+      "盐田区",
+      "龙华区",
+      "坪山区",
+      "光明区",
+      "大鹏新区",
+    ],
+    珠海市: ["香洲区", "斗门区", "金湾区"],
+    东莞市: [
+      "东城街道",
+      "南城街道",
+      "万江街道",
+      "莞城街道",
+      "石碣镇",
+      "石龙镇",
+      "茶山镇",
+      "石排镇",
+    ],
   },
-  "江苏省": {
-    "南京市": ["玄武区", "秦淮区", "建邺区", "鼓楼区", "浦口区", "栖霞区", "雨花台区", "江宁区", "六合区", "溧水区", "高淳区"],
-    "苏州市": ["虎丘区", "吴中区", "相城区", "姑苏区", "吴江区", "常熟市", "张家港市", "昆山市", "太仓市"],
-    "无锡市": ["锡山区", "惠山区", "滨湖区", "梁溪区", "新吴区", "江阴市", "宜兴市"]
+  江苏省: {
+    南京市: [
+      "玄武区",
+      "秦淮区",
+      "建邺区",
+      "鼓楼区",
+      "浦口区",
+      "栖霞区",
+      "雨花台区",
+      "江宁区",
+      "六合区",
+      "溧水区",
+      "高淳区",
+    ],
+    苏州市: [
+      "虎丘区",
+      "吴中区",
+      "相城区",
+      "姑苏区",
+      "吴江区",
+      "常熟市",
+      "张家港市",
+      "昆山市",
+      "太仓市",
+    ],
+    无锡市: [
+      "锡山区",
+      "惠山区",
+      "滨湖区",
+      "梁溪区",
+      "新吴区",
+      "江阴市",
+      "宜兴市",
+    ],
   },
-  "浙江省": {
-    "杭州市": ["上城区", "拱墅区", "西湖区", "滨江区", "萧山区", "余杭区", "临平区", "钱塘区", "富阳区", "临安区", "桐庐县", "淳安县", "建德市"],
-    "宁波市": ["海曙区", "江北区", "北仑区", "镇海区", "鄞州区", "奉化区", "象山县", "宁海县", "余姚市", "慈溪市"],
-    "温州市": ["鹿城区", "龙湾区", "瓯海区", "洞头区", "永嘉县", "平阳县", "苍南县", "文成县", "泰顺县", "瑞安市", "乐清市"]
+  浙江省: {
+    杭州市: [
+      "上城区",
+      "拱墅区",
+      "西湖区",
+      "滨江区",
+      "萧山区",
+      "余杭区",
+      "临平区",
+      "钱塘区",
+      "富阳区",
+      "临安区",
+      "桐庐县",
+      "淳安县",
+      "建德市",
+    ],
+    宁波市: [
+      "海曙区",
+      "江北区",
+      "北仑区",
+      "镇海区",
+      "鄞州区",
+      "奉化区",
+      "象山县",
+      "宁海县",
+      "余姚市",
+      "慈溪市",
+    ],
+    温州市: [
+      "鹿城区",
+      "龙湾区",
+      "瓯海区",
+      "洞头区",
+      "永嘉县",
+      "平阳县",
+      "苍南县",
+      "文成县",
+      "泰顺县",
+      "瑞安市",
+      "乐清市",
+    ],
   },
-  "四川省": {
-    "成都市": ["锦江区", "青羊区", "金牛区", "武侯区", "成华区", "龙泉驿区", "青白江区", "新都区", "温江区", "双流区", "郫都区", "新津区"],
-    "绵阳市": ["涪城区", "游仙区", "安州区", "江油市", "三台县", "盐亭县", "梓潼县", "北川羌族自治县", "平武县"]
-  }
-}
+  四川省: {
+    成都市: [
+      "锦江区",
+      "青羊区",
+      "金牛区",
+      "武侯区",
+      "成华区",
+      "龙泉驿区",
+      "青白江区",
+      "新都区",
+      "温江区",
+      "双流区",
+      "郫都区",
+      "新津区",
+    ],
+    绵阳市: [
+      "涪城区",
+      "游仙区",
+      "安州区",
+      "江油市",
+      "三台县",
+      "盐亭县",
+      "梓潼县",
+      "北川羌族自治县",
+      "平武县",
+    ],
+  },
+};
 
 // 简化城市列表（用于简单筛选）
-export const CITIES = ["北京", "上海", "广州", "深圳", "成都", "杭州", "武汉", "西安", "南京", "重庆"]
+export const CITIES = [
+  "北京",
+  "上海",
+  "广州",
+  "深圳",
+  "成都",
+  "杭州",
+  "武汉",
+  "西安",
+  "南京",
+  "重庆",
+];
 
 // ==================== 职位/专业分类数据 ====================
 
 // 前台职位类型（求职者筛选用）
 export const FRONTEND_JOB_TYPES = [
-  "舞蹈演员", "武术表演", "杂技演员", "声乐演员", 
-  "器乐演奏", "戏曲演员", "主持人", "模特"
-]
+  "舞蹈演员",
+  "武术表演",
+  "杂技演员",
+  "声乐演员",
+  "器乐演奏",
+  "戏曲演员",
+  "主持人",
+  "模特",
+];
 
 // 后台职位类型（求职者筛选用）
 export const BACKEND_JOB_TYPES = [
-  "导演", "编剧", "制片人", "摄影师", 
-  "灯光师", "音响师", "舞美设计", "服装设计"
-]
+  "导演",
+  "编剧",
+  "制片人",
+  "摄影师",
+  "灯光师",
+  "音响师",
+  "舞美设计",
+  "服装设计",
+];
 
 // 前台专业列表（招聘方筛选用）
 export const FRONTEND_SPECIALTIES = [
-  "古典舞", "民族舞", "芭蕾舞", "现代舞", "街舞",
-  "武术", "杂技", "声乐", "器乐", "戏曲", 
-  "表演", "主持", "模特"
-]
+  "古典舞",
+  "民族舞",
+  "芭蕾舞",
+  "现代舞",
+  "街舞",
+  "武术",
+  "杂技",
+  "声乐",
+  "器乐",
+  "戏曲",
+  "表演",
+  "主持",
+  "模特",
+];
 
 // 后台专业列表（招聘方筛选用）
 export const BACKEND_SPECIALTIES = [
-  "导演", "编剧", "制片", "摄影", "灯光", "音响",
-  "舞美设计", "服装设计", "化妆造型", "道具制作", 
-  "后期制作", "音效制作"
-]
+  "导演",
+  "编剧",
+  "制片",
+  "摄影",
+  "灯光",
+  "音响",
+  "舞美设计",
+  "服装设计",
+  "化妆造型",
+  "道具制作",
+  "后期制作",
+  "音效制作",
+];
 
 // 发布页面用的分类（更详细）
 export const FRONTEND_POST_CATEGORIES = [
-  "舞蹈表演", "戏曲表演", "武术表演", "杂技表演",
-  "声乐表演", "器乐表演", "话剧表演", "音乐剧表演",
-  "影视表演", "商业演出", "教学培训", "其他"
-]
+  "舞蹈表演",
+  "戏曲表演",
+  "武术表演",
+  "杂技表演",
+  "声乐表演",
+  "器乐表演",
+  "话剧表演",
+  "音乐剧表演",
+  "影视表演",
+  "商业演出",
+  "教学培训",
+  "其他",
+];
 
 export const BACKEND_POST_CATEGORIES = [
-  "导演", "副导演", "执行导演", "编剧",
-  "制片人", "制片助理", "摄影师", "摄像师",
-  "灯光师", "音响师", "舞美设计", "服装设计"
-]
+  "导演",
+  "副导演",
+  "执行导演",
+  "编剧",
+  "制片人",
+  "制片助理",
+  "摄影师",
+  "摄像师",
+  "灯光师",
+  "音响师",
+  "舞美设计",
+  "服装设计",
+];
 
 // ==================== 主页分类展示数据 ====================
 
 export const FRONTEND_CATEGORIES_DISPLAY = [
-  { name: "舞蹈", count: 56, icon: "💃" },
-  { name: "表演", count: 43, icon: "🎭" },
-  { name: "武术", count: 28, icon: "🥋" },
-  { name: "杂技", count: 15, icon: "🤹" },
-  { name: "音乐", count: 37, icon: "🎵" },
-  { name: "戏曲", count: 22, icon: "🎪" }
-]
+  {
+    name: "演员",
+    count: 156,
+    icon: "💃",
+    children: [
+      { name: "舞蹈类", count: 56, icon: "💃" },
+      { name: "表演类", count: 43, icon: "🎭" },
+      { name: "武术类", count: 28, icon: "🥋" },
+      { name: "杂技类", count: 15, icon: "🤹" },
+      { name: "音乐类", count: 37, icon: "🎵" },
+      { name: "模特类", count: 22, icon: "🎪" },
+    ],
+  },
+  {
+    name: "主持/互动",
+    count: 156,
+    icon: "💃",
+    children: [
+      { name: "驻场主持人", count: 56, icon: "💃" },
+      { name: "角色扮演互动员", count: 56, icon: "💃" },
+      { name: "古装NPC", count: 56, icon: "💃" },
+    ],
+  },
+];
 
 export const BACKEND_CATEGORIES_DISPLAY = [
-  { name: "导演", count: 15, icon: "🎬" },
-  { name: "编剧", count: 12, icon: "✍️" },
-  { name: "制片", count: 8, icon: "📋" },
-  { name: "摄影", count: 22, icon: "📷" },
-  { name: "灯光", count: 18, icon: "💡" },
-  { name: "音响", count: 16, icon: "🔊" }
-]
+  {
+    name: "艺术创作",
+    count: 15,
+    icon: "🎬",
+    children: [
+      { name: "导演", count: 15, icon: "🎬" },
+      { name: "分幕编剧", count: 12, icon: "✍️" },
+      { name: "舞蹈编排师", count: 8, icon: "📋" },
+      { name: "服装设计师", count: 22, icon: "📷" },
+      { name: "道具造型师", count: 22, icon: "📷" },
+      { name: "舞美设计师", count: 22, icon: "📷" },
+      { name: "特效设计师", count: 22, icon: "📷" },
+    ],
+  },
+  {
+    name: "技术制作",
+    count: 15,
+    icon: "🎬",
+    children: [
+      { name: "灯光控制师", count: 15, icon: "🎬" },
+      { name: "音响工程师", count: 12, icon: "✍️" },
+      { name: "舞台机械操作员", count: 8, icon: "📋" },
+      { name: "焰火控制员", count: 22, icon: "📷" },
+      { name: "水景特效师", count: 22, icon: "📷" },
+      { name: "多媒体投影师", count: 22, icon: "📷" },
+      { name: "道具制作师", count: 22, icon: "📷" },
+      { name: "武器维护员", count: 22, icon: "📷" },
+      { name: "动物演员驯导师", count: 22, icon: "📷" },
+    ],
+  },
+  {
+    name: "支持保障",
+    count: 15,
+    icon: "🎬",
+    children: [
+      { name: "舞台监督", count: 15, icon: "🎬" },
+      { name: "演出场记", count: 12, icon: "✍️" },
+      { name: "替补演员", count: 8, icon: "📋" },
+    ],
+  },
+];
+
+export const OPERATIONS_CATEGORIES_DISPLAY = [
+  {
+    name: "游客服务",
+    count: 15,
+    icon: "🎬",
+    children: [
+      { name: "票务", count: 15, icon: "🎬" },
+      { name: "接待", count: 12, icon: "✍️" },
+      { name: "客户服务", count: 8, icon: "📋" },
+    ],
+  },
+  {
+    name: "安全管理",
+    count: 15,
+    icon: "🎬",
+    children: [
+      { name: "紧急救护员", count: 15, icon: "🎬" },
+      { name: "设备安全检查员", count: 12, icon: "✍️" },
+    ],
+  },
+  {
+    name: "市场营销",
+    count: 15,
+    icon: "🎬",
+    children: [
+      { name: "宣传策划", count: 15, icon: "🎬" },
+      { name: "新媒体运营", count: 12, icon: "✍️" },
+      { name: "票务渠道营销", count: 8, icon: "📋" },
+    ],
+  },
+  {
+    name: "综合支持",
+    count: 15,
+    icon: "🎬",
+    children: [
+      { name: "产品开发", count: 15, icon: "🎬" },
+      { name: "广告招商", count: 12, icon: "✍️" },
+      { name: "数据运营", count: 8, icon: "📋" },
+      { name: "人力资源", count: 8, icon: "📋" },
+      { name: "后勤", count: 8, icon: "📋" },
+      { name: "工程维修", count: 8, icon: "📋" },
+    ],
+  },
+];
 
 // 招聘方主页分类展示数据
 export const EMPLOYER_FRONTEND_CATEGORIES = [
@@ -102,8 +414,8 @@ export const EMPLOYER_FRONTEND_CATEGORIES = [
   { name: "杂技", count: 67, icon: "🤹" },
   { name: "声乐", count: 134, icon: "🎵" },
   { name: "器乐", count: 98, icon: "🎼" },
-  { name: "戏曲", count: 76, icon: "🎭" }
-]
+  { name: "戏曲", count: 76, icon: "🎭" },
+];
 
 export const EMPLOYER_BACKEND_CATEGORIES = [
   { name: "导演", count: 45, icon: "🎬" },
@@ -111,160 +423,280 @@ export const EMPLOYER_BACKEND_CATEGORIES = [
   { name: "制片", count: 28, icon: "📋" },
   { name: "摄影", count: 56, icon: "📷" },
   { name: "灯光", count: 41, icon: "💡" },
-  { name: "音响", count: 38, icon: "🔊" }
-]
+  { name: "音响", count: 38, icon: "🔊" },
+];
 
 // ==================== 工作相关选项 ====================
 
 // 工作性质
-export const WORK_TYPES = ["全职", "兼职", "临时", "合同制", "实习"]
+export const WORK_TYPES = ["全职", "兼职", "临时", "合同制", "实习"];
 
 // 经验要求选项
-export const EXPERIENCE_OPTIONS = ["不限", "应届生", "1年以内", "1-3年", "3-5年", "5年以上"]
+export const EXPERIENCE_OPTIONS = [
+  "不限",
+  "应届生",
+  "1年以内",
+  "1-3年",
+  "3-5年",
+  "5年以上",
+];
 
 // 求职者经验选项（不包含"不限"）
-export const JOBSEEKER_EXPERIENCE_OPTIONS = ["应届生", "1年以内", "1-3年", "3-5年", "5年以上"]
+export const JOBSEEKER_EXPERIENCE_OPTIONS = [
+  "应届生",
+  "1年以内",
+  "1-3年",
+  "3-5年",
+  "5年以上",
+];
 
 // 学历选项
-export const EDUCATION_OPTIONS = ["专科以下", "专科", "本科", "硕士", "博士"]
+export const EDUCATION_OPTIONS = ["专科以下", "专科", "本科", "硕士", "博士"];
 
 // 招聘方学历选项（包含"不限"）
-export const EMPLOYER_EDUCATION_OPTIONS = ["不限", "中专", "大专", "本科", "硕士", "博士"]
+export const EMPLOYER_EDUCATION_OPTIONS = [
+  "不限",
+  "中专",
+  "大专",
+  "本科",
+  "硕士",
+  "博士",
+];
 
 // 求职者学历选项（不包含"不限"）
-export const JOBSEEKER_EDUCATION_OPTIONS = ["中专", "大专", "本科", "硕士", "博士"]
+export const JOBSEEKER_EDUCATION_OPTIONS = [
+  "中专",
+  "大专",
+  "本科",
+  "硕士",
+  "博士",
+];
 
 // 年龄段选项
 export const AGE_GROUP_OPTIONS = [
   { value: "unlimited", label: "不限" },
   { value: "under18", label: "18岁以下" },
   { value: "18-35", label: "18-35岁" },
-  { value: "over35", label: "35岁以上" }
-]
+  { value: "over35", label: "35岁以上" },
+];
 
 // 到岗时间选项
-export const AVAILABILITY_OPTIONS = ["立即到岗", "1周内", "2周内", "1个月内", "面议"]
+export const AVAILABILITY_OPTIONS = [
+  "立即到岗",
+  "1周内",
+  "2周内",
+  "1个月内",
+  "面议",
+];
 
 // ==================== 福利待遇选项 ====================
 
 // 福利待遇列表
 export const BENEFIT_OPTIONS = [
-  "五险一金", "工作补贴", "提供住宿", "培训机会",
-  "国内出差", "国际出差", "项目奖金", "灵活工作"
-]
+  "五险一金",
+  "工作补贴",
+  "提供住宿",
+  "培训机会",
+  "国内出差",
+  "国际出差",
+  "项目奖金",
+  "灵活工作",
+];
 
 // 招聘方发布职位用的福利选项（更全面）
 export const EMPLOYER_BENEFIT_OPTIONS = [
-  "五险一金", "包食宿", "交通补贴", "话费补贴",
-  "年终奖", "绩效奖金", "带薪年假", "节日福利",
-  "培训机会", "晋升空间", "团建活动", "健康体检",
-  "弹性工作", "免费工作餐", "住房补贴", "出国机会"
-]
+  "五险一金",
+  "包食宿",
+  "交通补贴",
+  "话费补贴",
+  "年终奖",
+  "绩效奖金",
+  "带薪年假",
+  "节日福利",
+  "培训机会",
+  "晋升空间",
+  "团建活动",
+  "健康体检",
+  "弹性工作",
+  "免费工作餐",
+  "住房补贴",
+  "出国机会",
+];
 
 // ==================== 技能和要求选项 ====================
 
 // 常用技能标签
 export const COMMON_SKILLS = [
-  "古典舞", "民族舞", "芭蕾舞", "现代舞", "爵士舞", "街舞",
-  "京剧", "昆曲", "豫剧", "越剧", "黄梅戏", "评剧",
-  "太极拳", "长拳", "南拳", "剑术", "刀术", "棍术",
-  "杂技", "魔术", "小丑表演", "高空表演"
-]
+  "古典舞",
+  "民族舞",
+  "芭蕾舞",
+  "现代舞",
+  "爵士舞",
+  "街舞",
+  "京剧",
+  "昆曲",
+  "豫剧",
+  "越剧",
+  "黄梅戏",
+  "评剧",
+  "太极拳",
+  "长拳",
+  "南拳",
+  "剑术",
+  "刀术",
+  "棍术",
+  "杂技",
+  "魔术",
+  "小丑表演",
+  "高空表演",
+];
 
 // 常用优势标签
 export const COMMON_ADVANTAGES = [
-  "形象气质佳", "舞台经验丰富", "专业院校毕业", "获奖经历",
-  "团队合作能力强", "责任心强", "能适应出差", "英语流利",
-  "创新能力强", "学习能力强", "抗压能力强", "沟通能力强"
-]
+  "形象气质佳",
+  "舞台经验丰富",
+  "专业院校毕业",
+  "获奖经历",
+  "团队合作能力强",
+  "责任心强",
+  "能适应出差",
+  "英语流利",
+  "创新能力强",
+  "学习能力强",
+  "抗压能力强",
+  "沟通能力强",
+];
 
 // 招聘要求标签
 export const COMMON_REQUIREMENTS = [
-  "形象气质佳", "舞台经验丰富", "专业院校毕业", "获奖经历",
-  "团队合作能力强", "责任心强", "能适应出差", "英语流利",
-  "创新能力强", "学习能力强", "抗压能力强", "沟通能力强",
-  "身高要求", "年龄要求", "性别要求", "体重要求"
-]
+  "形象气质佳",
+  "舞台经验丰富",
+  "专业院校毕业",
+  "获奖经历",
+  "团队合作能力强",
+  "责任心强",
+  "能适应出差",
+  "英语流利",
+  "创新能力强",
+  "学习能力强",
+  "抗压能力强",
+  "沟通能力强",
+  "身高要求",
+  "年龄要求",
+  "性别要求",
+  "体重要求",
+];
 
 // ==================== 工具函数 ====================
 
 // 获取省份列表
-export const getProvinces = () => Object.keys(LOCATION_DATA)
+export const getProvinces = () => Object.keys(LOCATION_DATA);
 
 // 获取城市列表
 export const getCities = (province: string) => {
-  return province ? Object.keys(LOCATION_DATA[province] || {}) : []
-}
+  return province ? Object.keys(LOCATION_DATA[province] || {}) : [];
+};
 
 // 获取区县列表
 export const getDistricts = (province: string, city: string) => {
-  return province && city ? LOCATION_DATA[province]?.[city] || [] : []
-}
+  return province && city ? LOCATION_DATA[province]?.[city] || [] : [];
+};
 
 // 根据类别获取职位类型
-export const getJobTypesByCategory = (categoryType: 'frontend' | 'backend') => {
-  return categoryType === 'frontend' ? FRONTEND_JOB_TYPES : BACKEND_JOB_TYPES
-}
+export const getJobTypesByCategory = (categoryType: "frontend" | "backend") => {
+  return categoryType === "frontend" ? FRONTEND_JOB_TYPES : BACKEND_JOB_TYPES;
+};
 
 // 根据类别获取专业列表
-export const getSpecialtiesByCategory = (categoryType: 'frontend' | 'backend') => {
-  return categoryType === 'frontend' ? FRONTEND_SPECIALTIES : BACKEND_SPECIALTIES
-}
+export const getSpecialtiesByCategory = (
+  categoryType: "frontend" | "backend"
+) => {
+  return categoryType === "frontend"
+    ? FRONTEND_SPECIALTIES
+    : BACKEND_SPECIALTIES;
+};
 
 // 根据类别获取发布页面分类
-export const getPostCategoriesByType = (categoryType: 'frontend' | 'backend') => {
-  return categoryType === 'frontend' ? FRONTEND_POST_CATEGORIES : BACKEND_POST_CATEGORIES
-}
+export const getPostCategoriesByType = (
+  categoryType: "frontend" | "backend"
+) => {
+  return categoryType === "frontend"
+    ? FRONTEND_POST_CATEGORIES
+    : BACKEND_POST_CATEGORIES;
+};
 
 // 根据类别获取主页展示分类（求职者）
-export const getJobseekerCategoriesByType = (categoryType: 'frontend' | 'backend') => {
-  return categoryType === 'frontend' ? FRONTEND_CATEGORIES_DISPLAY : BACKEND_CATEGORIES_DISPLAY
-}
+export const getJobseekerCategoriesByType = (
+  categoryType: "frontend" | "backend"
+) => {
+  return categoryType === "frontend"
+    ? FRONTEND_CATEGORIES_DISPLAY
+    : BACKEND_CATEGORIES_DISPLAY;
+};
 
 // 根据类别获取主页展示分类（招聘方）
-export const getEmployerCategoriesByType = (categoryType: 'frontend' | 'backend') => {
-  return categoryType === 'frontend' ? EMPLOYER_FRONTEND_CATEGORIES : EMPLOYER_BACKEND_CATEGORIES
-}
+export const getEmployerCategoriesByType = (
+  categoryType: "frontend" | "backend"
+) => {
+  return categoryType === "frontend"
+    ? EMPLOYER_FRONTEND_CATEGORIES
+    : EMPLOYER_BACKEND_CATEGORIES;
+};
 
 // 格式化经验显示
 export const getExperienceText = (exp: string) => {
   switch (exp) {
-    case "0-1": return "应届/1年以内"
-    case "1-3": return "1-3年"
-    case "3-5": return "3-5年"
-    case "5+": return "5年以上"
-    default: return ""
+    case "0-1":
+      return "应届/1年以内";
+    case "1-3":
+      return "1-3年";
+    case "3-5":
+      return "3-5年";
+    case "5+":
+      return "5年以上";
+    default:
+      return "";
   }
-}
+};
 
 // 格式化年龄段显示
 export const getAgeGroupText = (ageGroup: string) => {
   switch (ageGroup) {
-    case "unlimited": return "不限"
-    case "under18": return "18岁以下"
-    case "18-35": return "18-35岁"
-    case "over35": return "35岁以上"
-    default: return ""
+    case "unlimited":
+      return "不限";
+    case "under18":
+      return "18岁以下";
+    case "18-35":
+      return "18-35岁";
+    case "over35":
+      return "35岁以上";
+    default:
+      return "";
   }
-}
+};
 
 // 格式化薪资显示
 export const formatSalary = (value: number) => {
-  if (value === 0) return "不限"
-  if (value >= 50) return "50K+"
-  return `${value}K`
-}
+  if (value === 0) return "不限";
+  if (value >= 50) return "50K+";
+  return `${value}K`;
+};
 
 // 格式化工作性质
 export const getEmploymentTypeText = (type: string) => {
   switch (type) {
-    case "full-time": return "全职"
-    case "part-time": return "兼职"
-    case "temporary": return "临时"
-    case "contract": return "合同制"
-    default: return ""
+    case "full-time":
+      return "全职";
+    case "part-time":
+      return "兼职";
+    case "temporary":
+      return "临时";
+    case "contract":
+      return "合同制";
+    default:
+      return "";
   }
-}
+};
 
 // ==================== 示例数据 ====================
 
@@ -278,11 +710,12 @@ export const SAMPLE_JOB_OPPORTUNITIES = [
     salary: "8000-12000",
     type: "全职",
     tags: ["五险一金", "工作补贴", "培训机会"],
-    description: "招聘专业舞蹈演员，要求有扎实的舞蹈基础，形象气质佳，有团队合作精神。",
+    description:
+      "招聘专业舞蹈演员，要求有扎实的舞蹈基础，形象气质佳，有团队合作精神。",
     posted: "2天前",
     urgent: true,
     requiredMajor: "舞蹈表演专业",
-    startTime: "立即到岗"
+    startTime: "立即到岗",
   },
   {
     id: 2,
@@ -296,7 +729,7 @@ export const SAMPLE_JOB_OPPORTUNITIES = [
     posted: "1天前",
     urgent: false,
     requiredMajor: "武术与民族传统体育",
-    startTime: "1周内到岗"
+    startTime: "1周内到岗",
   },
   {
     id: 3,
@@ -310,9 +743,9 @@ export const SAMPLE_JOB_OPPORTUNITIES = [
     posted: "3天前",
     urgent: false,
     requiredMajor: "表演专业",
-    startTime: "2周内到岗"
-  }
-]
+    startTime: "2周内到岗",
+  },
+];
 
 // 招聘方主页 - 求职者示例数据
 export const SAMPLE_PERFORMERS = [
@@ -327,9 +760,10 @@ export const SAMPLE_PERFORMERS = [
     avatar: "/placeholder.svg?height=60&width=60",
     tags: ["专业院校", "获奖经历", "团队合作"],
     price: "800-1200/天",
-    description: "毕业于北京舞蹈学院，擅长古典舞和民族舞，有丰富的舞台表演经验。",
+    description:
+      "毕业于北京舞蹈学院，擅长古典舞和民族舞，有丰富的舞台表演经验。",
     school: "北京舞蹈学院",
-    major: "舞蹈表演专业"
+    major: "舞蹈表演专业",
   },
   {
     id: 2,
@@ -342,9 +776,10 @@ export const SAMPLE_PERFORMERS = [
     avatar: "/placeholder.svg?height=60&width=60",
     tags: ["武术冠军", "影视经验", "教学经验"],
     price: "1000-1500/天",
-    description: "全国武术冠军，参与过多部影视作品拍摄，具有丰富的武术指导经验。",
+    description:
+      "全国武术冠军，参与过多部影视作品拍摄，具有丰富的武术指导经验。",
     school: "上海体育学院",
-    major: "武术与民族传统体育"
+    major: "武术与民族传统体育",
   },
   {
     id: 3,
@@ -359,9 +794,9 @@ export const SAMPLE_PERFORMERS = [
     price: "600-1000/天",
     description: "毕业于星海音乐学院，擅长美声和民族唱法，能演唱多种语言歌曲。",
     school: "星海音乐学院",
-    major: "声乐表演专业"
-  }
-]
+    major: "声乐表演专业",
+  },
+];
 
 // 求职者主页 - Banner轮播数据
 export const JOBSEEKER_BANNER_SLIDES = [
@@ -372,7 +807,7 @@ export const JOBSEEKER_BANNER_SLIDES = [
     description: "汇聚全国优质招聘职位，为您的艺术才华找到最佳工作机会",
     image: "/placeholder.svg?height=200&width=400",
     buttonText: "立即查看",
-    backgroundColor: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+    backgroundColor: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
   },
   {
     id: 2,
@@ -381,7 +816,7 @@ export const JOBSEEKER_BANNER_SLIDES = [
     description: "舞台剧、音乐剧、舞蹈表演、影视拍摄等多种职位等你来",
     image: "/placeholder.svg?height=200&width=400",
     buttonText: "浏览职位",
-    backgroundColor: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
+    backgroundColor: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
   },
   {
     id: 3,
@@ -390,9 +825,9 @@ export const JOBSEEKER_BANNER_SLIDES = [
     description: "与知名导演合作，参与优质项目，让您的艺术生涯更上一层楼",
     image: "/placeholder.svg?height=200&width=400",
     buttonText: "开始申请",
-    backgroundColor: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
-  }
-]
+    backgroundColor: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+  },
+];
 
 // 招聘方主页 - Banner轮播数据
 export const EMPLOYER_BANNER_SLIDES = [
@@ -403,7 +838,7 @@ export const EMPLOYER_BANNER_SLIDES = [
     description: "汇聚全国优秀艺术求职者，为您的招聘需求找到最合适的人才",
     image: "/placeholder.svg?height=200&width=400",
     buttonText: "立即招聘",
-    backgroundColor: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+    backgroundColor: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
   },
   {
     id: 2,
@@ -412,7 +847,7 @@ export const EMPLOYER_BANNER_SLIDES = [
     description: "舞蹈、戏曲、武术、杂技等各类专业求职者应有尽有",
     image: "/placeholder.svg?height=200&width=400",
     buttonText: "浏览人才",
-    backgroundColor: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
+    backgroundColor: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
   },
   {
     id: 3,
@@ -421,9 +856,9 @@ export const EMPLOYER_BANNER_SLIDES = [
     description: "基于招聘需求智能匹配，快速找到符合要求的求职者",
     image: "/placeholder.svg?height=200&width=400",
     buttonText: "开始匹配",
-    backgroundColor: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
-  }
-]
+    backgroundColor: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+  },
+];
 
 // ==================== 个人资料示例数据 ====================
 
@@ -444,14 +879,14 @@ export const SAMPLE_JOBSEEKER_PROFILE = {
     isVip: true,
     level: "白金会员",
     expireDate: "2024-11-30",
-    remainingDays: 267
+    remainingDays: 267,
   },
   profileViews: 156,
   profileLikes: 89,
   applications: 12,
   interviews: 5,
-  profileCompletion: 85
-}
+  profileCompletion: 85,
+};
 
 // 招聘方个人资料示例数据
 export const SAMPLE_EMPLOYER_PROFILE = {
@@ -471,9 +906,9 @@ export const SAMPLE_EMPLOYER_PROFILE = {
     isVip: true,
     level: "黄金会员",
     expireDate: "2024-12-31",
-    remainingDays: 298
-  }
-}
+    remainingDays: 298,
+  },
+};
 
 // 求职者详情页面示例数据
 export const SAMPLE_CANDIDATE_DETAIL = {
@@ -488,20 +923,21 @@ export const SAMPLE_CANDIDATE_DETAIL = {
   skills: ["古典舞", "民族舞", "芭蕾基础", "现代舞"],
   phone: "138****8888",
   email: "lixiaohua@example.com",
-  introduction: "我是一名专业的古典舞演员，毕业于北京舞蹈学院。有5年的舞台表演经验，擅长古典舞、民族舞，并具备芭蕾舞基础。曾参与多个大型舞蹈演出，希望能加入专业团队，展示自己的舞蹈才华。",
+  introduction:
+    "我是一名专业的古典舞演员，毕业于北京舞蹈学院。有5年的舞台表演经验，擅长古典舞、民族舞，并具备芭蕾舞基础。曾参与多个大型舞蹈演出，希望能加入专业团队，展示自己的舞蹈才华。",
   experience: [
     {
       company: "东方歌舞团",
       position: "舞蹈演员",
       duration: "2021.06 - 2024.03",
-      description: "参与团队的国内外巡演，主要表演民族舞和古典舞节目"
+      description: "参与团队的国内外巡演，主要表演民族舞和古典舞节目",
     },
     {
       company: "星光艺术团",
       position: "舞蹈演员",
       duration: "2019.08 - 2021.05",
-      description: "参与各类商业演出和文艺晚会"
-    }
+      description: "参与各类商业演出和文艺晚会",
+    },
   ],
   education: [
     {
@@ -510,8 +946,8 @@ export const SAMPLE_CANDIDATE_DETAIL = {
       degree: "学士学位",
       duration: "2015.09 - 2019.06",
       gpa: "3.8/4.0",
-      honors: ["优秀毕业生", "专业第一名"]
-    }
+      honors: ["优秀毕业生", "专业第一名"],
+    },
   ],
   awards: ["全国舞蹈比赛金奖", "亚洲青年舞蹈家大赛银奖"],
   performances: ["《丝路花雨》主要舞者", "《梁祝》独舞", "《春江花月夜》群舞"],
@@ -581,8 +1017,8 @@ export const SAMPLE_CANDIDATE_DETAIL = {
         description: "银奖获得者",
       },
     ],
-  }
-}
+  },
+};
 
 // 职位详情页面示例数据
 export const SAMPLE_JOB_DETAIL = {
@@ -602,9 +1038,15 @@ export const SAMPLE_JOB_DETAIL = {
     rehearsalTime: "19:00-21:00",
     overtime: "演出期间需要",
     restDay: "周日",
-    flexibleSchedule: true
+    flexibleSchedule: true,
   },
-  requirements: ["民族舞", "3年经验", "形象佳", "身高165cm以上", "有团队合作经验"],
+  requirements: [
+    "民族舞",
+    "3年经验",
+    "形象佳",
+    "身高165cm以上",
+    "有团队合作经验",
+  ],
   benefits: ["五险一金", "演出补贴", "舞台机会多", "国内外巡演", "专业培训"],
   description: `我们正在寻找有经验的民族舞演员加入我们的团队。您将参与团队的常规演出和国内外巡演活动。
 
@@ -633,29 +1075,30 @@ export const SAMPLE_JOB_DETAIL = {
     industry: "表演艺术",
     size: "50-100人",
     founded: "1995年",
-    description: "东方歌舞团是一家专业的表演艺术团体，致力于中国传统舞蹈的传承与创新，常年在国内外进行巡演活动。",
+    description:
+      "东方歌舞团是一家专业的表演艺术团体，致力于中国传统舞蹈的传承与创新，常年在国内外进行巡演活动。",
     address: "北京市海淀区文化艺术中心",
-    website: "www.dongfangdance.com"
+    website: "www.dongfangdance.com",
   },
   upcomingProjects: [
     {
       name: "《锦绣中华》民族舞蹈专场",
       date: "2024-06-15",
-      location: "北京国家大剧院"
+      location: "北京国家大剧院",
     },
     {
       name: "亚洲文化艺术节巡演",
       date: "2024-07-20",
-      location: "多个亚洲国家"
-    }
+      location: "多个亚洲国家",
+    },
   ],
   images: [
     "/placeholder.svg?height=200&width=300",
     "/placeholder.svg?height=200&width=300",
     "/placeholder.svg?height=200&width=300",
-    "/placeholder.svg?height=200&width=300"
-  ]
-}
+    "/placeholder.svg?height=200&width=300",
+  ],
+};
 
 // ==================== 消息页面示例数据 ====================
 
@@ -691,7 +1134,7 @@ export const SAMPLE_CONVERSATIONS = [
     type: "employer",
     online: true,
   },
-]
+];
 
 // 系统消息示例数据
 export const SAMPLE_SYSTEM_MESSAGES = [
@@ -723,7 +1166,7 @@ export const SAMPLE_SYSTEM_MESSAGES = [
     time: "2天前",
     type: "reminder",
   },
-]
+];
 
 // ==================== 论坛页面示例数据 ====================
 
@@ -737,7 +1180,7 @@ export const SAMPLE_FORUM_TOPICS = [
   { id: 6, name: "戏曲表演", count: 98 },
   { id: 7, name: "求职心得", count: 67 },
   { id: 8, name: "面试经验", count: 123 },
-]
+];
 
 // 论坛帖子示例数据
 export const SAMPLE_FORUM_POSTS = [
@@ -750,7 +1193,10 @@ export const SAMPLE_FORUM_POSTS = [
     },
     content:
       "刚刚结束了一场大型演出，分享一下我的心得体会。这次演出是《丝路花雨》的重排版，我担任主要舞者之一。排练了两个月，每天8小时的高强度训练，但看到观众的反响，一切都值得了...",
-    images: ["/placeholder.svg?height=150&width=200", "/placeholder.svg?height=150&width=200"],
+    images: [
+      "/placeholder.svg?height=150&width=200",
+      "/placeholder.svg?height=150&width=200",
+    ],
     topics: ["舞蹈技巧", "招聘信息"],
     likes: 128,
     comments: 45,
@@ -807,7 +1253,7 @@ export const SAMPLE_FORUM_POSTS = [
     time: "1天前",
     isLiked: false,
   },
-]
+];
 
 // ==================== 个人中心页面示例数据 ====================
 
@@ -828,7 +1274,7 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
     isVip: true,
     level: "白金会员",
     expireDate: "2024-11-30",
-    remainingDays: 267
+    remainingDays: 267,
   },
   profileViews: 156,
   profileLikes: 89,
@@ -848,7 +1294,7 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       company: "东方歌舞团",
       location: "北京",
       salary: "8K-15K",
-      posted: "2天前"
+      posted: "2天前",
     },
     {
       id: 2,
@@ -856,8 +1302,8 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       company: "艺术培训中心",
       location: "上海",
       salary: "6K-10K",
-      posted: "1周前"
-    }
+      posted: "1周前",
+    },
   ],
   myApplications: [
     {
@@ -866,7 +1312,7 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       company: "中央民族歌舞团",
       status: "面试中",
       appliedDate: "2024-01-15",
-      statusColor: "bg-blue-500"
+      statusColor: "bg-blue-500",
     },
     {
       id: 2,
@@ -874,8 +1320,8 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       company: "国家大剧院",
       status: "已投递",
       appliedDate: "2024-01-10",
-      statusColor: "bg-yellow-500"
-    }
+      statusColor: "bg-yellow-500",
+    },
   ],
   followedCompanies: [
     {
@@ -886,7 +1332,7 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       location: "北京",
       followDate: "2024-01-10",
       isActive: true,
-      newJobs: 3
+      newJobs: 3,
     },
     {
       id: 2,
@@ -896,7 +1342,7 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       location: "北京",
       followDate: "2024-01-08",
       isActive: true,
-      newJobs: 1
+      newJobs: 1,
     },
     {
       id: 3,
@@ -906,8 +1352,8 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       location: "上海",
       followDate: "2024-01-05",
       isActive: false,
-      newJobs: 0
-    }
+      newJobs: 0,
+    },
   ],
   messages: [
     {
@@ -917,7 +1363,7 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       content: "您的简历被东方歌舞团查看了",
       time: "2024-01-20 14:30",
       isRead: false,
-      avatar: "/placeholder.svg?height=32&width=32"
+      avatar: "/placeholder.svg?height=32&width=32",
     },
     {
       id: 2,
@@ -926,7 +1372,7 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       content: "中央芭蕾舞团邀请您参加面试",
       time: "2024-01-19 10:15",
       isRead: false,
-      avatar: "/placeholder.svg?height=32&width=32"
+      avatar: "/placeholder.svg?height=32&width=32",
     },
     {
       id: 3,
@@ -935,7 +1381,7 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       content: "为您推荐了3个匹配的职位",
       time: "2024-01-18 09:00",
       isRead: true,
-      avatar: "/placeholder.svg?height=32&width=32"
+      avatar: "/placeholder.svg?height=32&width=32",
     },
     {
       id: 4,
@@ -944,8 +1390,8 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       content: "某艺术团向您发送了私信",
       time: "2024-01-17 16:45",
       isRead: true,
-      avatar: "/placeholder.svg?height=32&width=32"
-    }
+      avatar: "/placeholder.svg?height=32&width=32",
+    },
   ],
   collections: [
     {
@@ -956,7 +1402,7 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       location: "北京",
       salary: "8K-15K",
       collectedDate: "2024-01-15",
-      status: "招聘中"
+      status: "招聘中",
     },
     {
       id: 2,
@@ -966,7 +1412,7 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       location: "北京",
       salary: "12K-20K",
       collectedDate: "2024-01-12",
-      status: "招聘中"
+      status: "招聘中",
     },
     {
       id: 3,
@@ -975,8 +1421,8 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       description: "国际知名歌剧院",
       location: "上海",
       collectedDate: "2024-01-10",
-      status: "活跃"
-    }
+      status: "活跃",
+    },
   ],
   browsingHistory: [
     {
@@ -987,7 +1433,7 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       location: "深圳",
       salary: "10K-18K",
       viewDate: "2024-01-20 15:30",
-      viewCount: 3
+      viewCount: 3,
     },
     {
       id: 2,
@@ -997,7 +1443,7 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       location: "广州",
       salary: "15K-25K",
       viewDate: "2024-01-19 11:20",
-      viewCount: 1
+      viewCount: 1,
     },
     {
       id: 3,
@@ -1006,7 +1452,7 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       description: "专业现代舞团体",
       location: "北京",
       viewDate: "2024-01-18 14:15",
-      viewCount: 2
+      viewCount: 2,
     },
     {
       id: 4,
@@ -1016,10 +1462,10 @@ export const SAMPLE_JOBSEEKER_PROFILE_COMPLETE = {
       location: "上海",
       salary: "12K-22K",
       viewDate: "2024-01-17 09:45",
-      viewCount: 1
-    }
-  ]
-}
+      viewCount: 1,
+    },
+  ],
+};
 
 // 招聘方个人中心完整数据
 export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
@@ -1039,7 +1485,7 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
     isVip: true,
     level: "黄金会员",
     expireDate: "2024-12-31",
-    remainingDays: 298
+    remainingDays: 298,
   },
   profileViews: 234,
   jobViews: 1580,
@@ -1061,7 +1507,7 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       views: 156,
       posted: "3天前",
       status: "招聘中",
-      urgent: true
+      urgent: true,
     },
     {
       id: 2,
@@ -1071,8 +1517,8 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       views: 89,
       posted: "1周前",
       status: "招聘中",
-      urgent: false
-    }
+      urgent: false,
+    },
   ],
   candidates: [
     {
@@ -1084,7 +1530,7 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       status: "待面试",
       appliedFor: "古典舞演员",
       appliedDate: "2024-01-15",
-      avatar: "/placeholder.svg?height=40&width=40"
+      avatar: "/placeholder.svg?height=40&width=40",
     },
     {
       id: 2,
@@ -1095,8 +1541,8 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       status: "已面试",
       appliedFor: "武术指导",
       appliedDate: "2024-01-12",
-      avatar: "/placeholder.svg?height=40&width=40"
-    }
+      avatar: "/placeholder.svg?height=40&width=40",
+    },
   ],
   followedCandidates: [
     {
@@ -1109,7 +1555,7 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       location: "北京",
       followDate: "2024-01-10",
       isActive: true,
-      lastActive: "2小时前"
+      lastActive: "2小时前",
     },
     {
       id: 2,
@@ -1121,7 +1567,7 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       location: "上海",
       followDate: "2024-01-08",
       isActive: true,
-      lastActive: "1天前"
+      lastActive: "1天前",
     },
     {
       id: 3,
@@ -1133,8 +1579,8 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       location: "北京",
       followDate: "2024-01-05",
       isActive: false,
-      lastActive: "1周前"
-    }
+      lastActive: "1周前",
+    },
   ],
   messages: [
     {
@@ -1144,7 +1590,7 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       content: "李小华申请了古典舞演员职位",
       time: "2024-01-20 14:30",
       isRead: false,
-      avatar: "/placeholder.svg?height=32&width=32"
+      avatar: "/placeholder.svg?height=32&width=32",
     },
     {
       id: 2,
@@ -1153,7 +1599,7 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       content: "您的职位已被推荐给50位匹配候选人",
       time: "2024-01-19 10:15",
       isRead: false,
-      avatar: "/placeholder.svg?height=32&width=32"
+      avatar: "/placeholder.svg?height=32&width=32",
     },
     {
       id: 3,
@@ -1162,7 +1608,7 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       content: "明天下午2点与王明的面试",
       time: "2024-01-18 09:00",
       isRead: true,
-      avatar: "/placeholder.svg?height=32&width=32"
+      avatar: "/placeholder.svg?height=32&width=32",
     },
     {
       id: 4,
@@ -1171,8 +1617,8 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       content: "张丽询问了职位详情",
       time: "2024-01-17 16:45",
       isRead: true,
-      avatar: "/placeholder.svg?height=32&width=32"
-    }
+      avatar: "/placeholder.svg?height=32&width=32",
+    },
   ],
   collections: [
     {
@@ -1185,7 +1631,7 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       education: "北京舞蹈学院",
       location: "北京",
       collectedDate: "2024-01-15",
-      status: "求职中"
+      status: "求职中",
     },
     {
       id: 2,
@@ -1197,7 +1643,7 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       education: "上海戏剧学院",
       location: "上海",
       collectedDate: "2024-01-12",
-      status: "求职中"
+      status: "求职中",
     },
     {
       id: 3,
@@ -1205,8 +1651,8 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       title: "舞蹈演员招聘模板",
       description: "适用于各类舞蹈演员招聘",
       collectedDate: "2024-01-10",
-      status: "可用"
-    }
+      status: "可用",
+    },
   ],
   browsingHistory: [
     {
@@ -1219,7 +1665,7 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       education: "中央民族大学",
       location: "北京",
       viewDate: "2024-01-20 15:30",
-      viewCount: 2
+      viewCount: 2,
     },
     {
       id: 2,
@@ -1231,7 +1677,7 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       education: "北京舞蹈学院",
       location: "北京",
       viewDate: "2024-01-19 11:20",
-      viewCount: 1
+      viewCount: 1,
     },
     {
       id: 3,
@@ -1239,7 +1685,7 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       title: "音乐剧演员招聘模板",
       description: "专业音乐剧演员招聘模板",
       viewDate: "2024-01-18 14:15",
-      viewCount: 3
+      viewCount: 3,
     },
     {
       id: 4,
@@ -1251,7 +1697,7 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
       education: "上海戏剧学院",
       location: "上海",
       viewDate: "2024-01-17 09:45",
-      viewCount: 1
-    }
-  ]
-}
+      viewCount: 1,
+    },
+  ],
+};

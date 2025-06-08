@@ -13,8 +13,6 @@ import { CarouselBanner } from "@/components/ui/carousel-banner"
 import Link from "next/link"
 import {
   getJobseekerCategoriesByType,
-  formatSalary,
-  getEmploymentTypeText,
   SAMPLE_JOB_OPPORTUNITIES,
   JOBSEEKER_BANNER_SLIDES
 } from "@/constants"
@@ -305,7 +303,7 @@ export default function JobseekerPage() {
                 }`}
                 onClick={() => setCategoryType('frontend')}
               >
-                前台
+                台前
               </Button>
               <Button
                 variant={categoryType === 'backend' ? 'default' : 'ghost'}
@@ -317,7 +315,7 @@ export default function JobseekerPage() {
                 }`}
                 onClick={() => setCategoryType('backend')}
               >
-                后台
+                幕后
               </Button>
             </div>
           </div>

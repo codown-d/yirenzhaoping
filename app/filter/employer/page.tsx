@@ -298,7 +298,7 @@ export default function EmployerFilterPage() {
                 setSpecialties([]) // 清空已选择的专业
               }}
             >
-              前台
+              台前
             </Button>
             <Button
               variant={categoryType === 'backend' ? 'default' : 'ghost'}
@@ -313,7 +313,7 @@ export default function EmployerFilterPage() {
                 setSpecialties([]) // 清空已选择的专业
               }}
             >
-              后台
+              幕后
             </Button>
           </div>
         </div>

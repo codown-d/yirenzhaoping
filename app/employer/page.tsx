@@ -323,7 +323,7 @@ export default function EmployerPage() {
                 }`}
                 onClick={() => setCategoryType('frontend')}
               >
-                前台
+                台前
               </Button>
               <Button
                 variant={categoryType === 'backend' ? 'default' : 'ghost'}
@@ -335,7 +335,7 @@ export default function EmployerPage() {
                 }`}
                 onClick={() => setCategoryType('backend')}
               >
-                后台
+                幕后
               </Button>
             </div>
           </div>
