@@ -38,7 +38,7 @@ export default function RoleSwitchPage() {
   const getRoleInfo = (userType: UserType) => {
     if (userType === UserType.JobSeeker) {
       return {
-        title: "求职者",
+        title: "薏人",
         description: "寻找表演机会，展示才华",
         icon: <UserCheck className="h-8 w-8" />,
         features: [
@@ -51,7 +51,7 @@ export default function RoleSwitchPage() {
       }
     } else {
       return {
-        title: "招聘方",
+        title: "老板",
         description: "发布职位，寻找人才",
         icon: <Briefcase className="h-8 w-8" />,
         features: [

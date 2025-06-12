@@ -75,9 +75,7 @@ export default function ThreeLevelCategories({
           <span className="mr-2">{currentCategoryData.icon}</span>
           {currentCategoryData.name}
         </h3>
-        <Badge variant="secondary">
-          共 {currentCategoryData.count} 个职位
-        </Badge>
+     
       </div>
 
       {/* 二级和三级分类展示 */}
@@ -94,9 +92,7 @@ export default function ThreeLevelCategories({
                   <span className="text-2xl">{subcategory.icon}</span>
                   <div>
                     <h4 className="font-medium text-base">{subcategory.name}</h4>
-                    <p className="text-sm text-gray-500">
-                      {subcategory.count} 个职位
-                    </p>
+                   
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -125,7 +121,6 @@ export default function ThreeLevelCategories({
                           <span className="text-lg">{item.icon}</span>
                           <div>
                             <p className="font-medium text-sm">{item.name}</p>
-                            <p className="text-xs text-gray-500">{item.count} 个</p>
                           </div>
                         </div>
                       </div>

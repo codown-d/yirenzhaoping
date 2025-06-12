@@ -16,7 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { SubPageHeader } from "@/components/ui/page-header";
-import { SAMPLE_CANDIDATE_DETAIL } from "@/constants";
+import { Actor_List, SAMPLE_CANDIDATE_DETAIL_Backend, SAMPLE_CANDIDATE_DETAIL_Frontend_1, SAMPLE_CANDIDATE_DETAIL_Frontend_2, SAMPLE_CANDIDATE_DETAIL_Operations,  } from "@/constants";
 import Link from "next/link";
 
 export async function generateStaticParams() {
@@ -26,8 +26,17 @@ export async function generateStaticParams() {
 
 export default function CandidateDetailPage() {
   // 使用常量文件中的数据
-  const candidate = SAMPLE_CANDIDATE_DETAIL;
-
+  let candidate:any =SAMPLE_CANDIDATE_DETAIL_Frontend_1
+  let num =Math.random()
+ if(num>0.25&&num<0.5){
+   candidate =SAMPLE_CANDIDATE_DETAIL_Frontend_2
+ } else if(num>0.5&&num<0.75){
+   candidate =SAMPLE_CANDIDATE_DETAIL_Backend
+ }else if(num>0.75){
+  candidate =SAMPLE_CANDIDATE_DETAIL_Operations
+}
+ 
+  let isActor = Actor_List.includes(candidate.type)
   return (
     <div className="min-h-screen bg-gray-50">
       {/* 头部组件 */}
@@ -50,10 +59,10 @@ export default function CandidateDetailPage() {
                   <div className="flex-1">
                     <CardTitle className="text-2xl">{candidate.name}</CardTitle>
                     <p className="text-gray-600 mt-1">
-                      {candidate.age}岁 · {candidate.gender}
+                      {candidate.age}岁 · {candidate.gender} · {isActor?`${candidate.height} · ${candidate.weight}`:candidate.experienceYears}
                     </p>
                     <p className="text-lg font-medium mt-2">
-                      {candidate.major}
+                      专业：{candidate.major}
                     </p>
                     <div className="flex items-center text-gray-500 mt-2">
                       <MapPin className="h-4 w-4 mr-1" />
@@ -107,7 +116,7 @@ export default function CandidateDetailPage() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-xl">
+            {candidate.id<=2?<Card className="rounded-xl">
               <CardHeader>
                 <CardTitle>自我介绍视频</CardTitle>
               </CardHeader>
@@ -137,39 +146,9 @@ export default function CandidateDetailPage() {
                   ))}
                 </div>
               </CardContent>
-            </Card>
-            {/* Videos */}
-            {/* <Card className="rounded-xl">
-              <CardHeader>
-                <CardTitle>表演视频</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {candidate.videos.map((video, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="aspect-video bg-gray-200 rounded-xl overflow-hidden relative">
-                        <img
-                          src={video.thumbnail || "/placeholder.svg"}
-                          alt={video.title}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="bg-black bg-opacity-50 rounded-full p-3">
-                            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M8 5v14l11-7z" />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-                      <p className="font-medium text-sm">{video.title}</p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card> */}
-
+            </Card>:null}
             {/* Stage Photos */}
-            <Card className="rounded-xl">
+            {candidate.id<=2?<Card className="rounded-xl">
               <CardHeader>
                 <CardTitle>专业视频</CardTitle>
               </CardHeader>
@@ -199,7 +178,7 @@ export default function CandidateDetailPage() {
                   ))}
                 </div>
               </CardContent>
-            </Card>
+            </Card>:null}
 
             {/* Training Photos */}
             {/* <Card className="rounded-xl">

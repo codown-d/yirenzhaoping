@@ -12,7 +12,6 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
 
     '/employer/', '/jobseeker/', '/forum/', '/messages/', '/profile/employer/', '/profile/jobseeker/'
   ]
-  console.log(segments, pathname)
   const isTopLevel = pageUrls.includes(pathname)
   let isEmployer = ['/employer', '/profile/employer',].includes(pathname);
 

@@ -15,6 +15,7 @@ import {
   EMPLOYER_BANNER_SLIDES
 } from "@/constants"
 import ThreeLevelCategories from "@/components/ThreeLevelCategories"
+import { Dialog } from "@radix-ui/react-dialog"
 
 export default function EmployerPage() {
   const router = useRouter()
@@ -386,8 +387,6 @@ export default function EmployerPage() {
           </div>
         </div>
       </main>
-
-     
     </div>
   )
 }

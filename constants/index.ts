@@ -324,7 +324,8 @@ export const BACKEND_POST_CATEGORIES = [
 ];
 
 // ==================== 主页分类展示数据 ====================
-
+export const Actor_List=['舞蹈类','表演类','武术类','杂技类','音乐类','模特类']
+let Icon_List=['🎭','💃','🥋','🤹','🎵','🎪']
 // 三级分类展示数据结构
 export const ALL_CATEGORIES_DISPLAY = {
   frontend: {
@@ -336,14 +337,7 @@ export const ALL_CATEGORIES_DISPLAY = {
         name: "演员",
         count: 156,
         icon: "💃",
-        children: [
-          { name: "舞蹈类", count: 56, icon: "💃" },
-          { name: "表演类", count: 43, icon: "🎭" },
-          { name: "武术类", count: 28, icon: "🥋" },
-          { name: "杂技类", count: 15, icon: "🤹" },
-          { name: "音乐类", count: 37, icon: "🎵" },
-          { name: "模特类", count: 22, icon: "🎪" },
-        ],
+        children: Actor_List.map((item,index)=>({ name:item, count: 56, icon:Icon_List[index] }))
       },
       {
         name: "主持/互动",
@@ -1000,17 +994,350 @@ export const SAMPLE_EMPLOYER_PROFILE = {
   },
 };
 
-// 求职者详情页面示例数据
-export const SAMPLE_CANDIDATE_DETAIL = {
+// 求职者详情页面示例数据"frontend" | "backend" | "operations"
+export const SAMPLE_CANDIDATE_DETAIL_Frontend_1 = {
   id: 1,
-  name: "李小华",
+  name: "李小华(台前演员)",
   age: 24,
   gender: "女",
+  type: "舞蹈类",
+  height: "160cm",
+  weight: "50kg",
   major: "古典舞",
   location: "北京市朝阳区",
   school: "北京舞蹈学院",
   avatar: "/placeholder.svg?height=120&width=120",
   skills: ["古典舞", "民族舞", "芭蕾基础", "现代舞"],
+  phone: "138****8888",
+  email: "lixiaohua@example.com",
+  introduction:
+    "我是一名专业的古典舞演员，毕业于北京舞蹈学院。有5年的舞台表演经验，擅长古典舞、民族舞，并具备芭蕾舞基础。曾参与多个大型舞蹈演出，希望能加入专业团队，展示自己的舞蹈才华。",
+  experience: [
+    {
+      company: "东方歌舞团",
+      position: "舞蹈演员",
+      duration: "2021.06 - 2024.03",
+      description: "参与团队的国内外巡演，主要表演民族舞和古典舞节目",
+    },
+    {
+      company: "星光艺术团",
+      position: "舞蹈演员",
+      duration: "2019.08 - 2021.05",
+      description: "参与各类商业演出和文艺晚会",
+    },
+  ],
+  education: [
+    {
+      school: "北京舞蹈学院",
+      major: "中国古典舞表演",
+      degree: "学士学位",
+      duration: "2015.09 - 2019.06",
+      gpa: "3.8/4.0",
+      honors: ["优秀毕业生", "专业第一名"],
+    },
+  ],
+  awards: ["全国舞蹈比赛金奖", "亚洲青年舞蹈家大赛银奖"],
+  performances: ["《丝路花雨》主要舞者", "《梁祝》独舞", "《春江花月夜》群舞"],
+  expectedSalary: "8000-12000",
+  workType: "全职",
+  videos: [
+    {
+      title: "古典舞《洛神赋》片段",
+      thumbnail: "/placeholder.svg?height=200&width=300",
+      url: "#",
+    },
+    {
+      title: "民族舞《茉莉花》",
+      thumbnail: "/placeholder.svg?height=200&width=300",
+      url: "#",
+    },
+    {
+      title: "现代舞表演片段",
+      thumbnail: "/placeholder.svg?height=200&width=300",
+      url: "#",
+    },
+  ],
+  images: {
+    stage: [
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "《洛神赋》舞台表演",
+        description: "2023年国家大剧院演出",
+      },
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "民族舞《茉莉花》",
+        description: "亚洲文化节表演",
+      },
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "古典舞独舞",
+        description: "个人代表作品",
+      },
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "现代舞表演",
+        description: "个人代表作品",
+      },
+    ],
+    training: [
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "日常训练",
+        description: "基本功练习",
+      },
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "排练现场",
+        description: "新剧目排练",
+      },
+    ],
+    awards: [
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "全国舞蹈比赛颁奖",
+        description: "获得金奖",
+      },
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "亚洲青年舞蹈家大赛",
+        description: "银奖获得者",
+      },
+    ],
+  },
+};
+export const SAMPLE_CANDIDATE_DETAIL_Frontend_2 = {
+  id: 2,
+  name: "李小华(台前非演员)",
+  age: 24,
+  gender: "女",
+  type: "主持/互动",
+  experienceYears: '三年行业经验',
+  major: "主持",
+  location: "北京市朝阳区",
+  school: "北京学院",
+  avatar: "/placeholder.svg?height=120&width=120",
+  skills: ["音乐主持",],
+  phone: "138****8888",
+  email: "lixiaohua@example.com",
+  introduction:
+    "我是一名专业的古典舞演员，毕业于北京舞蹈学院。有5年的舞台表演经验，擅长古典舞、民族舞，并具备芭蕾舞基础。曾参与多个大型舞蹈演出，希望能加入专业团队，展示自己的舞蹈才华。",
+  experience: [
+    {
+      company: "东方歌舞团",
+      position: "舞蹈演员",
+      duration: "2021.06 - 2024.03",
+      description: "参与团队的国内外巡演，主要表演民族舞和古典舞节目",
+    },
+    {
+      company: "星光艺术团",
+      position: "舞蹈演员",
+      duration: "2019.08 - 2021.05",
+      description: "参与各类商业演出和文艺晚会",
+    },
+  ],
+  education: [
+    {
+      school: "北京舞蹈学院",
+      major: "中国古典舞表演",
+      degree: "学士学位",
+      duration: "2015.09 - 2019.06",
+      gpa: "3.8/4.0",
+      honors: ["优秀毕业生", "专业第一名"],
+    },
+  ],
+  awards: ["全国舞蹈比赛金奖", "亚洲青年舞蹈家大赛银奖"],
+  performances: ["《丝路花雨》主要舞者", "《梁祝》独舞", "《春江花月夜》群舞"],
+  expectedSalary: "8000-12000",
+  workType: "全职",
+  videos: [
+    {
+      title: "古典舞《洛神赋》片段",
+      thumbnail: "/placeholder.svg?height=200&width=300",
+      url: "#",
+    },
+    {
+      title: "民族舞《茉莉花》",
+      thumbnail: "/placeholder.svg?height=200&width=300",
+      url: "#",
+    },
+    {
+      title: "现代舞表演片段",
+      thumbnail: "/placeholder.svg?height=200&width=300",
+      url: "#",
+    },
+  ],
+  images: {
+    stage: [
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "《洛神赋》舞台表演",
+        description: "2023年国家大剧院演出",
+      },
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "民族舞《茉莉花》",
+        description: "亚洲文化节表演",
+      },
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "古典舞独舞",
+        description: "个人代表作品",
+      },
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "现代舞表演",
+        description: "个人代表作品",
+      },
+    ],
+    training: [
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "日常训练",
+        description: "基本功练习",
+      },
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "排练现场",
+        description: "新剧目排练",
+      },
+    ],
+    awards: [
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "全国舞蹈比赛颁奖",
+        description: "获得金奖",
+      },
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "亚洲青年舞蹈家大赛",
+        description: "银奖获得者",
+      },
+    ],
+  },
+};
+export const SAMPLE_CANDIDATE_DETAIL_Backend = {
+  id: 3,
+  name: "李小华(幕后)",
+  age: 24,
+  gender: "女",
+  type: "艺术创作类",
+  experienceYears: '三年行业经验',
+  major: "导演",
+  location: "北京市朝阳区",
+  school: "北京舞蹈学院",
+  avatar: "/placeholder.svg?height=120&width=120",
+  skills: ['xxx','xxx','xxx'],
+  phone: "138****8888",
+  email: "lixiaohua@example.com",
+  introduction:
+    "我是一名专业的古典舞演员，毕业于北京舞蹈学院。有5年的舞台表演经验，擅长古典舞、民族舞，并具备芭蕾舞基础。曾参与多个大型舞蹈演出，希望能加入专业团队，展示自己的舞蹈才华。",
+  experience: [
+    {
+      company: "东方歌舞团",
+      position: "舞蹈演员",
+      duration: "2021.06 - 2024.03",
+      description: "参与团队的国内外巡演，主要表演民族舞和古典舞节目",
+    },
+    {
+      company: "星光艺术团",
+      position: "舞蹈演员",
+      duration: "2019.08 - 2021.05",
+      description: "参与各类商业演出和文艺晚会",
+    },
+  ],
+  education: [
+    {
+      school: "北京舞蹈学院",
+      major: "中国古典舞表演",
+      degree: "学士学位",
+      duration: "2015.09 - 2019.06",
+      gpa: "3.8/4.0",
+      honors: ["优秀毕业生", "专业第一名"],
+    },
+  ],
+  awards: ["全国舞蹈比赛金奖", "亚洲青年舞蹈家大赛银奖"],
+  performances: ["《丝路花雨》主要舞者", "《梁祝》独舞", "《春江花月夜》群舞"],
+  expectedSalary: "8000-12000",
+  workType: "全职",
+  videos: [
+    {
+      title: "古典舞《洛神赋》片段",
+      thumbnail: "/placeholder.svg?height=200&width=300",
+      url: "#",
+    },
+    {
+      title: "民族舞《茉莉花》",
+      thumbnail: "/placeholder.svg?height=200&width=300",
+      url: "#",
+    },
+    {
+      title: "现代舞表演片段",
+      thumbnail: "/placeholder.svg?height=200&width=300",
+      url: "#",
+    },
+  ],
+  images: {
+    stage: [
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "《洛神赋》舞台表演",
+        description: "2023年国家大剧院演出",
+      },
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "民族舞《茉莉花》",
+        description: "亚洲文化节表演",
+      },
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "古典舞独舞",
+        description: "个人代表作品",
+      },
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "现代舞表演",
+        description: "个人代表作品",
+      },
+    ],
+    training: [
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "日常训练",
+        description: "基本功练习",
+      },
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "排练现场",
+        description: "新剧目排练",
+      },
+    ],
+    awards: [
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "全国舞蹈比赛颁奖",
+        description: "获得金奖",
+      },
+      {
+        url: "/placeholder.svg?height=300&width=400",
+        title: "亚洲青年舞蹈家大赛",
+        description: "银奖获得者",
+      },
+    ],
+  },
+};
+export const SAMPLE_CANDIDATE_DETAIL_Operations = {
+  id: 4,
+  name: "李小华(运营)",
+  age: 24,
+  gender: "女",
+  type: "游客服务类",
+  experienceYears: '三年行业经验',
+  major: "票务",
+  location: "北京市朝阳区",
+  school: "北京舞蹈学院",
+  avatar: "/placeholder.svg?height=120&width=120",
+  skills: ['xxx','xxx','xxx','xxx'],
   phone: "138****8888",
   email: "lixiaohua@example.com",
   introduction:

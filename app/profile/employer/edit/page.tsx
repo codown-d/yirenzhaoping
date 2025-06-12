@@ -456,12 +456,12 @@ export default function EditEmployerProfilePage() {
             <CardContent className="space-y-6">
               {/* 工作环境照片 (4张) */}
               <div>
-                <Label htmlFor="work-environment-images">工作环境照片 (最多4张)</Label>
+                <Label htmlFor="work-environment-images">工作环境照片 (最多6张)</Label>
                 <p className="text-xs text-gray-500 mb-2">展示办公环境、工作场所、设施设备等</p>
                 <div className="mt-2 border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                   <Image className="h-8 w-8 mx-auto text-gray-400 mb-2" />
                   <p className="text-sm text-gray-600 mb-2">
-                    已上传 {formData.workEnvironmentImages.length}/4 张工作环境照片
+                    已上传 {formData.workEnvironmentImages.length}/6 张工作环境照片
                   </p>
                   <input
                     type="file"

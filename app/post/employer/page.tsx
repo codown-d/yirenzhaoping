@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import Link from "next/link"
+import PostThreeLevelCategorySelector from "@/components/PostThreeLevelCategorySelector"
 
 export default function EmployerPostPage() {
   const router = useRouter()
@@ -21,7 +22,9 @@ export default function EmployerPostPage() {
     location: "",
     salary: "",
     workType: "",
-    category: "",
+    categoryType: "frontend", // 一级分类
+    subcategory: "", // 二级分类
+    specificRole: "", // 三级分类
     requirements: [] as string[],
     benefits: [] as string[],
     contactInfo: "",
@@ -38,22 +41,30 @@ export default function EmployerPostPage() {
     performanceDate: "",
   })
 
-  // 分类切换状态
-  const [categoryType, setCategoryType] = useState<'frontend' | 'backend'>('frontend')
+  // 处理三级分类选择
+  const handleCategoryChange = (category: string) => {
+    setFormData(prev => ({
+      ...prev,
+      categoryType: category,
+      subcategory: "",
+      specificRole: ""
+    }))
+  }
 
-  const frontendCategories = [
-    "舞蹈表演", "戏曲表演", "武术表演", "杂技表演",
-    "声乐表演", "器乐表演", "话剧表演", "音乐剧表演",
-    "影视表演", "商业演出", "教学培训", "其他"
-  ]
+  const handleSubcategoryChange = (subcategory: string) => {
+    setFormData(prev => ({
+      ...prev,
+      subcategory: subcategory,
+      specificRole: ""
+    }))
+  }
 
-  const backendCategories = [
-    "导演", "副导演", "执行导演", "编剧",
-    "制片人", "制片助理", "摄影师", "摄像师",
-    "灯光师", "音响师", "舞美设计", "服装设计"
-  ]
-
-  const currentCategories = categoryType === 'frontend' ? frontendCategories : backendCategories
+  const handleSpecificRoleChange = (role: string) => {
+    setFormData(prev => ({
+      ...prev,
+      specificRole: role
+    }))
+  }
 
   const workTypes = ["全职", "兼职", "临时", "合同制", "实习"]
   
@@ -167,66 +178,15 @@ export default function EmployerPostPage() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="categoryType">职位类型 *</Label>
-                  <Select
-                    value={categoryType}
-                    onValueChange={(value: 'frontend' | 'backend') => {
-                      setCategoryType(value)
-                      setFormData(prev => ({ ...prev, category: "" })) // 重置类别选择
-                    }}
-                  >
-                    <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="选择职位类型" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="frontend">
-                        <div className="flex items-center">
-                          <span className="mr-2">🎭</span>
-                          <div>
-                            <div className="font-medium">前台表演</div>
-                            <div className="text-xs text-gray-500">舞台表演、演出等</div>
-                          </div>
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="backend">
-                        <div className="flex items-center">
-                          <span className="mr-2">🎬</span>
-                          <div>
-                            <div className="font-medium">后台制作</div>
-                            <div className="text-xs text-gray-500">导演、制片、技术等</div>
-                          </div>
-                        </div>
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Label htmlFor="category">具体类别 *</Label>
-                  <Select
-                    value={formData.category}
-                    onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}
-                    disabled={!categoryType}
-                  >
-                    <SelectTrigger className="mt-1">
-                      <SelectValue placeholder={
-                        !categoryType
-                          ? "请先选择职位类型"
-                          : `选择${categoryType === 'frontend' ? '前台表演' : '后台制作'}类别`
-                      } />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {currentCategories.map((category) => (
-                        <SelectItem key={category} value={category}>
-                          {category}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+              {/* 三级分类选择 */}
+              <PostThreeLevelCategorySelector
+                selectedCategory={formData.categoryType}
+                selectedSubcategory={formData.subcategory}
+                selectedItem={formData.specificRole}
+                onCategoryChange={handleCategoryChange}
+                onSubcategoryChange={handleSubcategoryChange}
+                onItemChange={handleSpecificRoleChange}
+              />
 
               <div>
                 <Label htmlFor="location">工作地点 *</Label>
@@ -432,7 +392,7 @@ export default function EmployerPostPage() {
               </div>
 
               <div>
-                <Label htmlFor="companyDescription">公司简介</Label>
+                <Label htmlFor="companyDescription">公司简介 *</Label>
                 <Textarea
                   id="companyDescription"
                   placeholder="请简要介绍公司背景、规模、主要业务等..."
@@ -454,7 +414,7 @@ export default function EmployerPostPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label htmlFor="images">上传宣传图片</Label>
+                <Label htmlFor="images">上传宣传图片 *</Label>
                 <div className="mt-2 border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                   <Image className="h-8 w-8 mx-auto text-gray-400 mb-2" />
                   <p className="text-sm text-gray-600 mb-2">展示演出场景、公司环境等</p>
@@ -483,7 +443,7 @@ export default function EmployerPostPage() {
               </div>
 
               <div>
-                <Label htmlFor="videos">上传宣传视频</Label>
+                <Label htmlFor="videos">上传宣传视频 *</Label>
                 <div className="mt-2 border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                   <Video className="h-8 w-8 mx-auto text-gray-400 mb-2" />
                   <p className="text-sm text-gray-600 mb-2">展示演出片段、公司介绍等</p>

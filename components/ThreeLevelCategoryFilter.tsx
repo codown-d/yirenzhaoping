@@ -150,9 +150,7 @@ export default function ThreeLevelCategoryFilter({
                     <span className="text-xl">{subcategory.icon}</span>
                     <div>
                       <h4 className="font-medium text-sm">{subcategory.name}</h4>
-                      <p className="text-xs text-gray-500">
-                        {subcategory.count} 个职位
-                      </p>
+                      
                     </div>
                   </div>
                   <div className="flex items-center space-x-2">
@@ -188,7 +186,6 @@ export default function ThreeLevelCategoryFilter({
                             <span className="text-base">{item.icon}</span>
                             <div>
                               <p className="font-medium text-sm">{item.name}</p>
-                              <p className="text-xs text-gray-500">{item.count} 个职位</p>
                             </div>
                           </Label>
                         </div>

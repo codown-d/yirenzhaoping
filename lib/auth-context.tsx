@@ -45,7 +45,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (savedUser) {
           const userData = JSON.parse(savedUser);
           setUser(userData);
-          console.log(userData)
           setRole(userData.userType);
         } else if (savedUserType) {
           // 如果没有用户数据但有保存的用户类型，使用保存的类型

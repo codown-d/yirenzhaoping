@@ -63,7 +63,6 @@ export default function JobseekerPage() {
   // 搜索处理函数
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('搜索:', searchValue)
     // 这里可以添加搜索逻辑
   }
 
