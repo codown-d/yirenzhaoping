@@ -1,148 +1,207 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useAuth, useUserType, useIsAuthenticated } from "@/lib/auth-context"
-import { useRouter } from "next/navigation"
-import { Search, Filter, Star, Heart, MessageCircle, User, Users, GraduationCap } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { CarouselBanner } from "@/components/ui/carousel-banner"
+import { useState, useEffect } from "react";
+import { useAuth, useUserType, useIsAuthenticated } from "@/lib/auth-context";
+import { useRouter } from "next/navigation";
+import {
+  Search,
+  Filter,
+  Star,
+  Heart,
+  MessageCircle,
+  User,
+  Users,
+  GraduationCap,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CarouselBanner } from "@/components/ui/carousel-banner";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   getAgeGroupText,
   SAMPLE_PERFORMERS,
-  EMPLOYER_BANNER_SLIDES
-} from "@/constants"
-import ThreeLevelCategories from "@/components/ThreeLevelCategories"
-import { Dialog } from "@radix-ui/react-dialog"
+  EMPLOYER_BANNER_SLIDES,
+} from "@/constants";
+import ThreeLevelCategories from "@/components/ThreeLevelCategories";
 
+let timer: NodeJS.Timeout | null = null;
 export default function EmployerPage() {
-  const router = useRouter()
-  const { user, logout } = useAuth()
-  const userType = useUserType()
-  const isAuthenticated = useIsAuthenticated()
+  const router = useRouter();
+  const { user, logout } = useAuth();
+  const userType = useUserType();
+  const isAuthenticated = useIsAuthenticated();
 
   // 未登录状态允许访问，按照求职者逻辑处理
-  const effectiveUserType = userType || 'jobseeker'
+  const effectiveUserType = userType || "jobseeker";
 
   // 从 localStorage 加载筛选条件
-  const [employerFilters, setEmployerFilters] = useState<any>({})
+  const [employerFilters, setEmployerFilters] = useState<any>({});
 
   // 页面加载时从 localStorage 读取筛选条件
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       try {
-        const savedEmployerFilters = localStorage.getItem('employer_filters')
+        const savedEmployerFilters = localStorage.getItem("employer_filters");
         if (savedEmployerFilters) {
-          setEmployerFilters(JSON.parse(savedEmployerFilters))
+          setEmployerFilters(JSON.parse(savedEmployerFilters));
         }
       } catch (error) {
-        console.error('Failed to load filters:', error)
+        console.error("Failed to load filters:", error);
       }
     }
-  }, [])
+  }, []);
 
   // 检查是否有活跃的筛选条件
   const hasActiveFilters = () => {
     return (
       employerFilters.location?.length > 0 ||
       employerFilters.gender !== "" ||
-      (employerFilters.categoryType && employerFilters.categoryType !== 'frontend') ||
+      (employerFilters.categoryType &&
+        employerFilters.categoryType !== "frontend") ||
       employerFilters.specialties?.length > 0 ||
-      (employerFilters.ageGroup && employerFilters.ageGroup !== 'unlimited') ||
+      (employerFilters.ageGroup && employerFilters.ageGroup !== "unlimited") ||
       employerFilters.experience !== "" ||
       employerFilters.education?.length > 0
-    )
-  }
+    );
+  };
 
   // 清除筛选条件的辅助函数
   const clearFilter = (type: string, value?: string) => {
     if (type === "location" && value) {
       const newFilters = {
         ...employerFilters,
-        location: employerFilters.location.filter((item: string) => item !== value),
-      }
-      setEmployerFilters(newFilters)
-      localStorage.setItem('employer_filters', JSON.stringify(newFilters))
+        location: employerFilters.location.filter(
+          (item: string) => item !== value
+        ),
+      };
+      setEmployerFilters(newFilters);
+      localStorage.setItem("employer_filters", JSON.stringify(newFilters));
     } else if (type === "gender") {
-      const newFilters = { ...employerFilters, gender: "" }
-      setEmployerFilters(newFilters)
-      localStorage.setItem('employer_filters', JSON.stringify(newFilters))
+      const newFilters = { ...employerFilters, gender: "" };
+      setEmployerFilters(newFilters);
+      localStorage.setItem("employer_filters", JSON.stringify(newFilters));
     } else if (type === "categoryType") {
-      const newFilters = { ...employerFilters, categoryType: 'frontend' }
-      setEmployerFilters(newFilters)
-      localStorage.setItem('employer_filters', JSON.stringify(newFilters))
+      const newFilters = { ...employerFilters, categoryType: "frontend" };
+      setEmployerFilters(newFilters);
+      localStorage.setItem("employer_filters", JSON.stringify(newFilters));
     } else if (type === "specialties" && value) {
       const newFilters = {
         ...employerFilters,
-        specialties: employerFilters.specialties.filter((item: string) => item !== value),
-      }
-      setEmployerFilters(newFilters)
-      localStorage.setItem('employer_filters', JSON.stringify(newFilters))
+        specialties: employerFilters.specialties.filter(
+          (item: string) => item !== value
+        ),
+      };
+      setEmployerFilters(newFilters);
+      localStorage.setItem("employer_filters", JSON.stringify(newFilters));
     } else if (type === "ageGroup") {
-      const newFilters = { ...employerFilters, ageGroup: 'unlimited' }
-      setEmployerFilters(newFilters)
-      localStorage.setItem('employer_filters', JSON.stringify(newFilters))
+      const newFilters = { ...employerFilters, ageGroup: "unlimited" };
+      setEmployerFilters(newFilters);
+      localStorage.setItem("employer_filters", JSON.stringify(newFilters));
     } else if (type === "experience") {
-      const newFilters = { ...employerFilters, experience: "" }
-      setEmployerFilters(newFilters)
-      localStorage.setItem('employer_filters', JSON.stringify(newFilters))
+      const newFilters = { ...employerFilters, experience: "" };
+      setEmployerFilters(newFilters);
+      localStorage.setItem("employer_filters", JSON.stringify(newFilters));
     } else if (type === "education" && value) {
       const newFilters = {
         ...employerFilters,
-        education: employerFilters.education.filter((item: string) => item !== value),
-      }
-      setEmployerFilters(newFilters)
-      localStorage.setItem('employer_filters', JSON.stringify(newFilters))
+        education: employerFilters.education.filter(
+          (item: string) => item !== value
+        ),
+      };
+      setEmployerFilters(newFilters);
+      localStorage.setItem("employer_filters", JSON.stringify(newFilters));
     }
-  }
+  };
 
   // 格式化经验显示
   const getExperienceText = (exp: string) => {
     switch (exp) {
-      case "0-1": return "应届/1年以内"
-      case "1-3": return "1-3年"
-      case "3-5": return "3-5年"
-      case "5+": return "5年以上"
-      default: return ""
+      case "0-1":
+        return "应届/1年以内";
+      case "1-3":
+        return "1-3年";
+      case "3-5":
+        return "3-5年";
+      case "5+":
+        return "5年以上";
+      default:
+        return "";
     }
-  }
+  };
 
   // 格式化年龄段显示
   const getAgeGroupText = (ageGroup: string) => {
     switch (ageGroup) {
-      case "unlimited": return "不限"
-      case "under18": return "18岁以下"
-      case "18-35": return "18-35岁"
-      case "over35": return "35岁以上"
-      default: return ""
+      case "unlimited":
+        return "不限";
+      case "under18":
+        return "18岁以下";
+      case "18-35":
+        return "18-35岁";
+      case "over35":
+        return "35岁以上";
+      default:
+        return "";
     }
-  }
+  };
 
   // 使用常量文件中的数据
-  const performers = SAMPLE_PERFORMERS
-  const bannerSlides = EMPLOYER_BANNER_SLIDES
+  const performers = SAMPLE_PERFORMERS;
+  const bannerSlides = EMPLOYER_BANNER_SLIDES;
 
-  const [searchValue, setSearchValue] = useState("")
+  const [searchValue, setSearchValue] = useState("");
+  const [showRoleDialog, setShowRoleDialog] = useState(false);
+
+  // 滚动监听
+  useEffect(() => {
+    if (isAuthenticated) return; // 已登录用户不需要显示弹窗
+
+    const handleScroll = () => {
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      clearTimeout(timer);
+      // 当滚动到页面底部附近时显示弹窗（距离底部100px以内）
+      if (scrollTop + windowHeight >= documentHeight - 10) {
+        timer = setTimeout(() => {
+          setShowRoleDialog(true);
+        }, 1000);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isAuthenticated]);
 
   // 处理分类选择
-  const handleCategorySelect = (category: string, subcategory: string, item: string) => {
-    console.log('选择了分类:', { category, subcategory, item })
+  const handleCategorySelect = (
+    category: string,
+    subcategory: string,
+    item: string
+  ) => {
+    console.log("选择了分类:", { category, subcategory, item });
     // 这里可以添加跳转到具体分类页面的逻辑
-  }
+  };
 
   // 跳转到筛选页面
   const handleFilterClick = () => {
-    router.push('/filter/employer')
-  }
+    router.push("/filter/employer");
+  };
 
   // 搜索处理函数
   const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log('搜索:', searchValue)
+    e.preventDefault();
+    console.log("搜索:", searchValue);
     // 这里可以添加搜索逻辑
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -184,12 +243,18 @@ export default function EmployerPage() {
                 {hasActiveFilters() && (
                   <Badge className="ml-1 bg-green-500 text-white text-xs px-1.5 py-0.5">
                     {(employerFilters.location?.length || 0) +
-                     (employerFilters.gender ? 1 : 0) +
-                     (employerFilters.categoryType && employerFilters.categoryType !== 'frontend' ? 1 : 0) +
-                     (employerFilters.specialties?.length || 0) +
-                     (employerFilters.ageGroup && employerFilters.ageGroup !== 'unlimited' ? 1 : 0) +
-                     (employerFilters.experience ? 1 : 0) +
-                     (employerFilters.education?.length || 0)}
+                      (employerFilters.gender ? 1 : 0) +
+                      (employerFilters.categoryType &&
+                      employerFilters.categoryType !== "frontend"
+                        ? 1
+                        : 0) +
+                      (employerFilters.specialties?.length || 0) +
+                      (employerFilters.ageGroup &&
+                      employerFilters.ageGroup !== "unlimited"
+                        ? 1
+                        : 0) +
+                      (employerFilters.experience ? 1 : 0) +
+                      (employerFilters.education?.length || 0)}
                   </Badge>
                 )}
               </Button>
@@ -204,9 +269,16 @@ export default function EmployerPage() {
               <h3 className="font-medium mb-3">已选条件</h3>
               <div className="flex flex-wrap gap-2">
                 {employerFilters.location?.map((city: string) => (
-                  <Badge key={city} variant="secondary" className="rounded-full px-3 py-1">
+                  <Badge
+                    key={city}
+                    variant="secondary"
+                    className="rounded-full px-3 py-1"
+                  >
                     {city}
-                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("location", city)}>
+                    <button
+                      className="ml-1 text-gray-500"
+                      onClick={() => clearFilter("location", city)}
+                    >
                       ×
                     </button>
                   </Badge>
@@ -215,53 +287,90 @@ export default function EmployerPage() {
                 {employerFilters.gender && (
                   <Badge variant="secondary" className="rounded-full px-3 py-1">
                     {employerFilters.gender === "male" ? "男" : "女"}
-                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("gender")}>
+                    <button
+                      className="ml-1 text-gray-500"
+                      onClick={() => clearFilter("gender")}
+                    >
                       ×
                     </button>
                   </Badge>
                 )}
 
-                {employerFilters.categoryType && employerFilters.categoryType !== 'frontend' && (
-                  <Badge variant="secondary" className="rounded-full px-3 py-1">
-                    {employerFilters.categoryType === 'backend' ? '幕后' :
-                     employerFilters.categoryType === 'operations' ? '运营' : '台前'}
-                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("categoryType")}>
-                      ×
-                    </button>
-                  </Badge>
-                )}
+                {employerFilters.categoryType &&
+                  employerFilters.categoryType !== "frontend" && (
+                    <Badge
+                      variant="secondary"
+                      className="rounded-full px-3 py-1"
+                    >
+                      {employerFilters.categoryType === "backend"
+                        ? "幕后"
+                        : employerFilters.categoryType === "operations"
+                        ? "运营"
+                        : "台前"}
+                      <button
+                        className="ml-1 text-gray-500"
+                        onClick={() => clearFilter("categoryType")}
+                      >
+                        ×
+                      </button>
+                    </Badge>
+                  )}
 
                 {employerFilters.specialties?.map((specialty: string) => (
-                  <Badge key={specialty} variant="secondary" className="rounded-full px-3 py-1">
+                  <Badge
+                    key={specialty}
+                    variant="secondary"
+                    className="rounded-full px-3 py-1"
+                  >
                     {specialty}
-                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("specialties", specialty)}>
+                    <button
+                      className="ml-1 text-gray-500"
+                      onClick={() => clearFilter("specialties", specialty)}
+                    >
                       ×
                     </button>
                   </Badge>
                 ))}
-                
-                {employerFilters.ageGroup && employerFilters.ageGroup !== 'unlimited' && (
-                  <Badge variant="secondary" className="rounded-full px-3 py-1">
-                    {getAgeGroupText(employerFilters.ageGroup)}
-                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("ageGroup")}>
-                      ×
-                    </button>
-                  </Badge>
-                )}
-                
+
+                {employerFilters.ageGroup &&
+                  employerFilters.ageGroup !== "unlimited" && (
+                    <Badge
+                      variant="secondary"
+                      className="rounded-full px-3 py-1"
+                    >
+                      {getAgeGroupText(employerFilters.ageGroup)}
+                      <button
+                        className="ml-1 text-gray-500"
+                        onClick={() => clearFilter("ageGroup")}
+                      >
+                        ×
+                      </button>
+                    </Badge>
+                  )}
+
                 {employerFilters.experience && (
                   <Badge variant="secondary" className="rounded-full px-3 py-1">
                     {getExperienceText(employerFilters.experience)}
-                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("experience")}>
+                    <button
+                      className="ml-1 text-gray-500"
+                      onClick={() => clearFilter("experience")}
+                    >
                       ×
                     </button>
                   </Badge>
                 )}
-                
+
                 {employerFilters.education?.map((edu: string) => (
-                  <Badge key={edu} variant="secondary" className="rounded-full px-3 py-1">
+                  <Badge
+                    key={edu}
+                    variant="secondary"
+                    className="rounded-full px-3 py-1"
+                  >
                     {edu}
-                    <button className="ml-1 text-gray-500" onClick={() => clearFilter("education", edu)}>
+                    <button
+                      className="ml-1 text-gray-500"
+                      onClick={() => clearFilter("education", edu)}
+                    >
                       ×
                     </button>
                   </Badge>
@@ -270,48 +379,7 @@ export default function EmployerPage() {
             </div>
           </div>
         )}
- {/* 未登录状态的选择组件 - 移动端优化 */}
-      {!isAuthenticated && (
-        <div className="px-3 py-4">
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-100">
-            <div className="grid grid-cols-2 gap-3">
-              {/* 来求职 */}
-              <div
-                className="bg-white rounded-lg p-3 border-2 border-blue-200 hover:border-blue-400 transition-all cursor-pointer group active:scale-95"
-                onClick={() => router.push('/login?type=jobseeker')}
-              >
-                <div className="text-center">
-                  <div className="bg-blue-100 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-2 group-hover:bg-blue-200 transition-colors">
-                    <User className="h-5 w-5 text-blue-600" />
-                  </div>
-                  <h3 className="text-sm font-bold text-gray-800 mb-1">我来求职</h3>
-                  <p className="text-gray-600 text-xs mb-2">寻找表演机会</p>
-                  <div className="flex flex-wrap gap-1 justify-center">
-                    <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs">找工作</span>
-                  </div>
-                </div>
-              </div>
 
-              {/* 来招聘 */}
-              <div
-                className="bg-white rounded-lg p-3 border-2 border-green-200 hover:border-green-400 transition-all cursor-pointer group active:scale-95"
-                onClick={() => router.push('/login?type=employer')}
-              >
-                <div className="text-center">
-                  <div className="bg-green-100 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-2 group-hover:bg-green-200 transition-colors">
-                    <Users className="h-5 w-5 text-green-600" />
-                  </div>
-                  <h3 className="text-sm font-bold text-gray-800 mb-1">我来招聘</h3>
-                  <p className="text-gray-600 text-xs mb-2">发布职位招聘</p>
-                  <div className="flex flex-wrap gap-1 justify-center">
-                    <span className="bg-green-50 text-green-700 px-2 py-0.5 rounded-full text-xs">招人才</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
         {/* Categories - 三级分类展示 */}
         <div className="px-3 mb-6">
           <ThreeLevelCategories
@@ -325,22 +393,40 @@ export default function EmployerPage() {
           <h2 className="text-base font-semibold mb-3">推荐求职者</h2>
           <div className="space-y-3">
             {performers.map((performer) => (
-              <div key={performer.id} className="bg-white rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow">
+              <div
+                key={performer.id}
+                className="bg-white rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow"
+              >
                 <div className="flex items-start space-x-3">
                   <Avatar className="h-10 w-10 flex-shrink-0">
                     <AvatarImage src={performer.avatar} />
-                    <AvatarFallback className="text-sm">{performer.name[0]}</AvatarFallback>
+                    <AvatarFallback className="text-sm">
+                      {performer.name[0]}
+                    </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between mb-1">
-                      <h3 className="font-medium text-sm cursor-pointer hover:text-blue-600 transition-colors truncate" onClick={()=>{
-                        router.push("/candidate/1")
-                      }}>{performer.name}</h3>
+                      <h3
+                        className="font-medium text-sm cursor-pointer hover:text-blue-600 transition-colors truncate"
+                        onClick={() => {
+                          router.push("/candidate/1");
+                        }}
+                      >
+                        {performer.name}
+                      </h3>
                       <div className="flex items-center space-x-1 flex-shrink-0 ml-2">
-                        <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-7 w-7 p-0"
+                        >
                           <Heart className="h-3.5 w-3.5" />
                         </Button>
-                        <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-7 w-7 p-0"
+                        >
                           <MessageCircle className="h-3.5 w-3.5" />
                         </Button>
                       </div>
@@ -362,21 +448,35 @@ export default function EmployerPage() {
                     </div>
                     <div className="flex items-center space-x-1 mb-2">
                       <Star className="h-3 w-3 text-yellow-400 fill-current flex-shrink-0" />
-                      <span className="text-xs font-medium">{performer.rating}</span>
+                      <span className="text-xs font-medium">
+                        {performer.rating}
+                      </span>
                     </div>
                     <div className="flex flex-wrap gap-1 mb-2">
                       {performer.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-xs px-2 py-0.5">
+                        <Badge
+                          key={tag}
+                          variant="secondary"
+                          className="text-xs px-2 py-0.5"
+                        >
                           {tag}
                         </Badge>
                       ))}
                     </div>
-                    <p className="text-xs text-gray-600 mb-2 line-clamp-2">{performer.description}</p>
+                    <p className="text-xs text-gray-600 mb-2 line-clamp-2">
+                      {performer.description}
+                    </p>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-medium text-green-600">{performer.price}</span>
-                      <Button size="sm" className="rounded-lg h-7 px-3 text-xs" onClick={()=>{
-                        router.push("/candidate/1")
-                      }}>
+                      <span className="text-xs font-medium text-green-600">
+                        {performer.price}
+                      </span>
+                      <Button
+                        size="sm"
+                        className="rounded-lg h-7 px-3 text-xs"
+                        onClick={() => {
+                          router.push("/candidate/1");
+                        }}
+                      >
                         查看详情
                       </Button>
                     </div>
@@ -387,6 +487,88 @@ export default function EmployerPage() {
           </div>
         </div>
       </main>
+
+      {/* 角色选择弹窗 */}
+      <Dialog
+        open={showRoleDialog && !isAuthenticated}
+        onOpenChange={setShowRoleDialog}
+      >
+        <DialogContent className="max-w-sm mx-auto">
+          <DialogHeader>
+            <DialogTitle className="text-center text-lg font-semibold">
+              选择您的身份
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 pt-4">
+            <div className="grid grid-cols-1 gap-3">
+              {/* 来求职 */}
+              <div
+                className="bg-white rounded-lg p-4 border-2 border-blue-200 hover:border-blue-400 transition-all cursor-pointer group active:scale-95"
+                onClick={() => {
+                  setShowRoleDialog(false);
+                  router.push("/login?type=jobseeker");
+                }}
+              >
+                <div className="text-center">
+                  <div className="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-200 transition-colors">
+                    <User className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <h3 className="text-base font-bold text-gray-800 mb-2">
+                    我来求职
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-3">
+                    寻找表演机会，展示才华
+                  </p>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm">
+                      找工作
+                    </span>
+                    <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm">
+                      投简历
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 来招聘 */}
+              <div
+                className="bg-white rounded-lg p-4 border-2 border-green-200 hover:border-green-400 transition-all cursor-pointer group active:scale-95"
+                onClick={() => {
+                  setShowRoleDialog(false);
+                  router.push("/login?type=employer");
+                }}
+              >
+                <div className="text-center">
+                  <div className="bg-green-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 group-hover:bg-green-200 transition-colors">
+                    <Users className="h-6 w-6 text-green-600" />
+                  </div>
+                  <h3 className="text-base font-bold text-gray-800 mb-2">
+                    我来招聘
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-3">
+                    发布职位，寻找人才
+                  </p>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm">
+                      招人才
+                    </span>
+                    <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm">
+                      发职位
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 提示文字 */}
+            <div className="text-center pt-2">
+              <p className="text-xs text-gray-500">
+                选择身份后将跳转到登录页面
+              </p>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
-  )
+  );
 }

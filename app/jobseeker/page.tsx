@@ -8,8 +8,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { CarouselBanner } from "@/components/ui/carousel-banner"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import Link from "next/link"
 import {
   SAMPLE_JOB_OPPORTUNITIES,
@@ -17,6 +22,7 @@ import {
 } from "@/constants"
 import ThreeLevelCategories from "@/components/ThreeLevelCategories"
 
+let timer: NodeJS.Timeout | null = null;
 export default function JobseekerPage() {
   const router = useRouter()
   const { user, logout } = useAuth()
@@ -28,6 +34,7 @@ export default function JobseekerPage() {
 
   // 从 localStorage 加载筛选条件
   const [jobseekerFilters, setJobseekerFilters] = useState<any>({})
+  const [showRoleDialog, setShowRoleDialog] = useState(false)
 
   // 页面加载时从 localStorage 读取筛选条件
   useEffect(() => {
@@ -42,6 +49,30 @@ export default function JobseekerPage() {
       }
     }
   }, [])
+
+  // 滚动监听
+  useEffect(() => {
+    if (isAuthenticated) return // 已登录用户不需要显示弹窗
+
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop
+      const windowHeight = window.innerHeight
+      const documentHeight = document.documentElement.scrollHeight
+      clearTimeout(timer);
+      // 当滚动到页面底部附近时显示弹窗（距离底部100px以内）
+      if (scrollTop + windowHeight >= documentHeight - 10) {
+        timer = setTimeout(() => {
+          setShowRoleDialog(true);
+        }, 1000);
+      }
+    } // 100ms节流
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [isAuthenticated])
 
   // 检查是否有活跃的筛选条件
   const hasActiveFilters = () => {
@@ -246,48 +277,7 @@ export default function JobseekerPage() {
             </div>
           </div>
         )}
-    {/* 未登录状态的选择组件 - 移动端优化 */}
-    {!isAuthenticated && (
-        <div className="px-3 py-4">
-          <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-4 border border-blue-100">
-            <div className="grid grid-cols-2 gap-3">
-              {/* 来求职 */}
-              <div
-                className="bg-white rounded-lg p-3 border-2 border-blue-200 hover:border-blue-400 transition-all cursor-pointer group active:scale-95"
-                onClick={() => router.push('/login?type=jobseeker')}
-              >
-                <div className="text-center">
-                  <div className="bg-blue-100 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-2 group-hover:bg-blue-200 transition-colors">
-                    <User className="h-5 w-5 text-blue-600" />
-                  </div>
-                  <h3 className="text-sm font-bold text-gray-800 mb-1">我来求职</h3>
-                  <p className="text-gray-600 text-xs mb-2">寻找表演机会</p>
-                  <div className="flex flex-wrap gap-1 justify-center">
-                    <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs">找工作</span>
-                  </div>
-                </div>
-              </div>
 
-              {/* 来招聘 */}
-              <div
-                className="bg-white rounded-lg p-3 border-2 border-green-200 hover:border-green-400 transition-all cursor-pointer group active:scale-95"
-                onClick={() => router.push('/login?type=employer')}
-              >
-                <div className="text-center">
-                  <div className="bg-green-100 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-2 group-hover:bg-green-200 transition-colors">
-                    <Briefcase className="h-5 w-5 text-green-600" />
-                  </div>
-                  <h3 className="text-sm font-bold text-gray-800 mb-1">我来招聘</h3>
-                  <p className="text-gray-600 text-xs mb-2">发布职位招聘</p>
-                  <div className="flex flex-wrap gap-1 justify-center">
-                    <span className="bg-green-50 text-green-700 px-2 py-0.5 rounded-full text-xs">招人才</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
         {/* Categories - 三级分类展示 */}
         <div className="px-3 mb-6">
           <ThreeLevelCategories
@@ -360,6 +350,69 @@ export default function JobseekerPage() {
           </div>
         </div>
       </main>
+
+      {/* 角色选择弹窗 */}
+      <Dialog open={showRoleDialog && !isAuthenticated} onOpenChange={setShowRoleDialog}>
+        <DialogContent className="max-w-sm mx-auto">
+          <DialogHeader>
+            <DialogTitle className="text-center text-lg font-semibold">
+              选择您的身份
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 pt-4">
+            <div className="grid grid-cols-1 gap-3">
+              {/* 来求职 */}
+              <div
+                className="bg-white rounded-lg p-4 border-2 border-blue-200 hover:border-blue-400 transition-all cursor-pointer group active:scale-95"
+                onClick={() => {
+                  setShowRoleDialog(false)
+                  router.push('/login?type=jobseeker')
+                }}
+              >
+                <div className="text-center">
+                  <div className="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-200 transition-colors">
+                    <User className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <h3 className="text-base font-bold text-gray-800 mb-2">我来求职</h3>
+                  <p className="text-gray-600 text-sm mb-3">寻找表演机会，展示才华</p>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm">找工作</span>
+                    <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm">投简历</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 来招聘 */}
+              <div
+                className="bg-white rounded-lg p-4 border-2 border-green-200 hover:border-green-400 transition-all cursor-pointer group active:scale-95"
+                onClick={() => {
+                  setShowRoleDialog(false)
+                  router.push('/login?type=employer')
+                }}
+              >
+                <div className="text-center">
+                  <div className="bg-green-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 group-hover:bg-green-200 transition-colors">
+                    <Briefcase className="h-6 w-6 text-green-600" />
+                  </div>
+                  <h3 className="text-base font-bold text-gray-800 mb-2">我来招聘</h3>
+                  <p className="text-gray-600 text-sm mb-3">发布职位，寻找人才</p>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm">招人才</span>
+                    <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm">发职位</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 提示文字 */}
+            <div className="text-center pt-2">
+              <p className="text-xs text-gray-500">
+                选择身份后将跳转到登录页面
+              </p>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
