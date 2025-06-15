@@ -150,3 +150,4 @@ export function useIsAuthenticated() {
   const { user } = useAuth();
   return user?.isAuthenticated || false;
 }
+

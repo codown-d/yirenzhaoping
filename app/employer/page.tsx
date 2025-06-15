@@ -12,6 +12,7 @@ import {
   User,
   Users,
   GraduationCap,
+  Clock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,10 +29,12 @@ import {
   getAgeGroupText,
   SAMPLE_PERFORMERS,
   EMPLOYER_BANNER_SLIDES,
+  MIXED_HOMEPAGE_DATA,
 } from "@/constants";
 import ThreeLevelCategories from "@/components/ThreeLevelCategories";
+import MixedCardList from "@/components/MixedCardList";
 
-let timer: NodeJS.Timeout | null = null;
+let timer:any;
 export default function EmployerPage() {
   const router = useRouter();
   const { user, logout } = useAuth();
@@ -153,6 +156,7 @@ export default function EmployerPage() {
   };
 
   // 使用常量文件中的数据
+  const mixedData = MIXED_HOMEPAGE_DATA;
   const performers = SAMPLE_PERFORMERS;
   const bannerSlides = EMPLOYER_BANNER_SLIDES;
 
@@ -388,103 +392,122 @@ export default function EmployerPage() {
           />
         </div>
 
-        {/* Recommended Performers - 移动端优化 */}
+        {/* 根据登录状态显示不同内容 */}
         <div className="px-3">
-          <h2 className="text-base font-semibold mb-3">推荐求职者</h2>
-          <div className="space-y-3">
-            {performers.map((performer) => (
-              <div
-                key={performer.id}
-                className="bg-white rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow"
-              >
-                <div className="flex items-start space-x-3">
-                  <Avatar className="h-10 w-10 flex-shrink-0">
-                    <AvatarImage src={performer.avatar} />
-                    <AvatarFallback className="text-sm">
-                      {performer.name[0]}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between mb-1">
-                      <h3
-                        className="font-medium text-sm cursor-pointer hover:text-blue-600 transition-colors truncate"
-                        onClick={() => {
-                          router.push("/candidate/1");
-                        }}
-                      >
-                        {performer.name}
-                      </h3>
-                      <div className="flex items-center space-x-1 flex-shrink-0 ml-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-7 w-7 p-0"
-                        >
-                          <Heart className="h-3.5 w-3.5" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-7 w-7 p-0"
-                        >
-                          <MessageCircle className="h-3.5 w-3.5" />
-                        </Button>
+          {!isAuthenticated ? (
+            // 未登录用户显示混合内容
+            <MixedCardList data={mixedData} title="推荐内容" />
+          ) : (
+            // 已登录用户显示求职者信息
+            <>
+              <h2 className="text-base font-semibold mb-3">推荐求职者</h2>
+              <div className="space-y-3">
+                {performers.map((performer) => (
+                  <div
+                    key={performer.id}
+                    className="bg-white rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <div className="flex items-start space-x-3">
+                      <Avatar className="h-10 w-10 flex-shrink-0">
+                        <AvatarImage src={performer.avatar} />
+                        <AvatarFallback className="text-sm">
+                          {performer.name[0]}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between mb-1">
+                          <div className="flex">
+                            <h3
+                              className="font-medium text-sm cursor-pointer hover:text-blue-600 transition-colors truncate"
+                              onClick={() => {
+                                router.push("/candidate/1");
+                              }}
+                            >
+                              {performer.name}
+                            </h3>
+                            <div className="flex items-center space-x-1 mb-2 ml-2">
+                              <Star className="h-3 w-3 text-yellow-400 fill-current flex-shrink-0" />
+                              <span className="text-xs font-medium">
+                                {performer.rating}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center space-x-1 flex-shrink-0 ml-2">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-7 w-7 p-0"
+                            >
+                              <Heart className="h-3.5 w-3.5" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-7 w-7 p-0"
+                            >
+                              <MessageCircle className="h-3.5 w-3.5" />
+                            </Button>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-2 text-xs text-gray-600 mb-2">
+                          <span>{performer.age}岁</span>
+                          <span>•</span>
+                          <span className="truncate">
+                            {performer.specialty}
+                          </span>
+                          <span>•</span>
+                          <span className="truncate">
+                            {performer.experience}
+                          </span>
+                        </div>
+
+                        {/* <div className="flex items-center space-x-1 text-xs text-gray-600">
+                          <Clock className="h-3 w-3 flex-shrink-0" />
+                          <span>联系方式：13525679478</span>
+                        </div> */}
+                        {/* 学校和专业信息 - 移动端紧凑布局 */}
+                        <div className="flex items-center space-x-1 text-xs text-gray-600 mb-2">
+                          <GraduationCap className="h-3 w-3 flex-shrink-0" />
+                          <span className="truncate">{performer.school}</span>
+                          <span>•</span>
+                          <span className="truncate">{performer.major}</span>
+                        </div>
+                        <div className="flex flex-wrap gap-1 mb-2">
+                          {performer.tags.map((tag) => (
+                            <Badge
+                              key={tag}
+                              variant="secondary"
+                              className="text-xs px-2 py-0.5"
+                            >
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                        <p className="text-xs text-gray-600 mb-2 line-clamp-2">
+                          {performer.description}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-medium text-green-600">
+                            {performer.price}
+                          </span>
+                          <Button
+                            size="sm"
+                            className="rounded-lg h-7 px-3 text-xs"
+                            onClick={() => {
+                              router.push("/candidate/1");
+                            }}
+                          >
+                            查看详情
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2 text-xs text-gray-600 mb-2">
-                      <span>{performer.age}岁</span>
-                      <span>•</span>
-                      <span className="truncate">{performer.specialty}</span>
-                      <span>•</span>
-                      <span className="truncate">{performer.experience}</span>
-                    </div>
-
-                    {/* 学校和专业信息 - 移动端紧凑布局 */}
-                    <div className="flex items-center space-x-1 text-xs text-gray-600 mb-2">
-                      <GraduationCap className="h-3 w-3 flex-shrink-0" />
-                      <span className="truncate">{performer.school}</span>
-                      <span>•</span>
-                      <span className="truncate">{performer.major}</span>
-                    </div>
-                    <div className="flex items-center space-x-1 mb-2">
-                      <Star className="h-3 w-3 text-yellow-400 fill-current flex-shrink-0" />
-                      <span className="text-xs font-medium">
-                        {performer.rating}
-                      </span>
-                    </div>
-                    <div className="flex flex-wrap gap-1 mb-2">
-                      {performer.tags.map((tag) => (
-                        <Badge
-                          key={tag}
-                          variant="secondary"
-                          className="text-xs px-2 py-0.5"
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                    <p className="text-xs text-gray-600 mb-2 line-clamp-2">
-                      {performer.description}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-medium text-green-600">
-                        {performer.price}
-                      </span>
-                      <Button
-                        size="sm"
-                        className="rounded-lg h-7 px-3 text-xs"
-                        onClick={() => {
-                          router.push("/candidate/1");
-                        }}
-                      >
-                        查看详情
-                      </Button>
-                    </div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          )}
         </div>
       </main>
 
@@ -495,11 +518,14 @@ export default function EmployerPage() {
       >
         <DialogContent className="max-w-sm mx-auto">
           <DialogHeader>
+          <DialogTitle className="text-center text-lg font-semibold">
+              注册后浏览更多信息
+            </DialogTitle>
             <DialogTitle className="text-center text-lg font-semibold">
               选择您的身份
             </DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 pt-4">
+          <div className="space-y-4 pt-2">
             <div className="grid grid-cols-1 gap-3">
               {/* 来求职 */}
               <div

@@ -18,6 +18,7 @@ import { Separator } from "@/components/ui/separator";
 import { SubPageHeader } from "@/components/ui/page-header";
 import { Actor_List, SAMPLE_CANDIDATE_DETAIL_Backend, SAMPLE_CANDIDATE_DETAIL_Frontend_1, SAMPLE_CANDIDATE_DETAIL_Frontend_2, SAMPLE_CANDIDATE_DETAIL_Operations,  } from "@/constants";
 import Link from "next/link";
+import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, Key } from "react";
 
 export async function generateStaticParams() {
   // 为静态导出生成候选人ID参数
@@ -80,7 +81,7 @@ export default function CandidateDetailPage() {
                   <div>
                     <h4 className="font-medium mb-2">专业技能</h4>
                     <div className="flex flex-wrap gap-2">
-                      {candidate.skills.map((skill, index) => (
+                      {candidate.skills.map((skill: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined, index: Key | null | undefined) => (
                         <Badge key={index} variant="secondary">
                           {skill}
                         </Badge>
@@ -99,7 +100,7 @@ export default function CandidateDetailPage() {
                     <h4 className="font-medium mb-2">个人展示</h4>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {candidate.images.stage.map((image, index) => (
+                      {candidate.images.stage.map((image: { url: any; title: string | undefined; }, index: Key | null | undefined) => (
                         <div key={index} className="space-y-2">
                           <div className="aspect-[4/3] bg-gray-200 rounded-xl overflow-hidden">
                             <img
@@ -122,7 +123,7 @@ export default function CandidateDetailPage() {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1  gap-4">
-                  {candidate.videos.slice(-1).map((video, index) => (
+                  {candidate.videos.slice(-1).map((video: { thumbnail: any; title: string | undefined; }, index: Key | null | undefined) => (
                     <div key={index} className="space-y-2">
                       <div className="aspect-video bg-gray-200 rounded-xl overflow-hidden relative">
                         <img
@@ -154,7 +155,7 @@ export default function CandidateDetailPage() {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {candidate.videos.map((video, index) => (
+                  {candidate.videos.map((video: { thumbnail: any; title: string | undefined; }, index: Key | null | undefined) => (
                     <div key={index} className="space-y-2">
                       <div className="aspect-video bg-gray-200 rounded-xl overflow-hidden relative">
                         <img
@@ -239,7 +240,7 @@ export default function CandidateDetailPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {candidate.performances.map((performance, index) => (
+                  {candidate.performances.map((performance: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined, index: Key | null | undefined) => (
                     <div key={index} className="flex items-center space-x-3">
                       <div className="bg-green-100 p-2 rounded-full">
                         <Music className="h-5 w-5 text-green-600" />
@@ -258,7 +259,7 @@ export default function CandidateDetailPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {candidate.awards.map((award, index) => (
+                  {candidate.awards.map((award: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined, index: Key | null | undefined) => (
                     <div key={index} className="flex items-center space-x-3">
                       <div className="bg-yellow-100 p-2 rounded-full">
                         <Award className="h-5 w-5 text-yellow-600" />
@@ -277,7 +278,7 @@ export default function CandidateDetailPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {candidate.experience.map((exp, index) => (
+                  {candidate.experience.map((exp: { position: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; company: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; duration: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; description: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; }, index: Key | null | undefined) => (
                     <div
                       key={index}
                       className="border-l-2 border-green-200 pl-4"
@@ -302,7 +303,7 @@ export default function CandidateDetailPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {candidate.education.map((edu, index) => (
+                  {candidate.education.map((edu: { school: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; degree: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; major: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; duration: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; gpa: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; honors: any[]; }, index: Key | null | undefined) => (
                     <div
                       key={index}
                       className="border-l-4 border-blue-200 pl-4 bg-blue-50/50 rounded-r-lg py-3"
@@ -335,7 +336,7 @@ export default function CandidateDetailPage() {
                       {/* 荣誉信息 */}
                       {edu.honors && edu.honors.length > 0 && (
                         <div className="flex flex-wrap gap-1">
-                          {edu.honors.map((honor, honorIndex) => (
+                          {edu.honors.map((honor: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined, honorIndex: Key | null | undefined) => (
                             <Badge
                               key={honorIndex}
                               className="text-xs bg-yellow-100 text-yellow-800"
@@ -421,7 +422,7 @@ export default function CandidateDetailPage() {
 
                   {/* 详细教育信息 */}
                   <div className="space-y-3 pt-3 border-t">
-                    {candidate.education.map((edu, index) => (
+                    {candidate.education.map((edu: { school: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; degree: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; major: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; duration: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; gpa: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; honors: any[]; }, index: Key | null | undefined) => (
                       <div
                         key={index}
                         className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-3 border border-blue-100"
@@ -462,7 +463,7 @@ export default function CandidateDetailPage() {
                             <div className="flex flex-wrap gap-1">
                               {edu.honors
                                 .slice(0, 2)
-                                .map((honor, honorIndex) => (
+                                .map((honor: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined, honorIndex: Key | null | undefined) => (
                                   <Badge
                                     key={honorIndex}
                                     className="text-xs bg-yellow-100 text-yellow-700 px-1 py-0"

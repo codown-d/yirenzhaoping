@@ -324,8 +324,15 @@ export const BACKEND_POST_CATEGORIES = [
 ];
 
 // ==================== 主页分类展示数据 ====================
-export const Actor_List=['舞蹈类','表演类','武术类','杂技类','音乐类','模特类']
-let Icon_List=['🎭','💃','🥋','🤹','🎵','🎪']
+export const Actor_List = [
+  "舞蹈类",
+  "表演类",
+  "武术类",
+  "杂技类",
+  "音乐类",
+  "模特类",
+];
+let Icon_List = ["🎭", "💃", "🥋", "🤹", "🎵", "🎪"];
 // 三级分类展示数据结构
 export const ALL_CATEGORIES_DISPLAY = {
   frontend: {
@@ -337,7 +344,11 @@ export const ALL_CATEGORIES_DISPLAY = {
         name: "演员",
         count: 156,
         icon: "💃",
-        children: Actor_List.map((item,index)=>({ name:item, count: 56, icon:Icon_List[index] }))
+        children: Actor_List.map((item, index) => ({
+          name: item,
+          count: 56,
+          icon: Icon_List[index],
+        })),
       },
       {
         name: "主持/互动",
@@ -450,11 +461,14 @@ export const ALL_CATEGORIES_DISPLAY = {
 };
 
 // 保持向后兼容的单独导出
-export const FRONTEND_CATEGORIES_DISPLAY = ALL_CATEGORIES_DISPLAY.frontend.categories;
+export const FRONTEND_CATEGORIES_DISPLAY =
+  ALL_CATEGORIES_DISPLAY.frontend.categories;
 
-export const BACKEND_CATEGORIES_DISPLAY = ALL_CATEGORIES_DISPLAY.backend.categories;
+export const BACKEND_CATEGORIES_DISPLAY =
+  ALL_CATEGORIES_DISPLAY.backend.categories;
 
-export const OPERATIONS_CATEGORIES_DISPLAY = ALL_CATEGORIES_DISPLAY.operations.categories;
+export const OPERATIONS_CATEGORIES_DISPLAY =
+  ALL_CATEGORIES_DISPLAY.operations.categories;
 
 // 招聘方主页分类展示数据
 export const EMPLOYER_FRONTEND_CATEGORIES = [
@@ -661,7 +675,9 @@ export const getDistricts = (province: string, city: string) => {
 };
 
 // 根据类别获取职位类型
-export const getJobTypesByCategory = (categoryType: "frontend" | "backend" | "operations") => {
+export const getJobTypesByCategory = (
+  categoryType: "frontend" | "backend" | "operations"
+) => {
   switch (categoryType) {
     case "frontend":
       return FRONTEND_JOB_TYPES;
@@ -718,7 +734,9 @@ export const getEmployerCategoriesByType = (
 };
 
 // 获取三级分类数据
-export const getThreeLevelCategories = (categoryType: "frontend" | "backend" | "operations") => {
+export const getThreeLevelCategories = (
+  categoryType: "frontend" | "backend" | "operations"
+) => {
   return ALL_CATEGORIES_DISPLAY[categoryType];
 };
 
@@ -783,7 +801,189 @@ export const getEmploymentTypeText = (type: string) => {
 };
 
 // ==================== 示例数据 ====================
-
+// 游客主页 - 求职者示例数据
+export const SAMPLE_TOURIST = [
+  {
+    id: 1,
+    title: "大型音乐剧《猫》舞蹈演员",
+    company: "星光文化传媒",
+    location: "北京",
+    salary: "8000-12000",
+    type: "全职",
+    tags: ["五险一金", "工作补贴", "培训机会"],
+    description:
+      "招聘专业舞蹈演员，要求有扎实的舞蹈基础，形象气质佳，有团队合作精神。",
+    posted: "2天前",
+    urgent: true,
+    requiredMajor: "舞蹈表演专业",
+    startTime: "立即到岗",
+  },
+  {
+    id: 2,
+    title: "大型音乐剧《猫》舞蹈演员",
+    company: "星光文化传媒",
+    location: "北京",
+    salary: "8000-12000",
+    type: "全职",
+    tags: ["五险一金", "工作补贴", "培训机会"],
+    description:
+      "招聘专业舞蹈演员，要求有扎实的舞蹈基础，形象气质佳，有团队合作精神。",
+    posted: "2天前",
+    urgent: true,
+    requiredMajor: "舞蹈表演专业",
+    startTime: "立即到岗",
+  },
+  {
+    id: 3,
+    title: "大型音乐剧《猫》舞蹈演员",
+    company: "星光文化传媒",
+    location: "北京",
+    salary: "8000-12000",
+    type: "全职",
+    tags: ["五险一金", "工作补贴", "培训机会"],
+    description:
+      "招聘专业舞蹈演员，要求有扎实的舞蹈基础，形象气质佳，有团队合作精神。",
+    posted: "2天前",
+    urgent: true,
+    requiredMajor: "舞蹈表演专业",
+    startTime: "立即到岗",
+  },
+  {
+    id: 4,
+    title: "大型音乐剧《猫》舞蹈演员",
+    company: "星光文化传媒",
+    location: "北京",
+    salary: "8000-12000",
+    type: "全职",
+    tags: ["五险一金", "工作补贴", "培训机会"],
+    description:
+      "招聘专业舞蹈演员，要求有扎实的舞蹈基础，形象气质佳，有团队合作精神。",
+    posted: "2天前",
+    urgent: true,
+    requiredMajor: "舞蹈表演专业",
+    startTime: "立即到岗",
+  },
+  {
+    id: 5,
+    title: "大型音乐剧《猫》舞蹈演员",
+    company: "星光文化传媒",
+    location: "北京",
+    salary: "8000-12000",
+    type: "全职",
+    tags: ["五险一金", "工作补贴", "培训机会"],
+    description:
+      "招聘专业舞蹈演员，要求有扎实的舞蹈基础，形象气质佳，有团队合作精神。",
+    posted: "2天前",
+    urgent: true,
+    requiredMajor: "舞蹈表演专业",
+    startTime: "立即到岗",
+  },
+  {
+    id: 6,
+    title: "大型音乐剧《猫》舞蹈演员",
+    company: "星光文化传媒",
+    location: "北京",
+    salary: "8000-12000",
+    type: "全职",
+    tags: ["五险一金", "工作补贴", "培训机会"],
+    description:
+      "招聘专业舞蹈演员，要求有扎实的舞蹈基础，形象气质佳，有团队合作精神。",
+    posted: "2天前",
+    urgent: true,
+    requiredMajor: "舞蹈表演专业",
+    startTime: "立即到岗",
+  },
+  {
+    id: 7,
+    name: "王静",
+    age: 27,
+    specialty: "戏曲",
+    experience: "4年",
+    location: "上海",
+    rating: 4.8,
+    avatar: "/placeholder.svg?height=60&width=60",
+    tags: ["戏曲表演", "戏曲教育", "表演经验"],
+    price: "800-1200/天",
+    description: "上海戏曲表演专业，擅长戏曲表演和教育，有丰富的表演经验。",
+    school: "上海戏曲学院",
+    major: "戏曲表演专业",
+  },
+  {
+    id: 8,
+    name: "李静",
+    age: 26,
+    specialty: "舞蹈",
+    experience: "3年",
+    location: "广州",
+    rating: 4.7,
+    avatar: "/placeholder.svg?height=60&width=60",
+    tags: ["舞蹈表演", "舞蹈教育", "表演经验"],
+    price: "800-1200/天",
+    description: "广州舞蹈表演专业，擅长舞蹈表演和教育，有丰富的表演经验。",
+    school: "广州舞蹈学院",
+    major: "舞蹈表演专业",
+  },
+  {
+    id: 9,
+    name: "王静",
+    age: 27,
+    specialty: "戏曲",
+    experience: "4年",
+    location: "上海",
+    rating: 4.8,
+    avatar: "/placeholder.svg?height=60&width=60",
+    tags: ["戏曲表演", "戏曲教育", "表演经验"],
+    price: "800-1200/天",
+    description: "上海戏曲表演专业，擅长戏曲表演和教育，有丰富的表演经验。",
+    school: "上海戏曲学院",
+    major: "戏曲表演专业",
+  },
+  {
+    id: 10,
+    name: "李静",
+    age: 26,
+    specialty: "舞蹈",
+    experience: "3年",
+    location: "广州",
+    rating: 4.7,
+    avatar: "/placeholder.svg?height=60&width=60",
+    tags: ["舞蹈表演", "舞蹈教育", "表演经验"],
+    price: "800-1200/天",
+    description: "广州舞蹈表演专业，擅长舞蹈表演和教育，有丰富的表演经验。",
+    school: "广州舞蹈学院",
+    major: "舞蹈表演专业",
+  },
+  {
+    id: 11,
+    name: "王静",
+    age: 27,
+    specialty: "戏曲",
+    experience: "4年",
+    location: "上海",
+    rating: 4.8,
+    avatar: "/placeholder.svg?height=60&width=60",
+    tags: ["戏曲表演", "戏曲教育", "表演经验"],
+    price: "800-1200/天",
+    description: "上海戏曲表演专业，擅长戏曲表演和教育，有丰富的表演经验。",
+    school: "上海戏曲学院",
+    major: "戏曲表演专业",
+  },
+  {
+    id: 12,
+    name: "李静",
+    age: 26,
+    specialty: "舞蹈",
+    experience: "3年",
+    location: "广州",
+    rating: 4.7,
+    avatar: "/placeholder.svg?height=60&width=60",
+    tags: ["舞蹈表演", "舞蹈教育", "表演经验"],
+    price: "800-1200/天",
+    description: "广州舞蹈表演专业，擅长舞蹈表演和教育，有丰富的表演经验。",
+    school: "广州舞蹈学院",
+    major: "舞蹈表演专业",
+  },
+];
 // 求职者主页 - 招聘职位示例数据
 export const SAMPLE_JOB_OPPORTUNITIES = [
   {
@@ -907,10 +1107,9 @@ export const SAMPLE_PERFORMERS = [
     avatar: "/placeholder.svg?height=60&width=60",
     tags: ["戏曲表演", "戏曲教育", "表演经验"],
     price: "800-1200/天",
-    description:
-      "上海戏曲表演专业，擅长戏曲表演和教育，有丰富的表演经验。",
+    description: "上海戏曲表演专业，擅长戏曲表演和教育，有丰富的表演经验。",
     school: "上海戏曲学院",
-    major: "戏曲表演专业",  
+    major: "戏曲表演专业",
   },
   {
     id: 6,
@@ -923,109 +1122,10 @@ export const SAMPLE_PERFORMERS = [
     avatar: "/placeholder.svg?height=60&width=60",
     tags: ["舞蹈表演", "舞蹈教育", "表演经验"],
     price: "800-1200/天",
-    description:
-      "广州舞蹈表演专业，擅长舞蹈表演和教育，有丰富的表演经验。",
+    description: "广州舞蹈表演专业，擅长舞蹈表演和教育，有丰富的表演经验。",
     school: "广州舞蹈学院",
     major: "舞蹈表演专业",
   },
-  {
-    id: 7,
-    name: "王静",
-    age: 27,
-    specialty: "戏曲",
-    experience: "4年",
-    location: "上海",
-    rating: 4.8,
-    avatar: "/placeholder.svg?height=60&width=60",
-    tags: ["戏曲表演", "戏曲教育", "表演经验"],
-    price: "800-1200/天",
-    description:
-      "上海戏曲表演专业，擅长戏曲表演和教育，有丰富的表演经验。",
-    school: "上海戏曲学院",
-    major: "戏曲表演专业",
-  },
-  {
-    id: 8,
-    name: "李静",
-    age: 26,
-    specialty: "舞蹈",
-    experience: "3年",
-    location: "广州",
-    rating: 4.7,
-    avatar: "/placeholder.svg?height=60&width=60",
-    tags: ["舞蹈表演", "舞蹈教育", "表演经验"],
-    price: "800-1200/天",
-    description:
-      "广州舞蹈表演专业，擅长舞蹈表演和教育，有丰富的表演经验。",   
-    school: "广州舞蹈学院",
-    major: "舞蹈表演专业",  
-
-  },
-  {
-    id: 9,
-    name: "王静",
-    age: 27,
-    specialty: "戏曲",
-    experience: "4年",
-    location: "上海",
-    rating: 4.8,
-    avatar: "/placeholder.svg?height=60&width=60",
-    tags: ["戏曲表演", "戏曲教育", "表演经验"],
-    price: "800-1200/天",
-    description:
-      "上海戏曲表演专业，擅长戏曲表演和教育，有丰富的表演经验。", 
-    school: "上海戏曲学院",
-    major: "戏曲表演专业",
-  },
-  {
-    id: 10,
-    name: "李静",
-    age: 26,
-    specialty: "舞蹈",
-    experience: "3年",
-    location: "广州",
-    rating: 4.7,
-    avatar: "/placeholder.svg?height=60&width=60",
-    tags: ["舞蹈表演", "舞蹈教育", "表演经验"],
-    price: "800-1200/天", 
-    description:
-      "广州舞蹈表演专业，擅长舞蹈表演和教育，有丰富的表演经验。",
-    school: "广州舞蹈学院",
-    major: "舞蹈表演专业",  
-  },
-  {
-    id: 11,
-    name: "王静",
-    age: 27,  
-    specialty: "戏曲",  
-    experience: "4年",
-    location: "上海",
-    rating: 4.8,
-    avatar: "/placeholder.svg?height=60&width=60",
-    tags: ["戏曲表演", "戏曲教育", "表演经验"],
-    price: "800-1200/天",
-    description:
-      "上海戏曲表演专业，擅长戏曲表演和教育，有丰富的表演经验。", 
-    school: "上海戏曲学院",
-    major: "戏曲表演专业",    
-  },
-  {
-    id: 12,
-    name: "李静",
-    age: 26,
-    specialty: "舞蹈",
-    experience: "3年",
-    location: "广州",
-    rating: 4.7,
-    avatar: "/placeholder.svg?height=60&width=60",
-    tags: ["舞蹈表演", "舞蹈教育", "表演经验"],
-    price: "800-1200/天",   
-    description:    
-      "广州舞蹈表演专业，擅长舞蹈表演和教育，有丰富的表演经验。",   
-    school: "广州舞蹈学院", 
-    major: "舞蹈表演专业",  
-  }
-  
 ];
 
 // 求职者主页 - Banner轮播数据
@@ -1258,12 +1358,12 @@ export const SAMPLE_CANDIDATE_DETAIL_Frontend_2 = {
   age: 24,
   gender: "女",
   type: "主持/互动",
-  experienceYears: '三年行业经验',
+  experienceYears: "三年行业经验",
   major: "主持",
   location: "北京市朝阳区",
   school: "北京学院",
   avatar: "/placeholder.svg?height=120&width=120",
-  skills: ["音乐主持",],
+  skills: ["音乐主持"],
   phone: "138****8888",
   email: "lixiaohua@example.com",
   introduction:
@@ -1368,12 +1468,12 @@ export const SAMPLE_CANDIDATE_DETAIL_Backend = {
   age: 24,
   gender: "女",
   type: "艺术创作类",
-  experienceYears: '三年行业经验',
+  experienceYears: "三年行业经验",
   major: "导演",
   location: "北京市朝阳区",
   school: "北京舞蹈学院",
   avatar: "/placeholder.svg?height=120&width=120",
-  skills: ['xxx','xxx','xxx'],
+  skills: ["xxx", "xxx", "xxx"],
   phone: "138****8888",
   email: "lixiaohua@example.com",
   introduction:
@@ -1478,12 +1578,12 @@ export const SAMPLE_CANDIDATE_DETAIL_Operations = {
   age: 24,
   gender: "女",
   type: "游客服务类",
-  experienceYears: '三年行业经验',
+  experienceYears: "三年行业经验",
   major: "票务",
   location: "北京市朝阳区",
   school: "北京舞蹈学院",
   avatar: "/placeholder.svg?height=120&width=120",
-  skills: ['xxx','xxx','xxx','xxx'],
+  skills: ["xxx", "xxx", "xxx", "xxx"],
   phone: "138****8888",
   email: "lixiaohua@example.com",
   introduction:
@@ -2264,3 +2364,357 @@ export const SAMPLE_EMPLOYER_PROFILE_COMPLETE = {
     },
   ],
 };
+
+// ==================== 混合数据类型定义 ====================
+
+// 混合数据类型
+export interface JobData {
+  type: "job";
+  id: string;
+  title: string;
+  company: string;
+  companyLogo?: string;
+  location: string;
+  jobType: string;
+  salary: string;
+  requiredMajor: string;
+  startTime: string;
+  description: string;
+  tags: string[];
+  posted: string;
+  urgent?: boolean;
+  verified?: boolean;
+}
+
+export interface JobseekerData {
+  type: "jobseeker";
+  id: string;
+  name: string;
+  avatar?: string;
+  age: number;
+  gender: string;
+  location: string;
+  category: string;
+  specialties: string[];
+  experience: string;
+  education: string;
+  rating: number;
+  reviewCount: number;
+  hourlyRate: string;
+  availability: string;
+  description: string;
+  tags: string[];
+  posted: string;
+  verified?: boolean;
+  urgent?: boolean;
+}
+
+export type MixedCardData = JobData | JobseekerData;
+
+// 示例求职者数据
+export const SAMPLE_JOBSEEKERS = [
+  {
+    id: "1",
+    name: "李雅琴",
+    avatar: "/avatars/liyaqin.jpg",
+    age: 24,
+    gender: "女",
+    location: "北京",
+    category: "舞蹈表演",
+    specialties: ["古典舞", "民族舞", "现代舞"],
+    experience: "3年",
+    education: "北京舞蹈学院",
+    rating: 4.8,
+    reviewCount: 15,
+    hourlyRate: "200-300",
+    availability: "周末及晚上",
+    description:
+      "专业舞蹈演员，擅长古典舞和民族舞，有丰富的舞台表演经验。曾参与多部大型舞剧演出。",
+    tags: ["专业认证", "经验丰富", "形象佳"],
+    posted: "1天前",
+    verified: true,
+  },
+  {
+    id: "2",
+    name: "王志强",
+    avatar: "/avatars/wangzhiqiang.jpg",
+    age: 28,
+    gender: "男",
+    location: "上海",
+    category: "话剧表演",
+    specialties: ["话剧", "音乐剧", "影视表演"],
+    experience: "5年",
+    education: "上海戏剧学院",
+    rating: 4.9,
+    reviewCount: 23,
+    hourlyRate: "300-500",
+    availability: "全天候",
+    description:
+      "资深话剧演员，台词功底扎实，表演经验丰富。曾获得多个戏剧奖项。",
+    tags: ["获奖演员", "全职可用", "档期充足"],
+    posted: "3天前",
+    verified: true,
+    urgent: true,
+  },
+  {
+    id: "3",
+    name: "陈美琳",
+    avatar: "/avatars/chenmeilin.jpg",
+    age: 22,
+    gender: "女",
+    location: "广州",
+    category: "声乐表演",
+    specialties: ["民族唱法", "美声", "流行演唱"],
+    experience: "2年",
+    education: "星海音乐学院",
+    rating: 4.6,
+    reviewCount: 8,
+    hourlyRate: "150-250",
+    availability: "周末",
+    description:
+      "青年歌唱演员，声音条件优秀，擅长多种唱法。在校期间多次获得声乐比赛奖项。",
+    tags: ["新人推荐", "声音甜美", "学院派"],
+    posted: "2天前",
+  },
+];
+
+// 混合数据 - 职位和求职者混合展示
+export const MIXED_HOMEPAGE_DATA: MixedCardData[] = [
+  // 职位数据
+  {
+    type: "job",
+    id: "1",
+    title: "大型音乐剧《猫》舞蹈演员",
+    company: "****传媒",
+    location: "北京",
+    jobType: "全职",
+    salary: "8000-12000",
+    requiredMajor: "舞蹈表演专业",
+    startTime: "立即到岗",
+    description:
+      "招聘专业舞蹈演员，要求有扎实的舞蹈基础，形象气质佳，有团队合作精神。",
+    tags: ["五险一金", "工作补贴", "培训机会"],
+    posted: "2天前",
+    urgent: true,
+    verified: true,
+  },
+  // 职位数据
+  {
+    type: "job",
+    id: "2",
+    title: "武术指导及表演",
+    company: "****影视",
+    location: "上海",
+    jobType: "合同制",
+    salary: "10000-15000",
+    requiredMajor: "武术与民族传统体育",
+    startTime: "1周内到岗",
+    description: "知名导演新片招聘武术指导，要求有丰富的武术表演和指导经验。",
+    tags: ["影视经验", "高薪", "知名导演"],
+    posted: "1天前",
+  },
+  // 职位数据
+  {
+    type: "job",
+    id: "3",
+    title: "儿童剧表演演员",
+    company: "****剧团",
+    location: "广州",
+    jobType: "兼职",
+    salary: "6000-8000",
+    requiredMajor: "表演专业",
+    startTime: "2周内到岗",
+    description: "招聘儿童剧表演演员，要求喜欢孩子，表演生动有趣，周末工作。",
+    tags: ["周末工作", "儿童剧", "轻松愉快"],
+    posted: "3天前",
+  },
+  // 职位数据
+  {
+    type: "job",
+    id: "4",
+    title: "大型音乐剧《猫》舞蹈演员",
+    company: "****传媒",
+    location: "北京",
+    jobType: "全职",
+    salary: "8000-12000",
+    requiredMajor: "舞蹈表演专业",
+    startTime: "立即到岗",
+    description:
+      "招聘专业舞蹈演员，要求有扎实的舞蹈基础，形象气质佳，有团队合作精神。",
+    tags: ["五险一金", "工作补贴", "培训机会"],
+    posted: "2天前",
+    urgent: true,
+    verified: true,
+  },
+  // 职位数据
+  {
+    type: "job",
+    id: "5",
+    title: "武术指导及表演",
+    company: "****影视",
+    location: "上海",
+    jobType: "合同制",
+    salary: "10000-15000",
+    requiredMajor: "武术与民族传统体育",
+    startTime: "1周内到岗",
+    description: "知名导演新片招聘武术指导，要求有丰富的武术表演和指导经验。",
+    tags: ["影视经验", "高薪", "知名导演"],
+    posted: "1天前",
+  },
+  // 职位数据
+  {
+    type: "job",
+    id: "6",
+    title: "儿童剧表演演员",
+    company: "****剧团",
+    location: "广州",
+    jobType: "兼职",
+    salary: "6000-8000",
+    requiredMajor: "表演专业",
+    startTime: "2周内到岗",
+    description: "招聘儿童剧表演演员，要求喜欢孩子，表演生动有趣，周末工作。",
+    tags: ["周末工作", "儿童剧", "轻松愉快"],
+    posted: "3天前",
+  },
+  // 求职者数据
+  {
+    type: "jobseeker",
+    id: "1",
+    name: "李雅琴",
+    avatar: "/avatars/liyaqin.jpg",
+    age: 24,
+    gender: "女",
+    location: "北京",
+    category: "舞蹈表演",
+    specialties: ["古典舞", "民族舞", "现代舞"],
+    experience: "3年",
+    education: "北京舞蹈学院",
+    rating: 4.8,
+    reviewCount: 15,
+    hourlyRate: "200-300",
+    availability: "周末及晚上",
+    description:
+      "专业舞蹈演员，擅长古典舞和民族舞，有丰富的舞台表演经验。曾参与多部大型舞剧演出。",
+    tags: ["专业认证", "经验丰富", "形象佳"],
+    posted: "1天前",
+    verified: true,
+  },
+  // 求职者数据
+  {
+    type: "jobseeker",
+    id: "2",
+    name: "王志强",
+    avatar: "/avatars/wangzhiqiang.jpg",
+    age: 28,
+    gender: "男",
+    location: "上海",
+    category: "话剧表演",
+    specialties: ["话剧", "音乐剧", "影视表演"],
+    experience: "5年",
+    education: "上海戏剧学院",
+    rating: 4.9,
+    reviewCount: 23,
+    hourlyRate: "300-500",
+    availability: "全天候",
+    description:
+      "资深话剧演员，台词功底扎实，表演经验丰富。曾获得多个戏剧奖项。",
+    tags: ["获奖演员", "全职可用", "档期充足"],
+    posted: "3天前",
+    verified: true,
+    urgent: true,
+  },
+  // 求职者数据
+  {
+    type: "jobseeker",
+    id: "3",
+    name: "李雅琴",
+    avatar: "/avatars/liyaqin.jpg",
+    age: 24,
+    gender: "女",
+    location: "北京",
+    category: "舞蹈表演",
+    specialties: ["古典舞", "民族舞", "现代舞"],
+    experience: "3年",
+    education: "北京舞蹈学院",
+    rating: 4.8,
+    reviewCount: 15,
+    hourlyRate: "200-300",
+    availability: "周末及晚上",
+    description:
+      "专业舞蹈演员，擅长古典舞和民族舞，有丰富的舞台表演经验。曾参与多部大型舞剧演出。",
+    tags: ["专业认证", "经验丰富", "形象佳"],
+    posted: "1天前",
+    verified: true,
+  },
+  // 求职者数据
+  {
+    type: "jobseeker",
+    id: "4",
+    name: "李雅琴",
+    avatar: "/avatars/liyaqin.jpg",
+    age: 24,
+    gender: "女",
+    location: "北京",
+    category: "舞蹈表演",
+    specialties: ["古典舞", "民族舞", "现代舞"],
+    experience: "3年",
+    education: "北京舞蹈学院",
+    rating: 4.8,
+    reviewCount: 15,
+    hourlyRate: "200-300",
+    availability: "周末及晚上",
+    description:
+      "专业舞蹈演员，擅长古典舞和民族舞，有丰富的舞台表演经验。曾参与多部大型舞剧演出。",
+    tags: ["专业认证", "经验丰富", "形象佳"],
+    posted: "1天前",
+    verified: true,
+  },
+  // 求职者数据
+  {
+    type: "jobseeker",
+    id: "5",
+    name: "王志强",
+    avatar: "/avatars/wangzhiqiang.jpg",
+    age: 28,
+    gender: "男",
+    location: "上海",
+    category: "话剧表演",
+    specialties: ["话剧", "音乐剧", "影视表演"],
+    experience: "5年",
+    education: "上海戏剧学院",
+    rating: 4.9,
+    reviewCount: 23,
+    hourlyRate: "300-500",
+    availability: "全天候",
+    description:
+      "资深话剧演员，台词功底扎实，表演经验丰富。曾获得多个戏剧奖项。",
+    tags: ["获奖演员", "全职可用", "档期充足"],
+    posted: "3天前",
+    verified: true,
+    urgent: true,
+  },
+  // 求职者数据
+  {
+    type: "jobseeker",
+    id: "6",
+    name: "王志强",
+    avatar: "/avatars/wangzhiqiang.jpg",
+    age: 28,
+    gender: "男",
+    location: "上海",
+    category: "话剧表演",
+    specialties: ["话剧", "音乐剧", "影视表演"],
+    experience: "5年",
+    education: "上海戏剧学院",
+    rating: 4.9,
+    reviewCount: 23,
+    hourlyRate: "300-500",
+    availability: "全天候",
+    description:
+      "资深话剧演员，台词功底扎实，表演经验丰富。曾获得多个戏剧奖项。",
+    tags: ["获奖演员", "全职可用", "档期充足"],
+    posted: "3天前",
+    verified: true,
+    urgent: true,
+  },
+];

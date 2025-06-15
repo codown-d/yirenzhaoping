@@ -26,11 +26,16 @@ export async function generateStaticParams() {
     { id: '3' },
   ]
 }
-
 export default function JobDetailPage() {
   // 使用常量文件中的数据
   const job = SAMPLE_JOB_DETAIL
+ function maskCompanyName(name: string ) {
+  if (name.length < 2) return '*'.repeat(name.length); // 特殊情况处理
 
+  const visible = name.slice(-2); // 获取最后两个字符
+  const masked = '*'.repeat(name.length - 2); // 前面部分用 * 替换
+  return masked + visible;
+}
   return (
     <div className="min-h-screen bg-gray-50">
       {/* 头部组件 */}
@@ -47,7 +52,7 @@ export default function JobDetailPage() {
                 <div className="flex items-center space-x-4 text-gray-600">
                   <div className="flex items-center">
                     <Building className="h-4 w-4 mr-1" />
-                    <span>{job.company}</span>
+                    <span>{maskCompanyName(job.company)}</span>
                   </div>
                   <div className="flex items-center">
                     <MapPin className="h-4 w-4 mr-1" />
