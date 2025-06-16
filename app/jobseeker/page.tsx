@@ -30,6 +30,7 @@ import {
 } from "@/constants";
 import ThreeLevelCategories from "@/components/ThreeLevelCategories";
 import MixedCardList from "@/components/MixedCardList";
+import JobCard from "@/components/JobCard";
 
 let timer: any;
 export default function JobseekerPage() {
@@ -359,7 +360,56 @@ export default function JobseekerPage() {
             selectedCategory="frontend"
           />
         </div>
+        {/* 未登录状态的选择组件 - 移动端优化 */}
+        {!isAuthenticated && (
+          <div className="px-3 pb-4">
+            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-4 border border-blue-100">
+              <div className="grid grid-cols-2 gap-3">
+                {/* 来求职 */}
+                <div
+                  className="bg-white rounded-lg p-3 border-2 border-blue-200 hover:border-blue-400 transition-all cursor-pointer group active:scale-95"
+                  onClick={() => router.push("/login?type=jobseeker")}
+                >
+                  <div className="text-center">
+                    <div className="bg-blue-100 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-2 group-hover:bg-blue-200 transition-colors">
+                      <User className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <h3 className="text-sm font-bold text-gray-800 mb-1">
+                      我来求职
+                    </h3>
+                    <p className="text-gray-600 text-xs mb-2">寻找表演机会</p>
+                    <div className="flex flex-wrap gap-1 justify-center">
+                      <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs">
+                        找工作
+                      </span>
+                    </div>
+                  </div>
+                </div>
 
+                {/* 来招聘 */}
+                <div
+                  className="bg-white rounded-lg p-3 border-2 border-green-200 hover:border-green-400 transition-all cursor-pointer group active:scale-95"
+                  onClick={() => router.push("/login?type=employer")}
+                >
+                  <div className="text-center">
+                    <div className="bg-green-100 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-2 group-hover:bg-green-200 transition-colors">
+                      <Briefcase className="h-5 w-5 text-green-600" />
+                    </div>
+                    <h3 className="text-sm font-bold text-gray-800 mb-1">
+                      我来招聘
+                    </h3>
+                    <p className="text-gray-600 text-xs mb-2">发布职位招聘</p>
+                    <div className="flex flex-wrap gap-1 justify-center">
+                      <span className="bg-green-50 text-green-700 px-2 py-0.5 rounded-full text-xs">
+                        招人才
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         {/* 根据登录状态显示不同内容 */}
         <div className="px-3">
           {!isAuthenticated ? (
@@ -370,94 +420,11 @@ export default function JobseekerPage() {
             <>
               <h2 className="text-base font-semibold mb-3">推荐招聘职位</h2>
               <div className="space-y-3">
-                {opportunities.map((opportunity) => (
-                  <div
-                    key={opportunity.id}
-                    className="bg-white rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow"
-                  >
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start space-x-2 mb-1">
-                          <h3
-                            className="font-medium text-sm leading-tight cursor-pointer hover:text-blue-600 transition-colors flex-1"
-                            onClick={() => {
-                              router.push("/job/1");
-                            }}
-                          >
-                            {opportunity.title}
-                          </h3>
-                          {opportunity.urgent && (
-                            <Badge className="bg-red-100 text-red-800 text-xs px-1.5 py-0.5 flex-shrink-0">
-                              急招
-                            </Badge>
-                          )}
-                        </div>
-                        <p className="text-xs text-gray-600 mb-2">
-                          {opportunity.company}
-                        </p>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-7 w-7 p-0 flex-shrink-0 ml-2"
-                      >
-                        <Heart className="h-3.5 w-3.5" />
-                      </Button>
-                    </div>
-
-                    <div className="flex items-center space-x-2 text-xs text-gray-600 mb-2">
-                      <span>{opportunity.type}</span>
-                      <span>•</span>
-                      <span className="text-green-600 font-medium">
-                        {opportunity.salary}/月
-                      </span>
-                    </div>
-
-                    {/* 需求专业和到岗时间 - 移动端紧凑布局 */}
-                    <div className="space-y-1 mb-2">
-                      <div className="flex items-center space-x-1 text-xs text-gray-600">
-                        <GraduationCap className="h-3 w-3 flex-shrink-0" />
-                        <span className="truncate">
-                          需求专业：{opportunity.requiredMajor}
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-1 text-xs text-gray-600">
-                        <Clock className="h-3 w-3 flex-shrink-0" />
-                        <span>到岗时间：{opportunity.startTime}</span>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap gap-1 mb-2">
-                      {opportunity.tags.map((tag) => (
-                        <Badge
-                          key={tag}
-                          variant="secondary"
-                          className="text-xs px-2 py-0.5"
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-
-                    <p className="text-xs text-gray-600 mb-3 line-clamp-2">
-                      {opportunity.description}
-                    </p>
-
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-500">
-                        {opportunity.posted}
-                      </span>
-                      <Button
-                        size="sm"
-                        className="rounded-lg h-7 px-3 text-xs"
-                        onClick={() => {
-                          router.push("/job/1");
-                        }}
-                      >
-                        立即申请
-                      </Button>
-                    </div>
-                  </div>
+              {SAMPLE_JOB_OPPORTUNITIES.map((item) => (
+                 <JobCard
+                 key={`job-${item.id}`}
+                 job={item}
+               />
                 ))}
               </div>
             </>

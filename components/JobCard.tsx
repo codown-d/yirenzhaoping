@@ -5,24 +5,10 @@ import { useRouter } from "next/navigation"
 import { Heart, GraduationCap, Clock, MapPin, Building } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { JobData } from '@/constants'
 
 interface JobCardProps {
-  job: {
-    id: string
-    title: string
-    company: string
-    companyLogo?: string
-    location: string
-    type: string
-    salary: string
-    requiredMajor: string
-    startTime: string
-    description: string
-    tags: string[]
-    posted: string
-    urgent?: boolean
-    verified?: boolean
-  }
+  job: JobData
   className?: string
 }
 
@@ -51,9 +37,9 @@ export default function JobCard({ job, className = "" }: JobCardProps) {
             {job.urgent && (
               <Badge className="bg-red-100 text-red-800 text-xs px-1.5 py-0.5 flex-shrink-0">急招</Badge>
             )}
-            {job.verified && (
+            {/* {job.verified && (
               <Badge className="bg-green-100 text-green-800 text-xs px-1.5 py-0.5 flex-shrink-0">认证</Badge>
-            )}
+            )} */}
           </div>
           <div className="flex items-center space-x-2 text-xs text-gray-600 mb-2">
             <Building className="h-3 w-3" />

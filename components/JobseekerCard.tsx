@@ -1,50 +1,35 @@
-"use client"
-
-import React from 'react'
-import { useRouter } from "next/navigation"
-import { Heart, User, GraduationCap, MapPin, Star, Clock } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+'use client';
+import React from "react";
+import { useRouter } from "next/navigation";
+import { Heart, User, GraduationCap, MapPin, Star, Clock } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { JobseekerData } from "@/constants";
 
 interface JobseekerCardProps {
-  jobseeker: {
-    id: string
-    name: string
-    avatar?: string
-    age: number
-    gender: string
-    location: string
-    category: string
-    specialties: string[]
-    experience: string
-    education: string
-    rating: number
-    reviewCount: number
-    hourlyRate: string
-    availability: string
-    description: string
-    tags: string[]
-    posted: string
-    verified?: boolean
-    urgent?: boolean
-  }
-  className?: string
+  jobseeker: JobseekerData;
+  className?: string;
 }
 
-export default function JobseekerCard({ jobseeker, className = "" }: JobseekerCardProps) {
-  const router = useRouter()
-
+export default function JobseekerCard({
+  jobseeker,
+  className = "",
+}: JobseekerCardProps) {
+  const router = useRouter();
+  console.log(jobseeker);
   const handleViewProfile = () => {
-    router.push(`/candidate/1`)
-  }
+    router.push(`/candidate/1`);
+  };
 
   const handleContact = () => {
-    router.push(`/chat/${jobseeker.id}`)
-  }
+    router.push(`/chat/${jobseeker.id}`);
+  };
 
   return (
-    <div className={`bg-white rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow ${className}`}>
+    <div
+      className={`bg-white rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow ${className}`}
+    >
       <div className="flex items-start justify-between mb-2">
         <div className="flex items-start space-x-3 flex-1 min-w-0">
           <Avatar className="h-10 w-10 flex-shrink-0">
@@ -55,65 +40,71 @@ export default function JobseekerCard({ jobseeker, className = "" }: JobseekerCa
           </Avatar>
           <div className="flex-1 min-w-0">
             <div className="flex items-start space-x-2 mb-1">
-              <h3 
-                className="font-medium text-sm leading-tight cursor-pointer hover:text-blue-600 transition-colors flex-1" 
+              <h3
+                className="font-medium text-sm leading-tight cursor-pointer hover:text-blue-600 transition-colors flex-1"
                 onClick={handleViewProfile}
               >
                 {jobseeker.name}
               </h3>
               {jobseeker.verified && (
-                <Badge className="bg-blue-100 text-blue-800 text-xs px-1.5 py-0.5 flex-shrink-0">认证</Badge>
+                <Badge className="bg-blue-100 text-blue-800 text-xs px-1.5 py-0.5 flex-shrink-0">
+                  认证
+                </Badge>
               )}
-              {jobseeker.urgent && (
+              {/* {jobseeker.urgent && (
                 <Badge className="bg-red-100 text-red-800 text-xs px-1.5 py-0.5 flex-shrink-0">急找工作</Badge>
-              )}
+              )} */}
             </div>
-            <div className="flex items-center space-x-2 text-xs text-gray-600 mb-1">
+            {/* //年龄，专业，身高，体重 */}
+            {jobseeker.category==='舞蹈类'?<div className="flex items-center space-x-2 text-xs text-gray-600 mb-1">
               <span>{jobseeker.age}岁</span>
               <span>•</span>
-              <span>{jobseeker.gender}</span>
+              <span className="truncate">{jobseeker.category}</span>
               <span>•</span>
-              <span className="flex items-center">
-                <MapPin className="h-3 w-3 mr-1" />
-                {jobseeker.location}
-              </span>
-            </div>
+              <span>{jobseeker.height}</span>
+              <span>•</span>
+              <span>{jobseeker.weight}</span>
+            </div>:<div className="flex items-center space-x-2 text-xs text-gray-600 mb-1">
+              <span>{jobseeker.age}岁</span>
+              <span>•</span>
+              <span>{jobseeker.category}</span>
+              <span>•</span>
+              <span>{jobseeker.experience}</span>
+            </div>}
           </div>
         </div>
-        <Button variant="ghost" size="sm" className="h-7 w-7 p-0 flex-shrink-0 ml-2">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="h-7 w-7 p-0 flex-shrink-0 ml-2"
+        >
           <Heart className="h-3.5 w-3.5" />
         </Button>
       </div>
 
-      <div className="flex items-center space-x-2 text-xs text-gray-600 mb-2">
+      {/* <div className="flex items-center space-x-2 text-xs text-gray-600 mb-2">
         <span>{jobseeker.category}</span>
         <span>•</span>
-        <span className="text-green-600 font-medium">{jobseeker.hourlyRate}/小时</span>
-        {jobseeker.rating > 0 && (
-          <>
-            <span>•</span>
-            <div className="flex items-center">
-              <Star className="h-3 w-3 text-yellow-400 mr-1" />
-              <span>{jobseeker.rating}</span>
-              <span className="text-gray-400 ml-1">({jobseeker.reviewCount})</span>
-            </div>
-          </>
-        )}
-      </div>
+        <span className="text-green-600 font-medium">
+          {jobseeker.hourlyRate}/小时
+        </span>
+      </div> */}
 
       {/* 专业技能和学历 - 移动端紧凑布局 */}
       <div className="space-y-1 mb-2">
         <div className="flex items-center space-x-1 text-xs text-gray-600">
-          <GraduationCap className="h-3 w-3 flex-shrink-0" />
-          <span className="truncate">专业：{jobseeker.specialties.join('、')}</span>
+          <MapPin className="h-4 w-4 " />
+          <span>{jobseeker.school}</span>
+          <span>•</span>
+          <span>{jobseeker.major}</span>
         </div>
-        <div className="flex items-center space-x-1 text-xs text-gray-600">
+        {/* <div className="flex items-center space-x-1 text-xs text-gray-600">
           <Clock className="h-3 w-3 flex-shrink-0" />
           <span>可工作时间：{jobseeker.availability}</span>
-        </div>
+        </div> */}
         <div className="flex items-center space-x-1 text-xs text-gray-600">
           <Clock className="h-3 w-3 flex-shrink-0" />
-          <span>联系方式：135****9478</span>
+          <span>联系方式：{jobseeker.mobile}</span>
         </div>
       </div>
 
@@ -125,14 +116,16 @@ export default function JobseekerCard({ jobseeker, className = "" }: JobseekerCa
         ))}
       </div>
 
-      <p className="text-xs text-gray-600 mb-3 line-clamp-2">{jobseeker.description}</p>
+      <p className="text-xs text-gray-600 mb-3 line-clamp-2">
+        {jobseeker.description}
+      </p>
 
       <div className="flex items-center justify-between">
         <span className="text-xs text-gray-500">{jobseeker.posted}</span>
         <div className="flex space-x-2">
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             className="rounded-lg h-7 px-3 text-xs"
             onClick={handleViewProfile}
           >
@@ -148,5 +141,5 @@ export default function JobseekerCard({ jobseeker, className = "" }: JobseekerCa
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -3,48 +3,9 @@
 import React from 'react'
 import JobCard from './JobCard'
 import JobseekerCard from './JobseekerCard'
+import { JobData, JobseekerData } from '@/constants'
 
-// 定义数据类型
-export interface JobData {
-  type: 'job'
-  id: string
-  title: string
-  company: string
-  companyLogo?: string
-  location: string
-  jobType: string
-  salary: string
-  requiredMajor: string
-  startTime: string
-  description: string
-  tags: string[]
-  posted: string
-  urgent?: boolean
-  verified?: boolean
-}
 
-export interface JobseekerData {
-  type: 'jobseeker'
-  id: string
-  name: string
-  avatar?: string
-  age: number
-  gender: string
-  location: string
-  category: string
-  specialties: string[]
-  experience: string
-  education: string
-  rating: number
-  reviewCount: number
-  hourlyRate: string
-  availability: string
-  description: string
-  tags: string[]
-  posted: string
-  verified?: boolean
-  urgent?: boolean
-}
 
 export type MixedCardData = JobData | JobseekerData
 
@@ -75,22 +36,7 @@ let jobseeker=data.filter(item=>item.type==='jobseeker');
             return (
               <JobCard
                 key={`job-${item.id}`}
-                job={{
-                  id: item.id,
-                  title: item.title,
-                  company: item.company,
-                  companyLogo: item.companyLogo,
-                  location: item.location,
-                  type: item.jobType,
-                  salary: item.salary,
-                  requiredMajor: item.requiredMajor,
-                  startTime: item.startTime,
-                  description: item.description,
-                  tags: item.tags,
-                  posted: item.posted,
-                  urgent: item.urgent,
-                  verified: item.verified,
-                }}
+                job={item as JobData}
               />
             )
         })}
@@ -99,27 +45,7 @@ let jobseeker=data.filter(item=>item.type==='jobseeker');
             return (
               <JobseekerCard
                 key={`jobseeker-${item.id}`}
-                jobseeker={{
-                  id: item.id,
-                  name: item.name,
-                  avatar: item.avatar,
-                  age: item.age,
-                  gender: item.gender,
-                  location: item.location,
-                  category: item.category,
-                  specialties: item.specialties,
-                  experience: item.experience,
-                  education: item.education,
-                  rating: item.rating,
-                  reviewCount: item.reviewCount,
-                  hourlyRate: item.hourlyRate,
-                  availability: item.availability,
-                  description: item.description,
-                  tags: item.tags,
-                  posted: item.posted,
-                  verified: item.verified,
-                  urgent: item.urgent,
-                }}
+                jobseeker={item as JobseekerData}
               />
             )
         })}
