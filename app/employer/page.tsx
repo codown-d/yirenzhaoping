@@ -73,7 +73,7 @@ export default function EmployerPage() {
       (employerFilters.ageGroup && employerFilters.ageGroup !== "unlimited") ||
       employerFilters.experience !== "" ||
       employerFilters.education?.length > 0
-    );
+    )&&Object.keys(employerFilters).length > 0;
   };
 
   // 清除筛选条件的辅助函数
@@ -266,11 +266,12 @@ export default function EmployerPage() {
           </div>
         </div>
 
+      
         {/* Active Filters Display */}
         {hasActiveFilters() && (
           <div className="px-4 mb-4">
             <div className="bg-white rounded-2xl shadow-sm p-4">
-              <h3 className="font-medium mb-3">已选条件</h3>
+              <h3 className="font-medium">已选条件</h3>
               <div className="flex flex-wrap gap-2">
                 {employerFilters.location?.map((city: string) => (
                   <Badge
@@ -383,15 +384,7 @@ export default function EmployerPage() {
             </div>
           </div>
         )}
-
-        {/* Categories - 三级分类展示 */}
-        <div className="px-3 mb-6">
-          <ThreeLevelCategories
-            onCategorySelect={handleCategorySelect}
-            selectedCategory="frontend"
-          />
-        </div>
-        {/* 未登录状态的选择组件 - 移动端优化 */}
+  {/* 未登录状态的选择组件 - 移动端优化 */}
         {!isAuthenticated && (
           <div className="px-3 pb-4">
             <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-4 border border-blue-100">
@@ -408,7 +401,6 @@ export default function EmployerPage() {
                     <h3 className="text-sm font-bold text-gray-800 mb-1">
                       我来求职
                     </h3>
-                    <p className="text-gray-600 text-xs mb-2">寻找表演机会</p>
                     <div className="flex flex-wrap gap-1 justify-center">
                       <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs">
                         找工作
@@ -429,7 +421,6 @@ export default function EmployerPage() {
                     <h3 className="text-sm font-bold text-gray-800 mb-1">
                       我来招聘
                     </h3>
-                    <p className="text-gray-600 text-xs mb-2">发布职位招聘</p>
                     <div className="flex flex-wrap gap-1 justify-center">
                       <span className="bg-green-50 text-green-700 px-2 py-0.5 rounded-full text-xs">
                         招人才
@@ -441,6 +432,13 @@ export default function EmployerPage() {
             </div>
           </div>
         )}
+        {/* Categories - 三级分类展示 */}
+        <div className="px-3 mb-6">
+          <ThreeLevelCategories
+            onCategorySelect={handleCategorySelect}
+            selectedCategory="frontend"
+          />
+        </div>
         {/* 根据登录状态显示不同内容 */}
         <div className="px-3">
           {!isAuthenticated ? (
@@ -494,9 +492,6 @@ export default function EmployerPage() {
                   <h3 className="text-base font-bold text-gray-800 mb-2">
                     我来求职
                   </h3>
-                  <p className="text-gray-600 text-sm mb-3">
-                    寻找表演机会，展示才华
-                  </p>
                   <div className="flex flex-wrap gap-2 justify-center">
                     <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm">
                       找工作
@@ -523,9 +518,6 @@ export default function EmployerPage() {
                   <h3 className="text-base font-bold text-gray-800 mb-2">
                     我来招聘
                   </h3>
-                  <p className="text-gray-600 text-sm mb-3">
-                    发布职位，寻找人才
-                  </p>
                   <div className="flex flex-wrap gap-2 justify-center">
                     <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm">
                       招人才
